@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-2GmO+Xi4OQSPa6FwWGJtj6uzhqY8okMshQRoqe1mh3o='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-z0yteHCNHjMH/GXaG9GLjnMrTqTjjZ7sGSStrvP/MBA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -99,18 +99,18 @@ body.has-hero:not(.scrolled) .announce+.site-header{top:auto}
 @media (max-width:600px){.nav{gap:10px;min-height:72px}.logo svg{height:46px}.nav>.btn.gold{display:none}}
 
 /* Hero */
-.hero{position:relative;min-height:min(84vh,780px);display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:var(--forest)}
+.hero{position:relative;min-height:min(72vh,660px);display:flex;align-items:center;color:#fff;overflow:hidden;background:var(--forest)}
 .hero .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease;transform:scale(1.06)}
 .hero .slide.on{opacity:1;animation:kb 9s ease-out forwards}
 @keyframes kb{from{transform:scale(1.06)}to{transform:scale(1.0)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,22,15,.62) 0%,rgba(10,22,15,.25) 55%,rgba(10,22,15,.05) 100%),linear-gradient(180deg,rgba(10,22,15,.4) 0%,transparent 30%,rgba(10,22,15,.55) 100%)}
-.hero-inner{position:relative;z-index:1;width:100%;padding-top:120px;padding-bottom:116px}
-.hero .kicker{color:#ecd9b0}
+.hero-inner{position:relative;z-index:1;width:100%;padding-top:96px;padding-bottom:104px}
+.hero .kicker{color:#ecd9b0;margin-bottom:4px}
 .hero h1{color:#fff;max-width:880px;text-shadow:0 2px 30px rgba(0,0,0,.25)}
-.hero .script{font-size:clamp(2rem,4vw,3rem);color:#ecd9b0;display:block;margin:14px 0 6px}
+.hero .script{font-size:clamp(1.8rem,3.4vw,2.6rem);color:#ecd9b0;display:block;margin:6px 0 2px}
 .hero .lead{color:rgba(255,255,255,.9);max-width:620px}
 .hero .row{margin-top:30px}
-.dots{position:absolute;right:var(--gut);bottom:116px;z-index:2;display:flex;gap:8px}
+.dots{position:absolute;right:var(--gut);bottom:100px;z-index:2;display:flex;gap:8px}
 .dots button{width:28px;height:3px;border:0;padding:0;background:rgba(255,255,255,.45);cursor:pointer}
 .dots button[aria-current=true]{background:#fff}
 
@@ -495,6 +495,27 @@ td .row{gap:6px;flex-wrap:nowrap}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero .slide.on{transform:none}}
 #print-area{display:none}
+.logo .fr{transform-box:fill-box;transform-origin:50% 56%;animation:sway 3.8s ease-in-out infinite alternate}
+.logo g>g:nth-child(2) .fr{animation-duration:4.6s;animation-delay:-2s}
+.logo:hover .fr{animation-duration:1.4s}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(5deg)}}
+.logo text:first-of-type{animation:glow 6s ease-in-out infinite}
+@keyframes glow{50%{opacity:.82}}
+.cookie{position:fixed;left:16px;bottom:16px;z-index:60;max-width:420px;background:var(--paper);color:var(--ink);border:1px solid var(--line-2);padding:16px 18px;box-shadow:0 24px 50px -24px rgba(0,0,0,.45);font-size:.92rem}
+.cookie p{margin:0 0 10px}
+body.is-admin .cookie{display:none}
+@media (max-width:560px){.cookie{left:10px;right:10px;bottom:86px;max-width:none}}
+.mcal .cell{position:relative}
+.cell-add{all:unset;cursor:pointer;position:absolute;top:1px;right:2px;width:18px;height:18px;line-height:18px;text-align:center;font-size:.95rem;color:var(--forest-2);opacity:0}
+.mcal .cell:hover .cell-add,.cell-add:focus-visible{opacity:1;background:var(--paper)}
+.rb td{padding:0;height:26px}
+.rb td:first-child{padding:3px 6px}
+.rb th.tday{background:#e1ead9}.rb th.wknd{color:var(--brass)}
+.cell-new{all:unset;cursor:pointer;display:block;width:100%;height:26px;min-width:22px}
+.cell-new:hover,.cell-new:focus-visible{background:#eef3ea;outline:1px dashed var(--moss);outline-offset:-2px}
+.rb td .linkbtn{display:block;padding:4px 2px;text-decoration:none;font-weight:600;min-height:18px}
+.est{background:#f6f1e6;padding:10px 12px;margin-bottom:12px}
+.choice{border:1px solid var(--line);padding:10px 12px;margin:0 0 12px}
 .doc{font:13px/1.5 var(--sans);color:#1c2420;max-width:760px;margin:0 auto}
 .doc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:12px;margin-bottom:16px;color:#1f3d2b;border-bottom:1px solid #c9bfa8}
 .doc-head svg{height:74px;width:auto}.doc-head img{height:70px}
@@ -519,6 +540,7 @@ td .row{gap:6px;flex-wrap:nowrap}
 <div id="toasts" role="status" aria-live="polite"></div>
 <dialog id="modal" aria-modal="true"></dialog>
 <div id="print-area"></div>
+<div id="cookie" class="cookie" role="region" aria-label="Cookies and privacy" hidden></div>
 <noscript><div class="wrap" style="padding:40px 16px"><h1>Grand Bay Botanical Gardens &amp; Resort</h1><p>Fikeng village, along the Boatle Mmankgodi Road, about 25 km from Gaborone. Call +267 73 933 993 or +267 71 789 213. Please enable JavaScript to book online.</p></div></noscript>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -604,7 +626,7 @@ const ICONS = {
 };
 const icon = (n, cls = '') => raw(`<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[n] || ICONS.leaf}</svg>`);
 /* Grand Bay wordmark: twin palms with script name, drawn in currentColor */
-const palm = (x, s) => `<g transform="translate(${x} 0) scale(${s})"><path d="M22 60c1.5-12 2.6-24 1.2-37" stroke-width="2.2"/><path d="M23.2 23c-6-6.5-14-6.5-19-1.5M23.2 23c-3.5-8.5-10.5-12-17.5-11M23.2 23c1-9 7-13.5 14.5-12.5M23.2 23c6.5-6 14.5-5 19 .5M23.2 23c4 1 9 5 9.5 11.5M23.2 23c-4.5.5-9.5 4.5-10.5 10.5" stroke-width="1.6"/></g>`;
+const palm = (x, s) => `<g transform="translate(${x} 0) scale(${s})"><path d="M22 60c1.5-12 2.6-24 1.2-37" stroke-width="2.2"/><path class="fr" d="M23.2 23c-6-6.5-14-6.5-19-1.5M23.2 23c-3.5-8.5-10.5-12-17.5-11M23.2 23c1-9 7-13.5 14.5-12.5M23.2 23c6.5-6 14.5-5 19 .5M23.2 23c4 1 9 5 9.5 11.5M23.2 23c-4.5.5-9.5 4.5-10.5 10.5" stroke-width="1.6"/></g>`;
 const logoSvg = () => raw(`<svg viewBox="0 0 252 66" role="img" aria-label="Grand Bay Botanical Gardens and Resort"><g fill="none" stroke="currentColor" stroke-linecap="round">${palm(0, 1)}${palm(22, .78)}</g><text x="64" y="38" fill="currentColor" font-family="Great Vibes, cursive" font-size="34">Grand Bay</text><text x="66" y="56" fill="currentColor" font-family="Libre Franklin, sans-serif" font-size="8" letter-spacing="1.6">BOTANICAL GARDENS &amp; RESORT</text></svg>`);
 
 /* Helpers */
@@ -728,7 +750,7 @@ function renderChrome(path) {
     <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="#/contact">Directions</a></li></ul></div>
     <div><h4>Contact</h4><ul>${phones().map(p => html`<li><a href="${telHref(p)}">${p}</a></li>`)}${set('email') ? html`<li><a href="mailto:${set('email')}">${set('email')}</a></li>` : ''}
       ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
-  <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}</span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a><a href="#/admin">Staff login</a></span></div></div>`);
+  <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}</span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms</a><button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
 }
 function setFab(msg) { const f = $('#fab'); f.href = waLink(msg); f.innerHTML = String(html`${icon('whatsapp')}<span>WhatsApp us</span>`); }
 const pageHead = (kicker, title, lead, crumbs) => html`<header class="page-head"><div class="wrap">
@@ -787,7 +809,7 @@ let heroTimer = null;
 function pageHome() {
   const imgs = heroImages(), spa = svcBySlug('spa-day'), rest = svcBySlug('restaurant');
   const g = S.gallery.map(x => safeUrl(x.image_url)).filter(Boolean);
-  const featured = [...S.services].sort((a, b) => (!!safeUrl(b.image_url)) - (!!safeUrl(a.image_url))).slice(0, 7);
+  const featured = [...S.services].sort((a, b) => (!!safeUrl(b.image_url)) - (!!safeUrl(a.image_url))).slice(0, S.services.length >= 9 ? 9 : Math.min(6, S.services.length));
   const specials = S.menu.filter(m => m.is_special).concat(S.menu.filter(m => !m.is_special)).slice(0, 3);
   return html`<section class="hero" aria-label="Welcome">${imgs.map((u, i) => html`<img class="slide ${i === 0 ? 'on' : ''}" src="${u}" alt="" ${i === 0 ? raw('fetchpriority="high"') : raw('loading="lazy"')}>`)}
     <div class="wrap hero-inner"><span class="kicker">${set('hero_eyebrow')}</span><span class="script">${set('tagline').split('.')[0]}</span>
@@ -971,7 +993,9 @@ async function submitEnquiry(f) {
   err.textContent = '';
   if (v.website) { f.reset(); toast('Thank you, your message was sent.'); return; }
   if (!v.name.trim() || !v.message.trim()) { err.textContent = 'Please add your name and a message.'; return; }
-  if (!v.phone.trim() && !v.email.trim()) { err.textContent = 'Please give us a phone number or email so we can reply.'; return; }
+  if (!v.phone.trim() && !v.email.trim()) { err.textContent = 'Please give us a mobile number or email so we can reply.'; return; }
+  if (v.phone.trim() && !normPhone(v.phone)) { err.textContent = 'Please enter a valid mobile number, for example 71 234 567.'; return; }
+  if (v.email.trim()) { const em = emailIssue(v.email); if (em) { err.textContent = em; return; } }
   const btn = $('button[type=submit]', f); btn.disabled = true;
   const { error } = await sb.rpc('submit_enquiry', { p_name: v.name, p_phone: v.phone, p_email: v.email, p_service_id: f.dataset.service || v.service || null, p_subject: v.subject || '', p_message: v.message, p_consent: !!v.consent });
   btn.disabled = false;
@@ -980,8 +1004,8 @@ async function submitEnquiry(f) {
 }
 
 /* Booking wizard */
-const B = { step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
-function resetBooking() { Object.assign(B, { step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', notes: '', agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} }); }
+const B = { t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
+function resetBooking() { Object.assign(B, { t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', notes: '', agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} }); }
 const STEPS = ['Experience', 'Date', 'Your details', 'Review'];
 function pageBook(q) {
   if (q.service) {
@@ -1006,7 +1030,7 @@ function bookSummary() {
       <dt>${s.stay_mode ? 'Check-in' : 'Date'}</dt><dd>${B.date ? fmtDay(B.date) : 'Not chosen'}</dd>
       ${s.stay_mode ? html`<dt>Check-out</dt><dd>${B.end ? fmtDay(B.end) : 'Not chosen'}</dd>${B.date && B.end ? html`<dt>Nights</dt><dd>${nights(B.date, B.end)}</dd>` : ''}` : ''}
       ${s.time_slots ? html`<dt>Time</dt><dd>${B.time || 'Not chosen'}</dd>` : ''}
-      <dt>Guests</dt><dd>${B.guests || 'Not set'}</dd><dt>Price</dt><dd class="price">${p && p.price != null ? money(p.price) : priceText(s)}</dd></dl>
+      <dt>Guests</dt><dd>${B.guests || 'Not set'}</dd>${estRow(s, p)}</dl>
     <p class="faint small" style="margin:0">No payment is taken online. Prefer to talk? <a href="${waLink(s.whatsapp_message)}" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>.</p>`;
 }
 function navBtns(nextLabel = 'Continue') {
@@ -1039,7 +1063,7 @@ function stepHtml() {
       <div class="form-grid">${inp('name', 'Full name', 'autocomplete="name" maxlength="120"')}${inp('phone', 'Phone or WhatsApp', 'type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx"')}
         ${inp('email', 'Email', 'type="email" autocomplete="email" maxlength="200"')}${inp('guests', `Guests (up to ${s.max_guests})`, `type="number" min="1" max="${s.max_guests}" inputmode="numeric"`)}
         <div class="field full"><label for="b-notes">Special requirements</label><textarea id="b-notes" data-b="notes" maxlength="2000" placeholder="Theme, dietary needs, set-up, arrival time">${B.notes}</textarea></div></div>
-      <label class="check"><input type="checkbox" data-b="agree" ${B.agree ? 'checked' : ''}><span>I agree to the <a href="#/terms" target="_blank">booking terms</a> and <a href="#/privacy" target="_blank">privacy policy</a>.<span class="req" aria-hidden="true">*</span></span></label>${fErr('agree')}
+      <div class="hp" aria-hidden="true"><label>Company website<input data-b="hp" tabindex="-1" autocomplete="off"></label></div><label class="check"><input type="checkbox" data-b="agree" ${B.agree ? 'checked' : ''}><span>I agree to the <a href="#/terms" target="_blank">booking terms</a> and <a href="#/privacy" target="_blank">privacy policy</a>.<span class="req" aria-hidden="true">*</span></span></label>${fErr('agree')}
       <label class="check"><input type="checkbox" data-b="consent" ${B.consent ? 'checked' : ''}><span>Send me occasional news and offers (optional).</span></label>
       ${navBtns('Review booking')}`;
   }
@@ -1048,7 +1072,7 @@ function stepHtml() {
     <div class="summary card pad"><dl><dt>Experience</dt><dd>${s.name}</dd>${p ? html`<dt>Package</dt><dd>${p.name}</dd>` : ''}
       <dt>${s.stay_mode ? 'Stay' : 'Date'}</dt><dd>${fmtDay(B.date)}${B.end ? html` to ${fmtDay(B.end)}` : ''}</dd>${B.time ? html`<dt>Time</dt><dd>${B.time}</dd>` : ''}
       <dt>Guests</dt><dd>${B.guests}</dd><dt>Name</dt><dd>${B.name}</dd><dt>Phone</dt><dd>${B.phone}</dd><dt>Email</dt><dd>${B.email}</dd>
-      ${B.notes ? html`<dt>Notes</dt><dd style="white-space:pre-line">${B.notes}</dd>` : ''}<dt>Price</dt><dd class="price">${p && p.price != null ? money(p.price) : priceText(s)}</dd></dl>
+      ${B.notes ? html`<dt>Notes</dt><dd style="white-space:pre-line">${B.notes}</dd>` : ''}${estRow(s, p)}</dl>
       <p class="muted" style="margin:0">${s.booking_mode === 'instant' ? 'If the date is still free, your booking is confirmed straight away.' : `Our team will contact you to confirm${s.booking_mode === 'quote' ? ' and send a quotation' : ''}. Any deposit is arranged directly with us.`}</p></div>
     <p class="err" role="alert" id="b-err" tabindex="-1">${B.errors.submit || ''}</p>
     ${navBtns(s.booking_mode === 'instant' ? 'Confirm booking' : 'Send booking request')}`;
@@ -1101,9 +1125,9 @@ function validateStep() {
     if (s.time_slots && !B.time) e.time = 'Please choose a start time.';
   }
   if (B.step === 3) {
-    if (B.name.trim().length < 2) e.name = 'Please enter your full name.';
-    if (!/^\+?[0-9 ()-]{7,20}$/.test(B.phone.trim())) e.phone = 'Enter a valid phone number, for example +267 71 234 567.';
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(B.email.trim())) e.email = 'Enter a valid email address.';
+    if (B.name.trim().length < 2 || !/[a-z]/i.test(B.name)) e.name = 'Please enter your full name.';
+    if (!normPhone(B.phone)) e.phone = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; else B.phone = normPhone(B.phone);
+    { const em = emailIssue(B.email); if (em) e.email = em; }
     const g = Number(B.guests);
     if (!Number.isInteger(g) || g < 1 || g > s.max_guests) e.guests = `Enter between 1 and ${s.max_guests} guests.`;
     if (!B.agree) e.agree = 'Please accept the booking terms to continue.';
@@ -1115,7 +1139,7 @@ async function submitBooking() {
   const s = svcById(B.sid);
   B.busy = true; B.errors = {}; redrawStep();
   const { data, error } = await sb.rpc('create_booking', { p_service_id: B.sid, p_package_id: B.pid || null, p_name: B.name, p_phone: B.phone, p_email: B.email,
-    p_guests: Number(B.guests), p_date: B.date, p_end_date: s.stay_mode ? B.end : null, p_time: B.time || null, p_notes: B.notes, p_consent: !!B.consent });
+    p_guests: Number(B.guests), p_date: B.date, p_end_date: s.stay_mode ? B.end : null, p_time: B.time || null, p_notes: B.notes, p_consent: !!B.consent, p_hp: B.hp || '', p_elapsed: Date.now() - (B.t0 || 0) });
   B.busy = false;
   if (error) { B.errors = { submit: errText(error) }; B.availKey = ''; redrawStep(); $('#b-err')?.focus(); return; }
   B.result = { ...data, date: B.date, end: B.end, time: B.time, guests: B.guests, email: B.email, name: B.name };
@@ -1134,6 +1158,53 @@ function bookDone() {
       <button class="btn ghost" data-act="ics">${icon('calendar')} Add to calendar</button><button class="btn ghost" data-act="print">${icon('print')} Print</button></div>
     <p style="margin-top:22px"><button class="btn sm ghost" data-act="b-new">Make another booking</button></p></div></section>`;
 }
+/* Validation shared by the website and the admin portal */
+function normPhone(p) {
+  let d = String(p || '').replace(/[^\d+]/g, '');
+  if (!d) return null;
+  if (d.startsWith('+')) { d = d.slice(1); if (!d.startsWith('267')) return /^[1-9]\d{7,14}$/.test(d) ? '+' + d : null; d = d.slice(3); }
+  else if (d.startsWith('00267')) d = d.slice(5);
+  else if (d.startsWith('267') && d.length === 11) d = d.slice(3);
+  return /^7\d{7}$/.test(d) ? `+267 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5)}` : null;
+}
+const EMAIL_RE = /^[a-z0-9._%+'-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/i;
+const TYPO = { 'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gmail.co': 'gmail.com', 'gmail.con': 'gmail.com', 'gamil.com': 'gmail.com', 'gnail.com': 'gmail.com', 'yahoo.co': 'yahoo.com', 'yaho.com': 'yahoo.com', 'hotmial.com': 'hotmail.com', 'hotmail.co': 'hotmail.com', 'outlok.com': 'outlook.com', 'outlook.co': 'outlook.com' };
+function emailIssue(e) {
+  e = String(e || '').trim().toLowerCase();
+  if (!e) return 'Please enter your email address.';
+  if (e.length > 200 || !EMAIL_RE.test(e) || e.includes('..') || /^\.|\.@/.test(e)) return 'Please enter a valid email address, for example name@gmail.com.';
+  const [u, dom] = e.split('@');
+  return TYPO[dom] ? `Did you mean ${u}@${TYPO[dom]}? Please check the spelling.` : '';
+}
+/* Price estimate from the room rate, package or experience price */
+function estimate(s, p, guests, n, room) {
+  const g = Math.max(1, Number(guests) || 1), nn = Math.max(1, Number(n) || 1);
+  if (room && room.rate != null) return { amount: Number(room.rate) * nn, text: `${money(room.rate)} a night × ${nn} night(s)` };
+  const price = p && p.price != null ? Number(p.price) : s.price_from != null ? Number(s.price_from) : null;
+  if (price == null) return null;
+  const unit = (p ? p.price_note : s.price_unit) || '', parts = [];
+  let qty = 1;
+  if (/person|guest|pp\b|each/i.test(unit)) { qty *= g; parts.push(`${g} guest(s)`); }
+  if (/night/i.test(unit) || (s.stay_mode && !/person/i.test(unit))) { qty *= nn; parts.push(`${nn} night(s)`); }
+  return { amount: price * qty, text: parts.length ? `${money(price)} × ${parts.join(' × ')}` : `${money(price)} ${unit}`.trim() };
+}
+function estRow(s, p) {
+  const est = estimate(s, p, B.guests, s.stay_mode && B.date && B.end ? nights(B.date, B.end) : 0, null);
+  return est ? html`<dt>Estimated total</dt><dd class="price">${money(est.amount)}</dd><dt></dt><dd class="faint small">${est.text}. Final price confirmed by our team.</dd>` : html`<dt>Price</dt><dd class="price">${priceText(s)}</dd>`;
+}
+/* Cookie and privacy notice */
+const ls = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+function showCookie(force) {
+  const el = $('#cookie'); if (!el) return;
+  if (!force && ls.get('gb_consent')) { el.hidden = true; return; }
+  el.innerHTML = String(html`<p><b>Cookies and privacy</b><br>${set('cookie_notice', 'We use only essential cookies and browser storage to keep this website working.')}</p><p class="small"><a href="#/privacy">Read our privacy policy</a></p><div class="row"><button class="btn sm" data-act="cookie-accept">Accept</button><button class="btn sm ghost" data-act="cookie-essential">Essential only</button></div>`);
+  el.hidden = false;
+}
+const PUB_ACT = {
+  'cookie-accept': () => { ls.set('gb_consent', 'all:' + Date.now()); $('#cookie').hidden = true; toast('Thank you. Your choice is saved.'); },
+  'cookie-essential': () => { ls.set('gb_consent', 'essential:' + Date.now()); $('#cookie').hidden = true; toast('Only essential storage will be used.'); },
+  'cookie-open': () => showCookie(true)
+};
 function printDoc(body) {
   const logo = safeUrl(set('logo_url'));
   const p = $('#print-area');
@@ -1165,13 +1236,14 @@ const A = { staff: null, services: [], packages: [], rows: {}, bookings: [], bf:
 const can = roles => !!A.staff && roles.includes(A.staff.role);
 const SECTIONS = [
   { k: 'dashboard', l: 'Dashboard', i: 'grid', r: ALL_ROLES },
-  { k: 'reception', l: 'Reception', i: 'bed', r: OPS },
+  { k: 'reception', l: 'Reception', i: 'users', r: OPS },
+  { k: 'planner', l: 'Room planner', i: 'bed', r: [...OPS, 'finance'] },
   { k: 'bookings', l: 'Bookings', i: 'calendar', r: [...OPS, 'finance'] },
   { k: 'payments', l: 'Payments', i: 'tag', r: [...OPS, 'finance'] },
   { k: 'requests', l: 'Change requests', i: 'refresh', r: OPS, c: 'req' },
   { k: 'enquiries', l: 'Enquiries', i: 'inbox', r: OPS, c: 'enq' },
   { k: 'customers', l: 'Customers', i: 'users', r: [...OPS, 'finance'] },
-  { k: 'reports', l: 'Reports', i: 'chart', r: ['super_admin', 'manager', 'finance'] },
+  { k: 'reports', l: 'Reports', i: 'chart', r: ALL_ROLES },
   { g: 'Catalogue' },
   { k: 'services', l: 'Experiences', i: 'sparkle', r: CAT },
   { k: 'packages', l: 'Packages & pricing', i: 'tag', r: CAT },
@@ -1328,6 +1400,7 @@ async function renderAdmin(sub) {
 async function loadAdminCatalogue() {
   const [s, p] = await Promise.all([sb.from('services').select('*').order('sort'), sb.from('packages').select('*').order('sort')]);
   A.services = s.data || []; A.packages = p.data || [];
+  if (!A.rooms) await loadRooms();
 }
 async function refreshCounts() {
   if (!can(OPS)) return;
@@ -1440,19 +1513,22 @@ const redrawBookings = () => { const b = $('#bk-body'); if (b) { b.innerHTML = s
 const BK_FIELDS = () => [
   { k: 'service_id', l: 'Experience', t: 'select', opts: () => svcOpts(), req: true },
   { k: 'package_id', l: 'Package', t: 'select', opts: () => [{ v: '', l: 'None' }, ...A.packages.map(p => ({ v: p.id, l: `${svcName(p.service_id)}: ${p.name}` }))] },
-  { k: 'customer_name', l: 'Customer name', req: true, max: 120 }, { k: 'phone', l: 'Phone', req: true, max: 20, pattern: '\\+?[0-9 \\(\\)\\-]{7,20}' },
+  { k: 'customer_name', l: 'Customer name', req: true, max: 120 }, { k: 'phone', l: 'Mobile number', req: true, max: 20, help: 'Botswana mobile such as 71 234 567, or an international number with +.' },
   { k: 'email', l: 'Email', t: 'email', max: 200 }, { k: 'guests', l: 'Guests', t: 'number', min: 1, def: 1 },
   { k: 'booking_date', l: 'Date or check-in', t: 'date', req: true }, { k: 'end_date', l: 'Check-out (stays only)', t: 'date' },
+  { k: 'room_id', l: 'Room (stays only)', t: 'select', opts: () => [{ v: '', l: 'Not assigned' }, ...(A.rooms || []).filter(r => r.active).map(r => ({ v: r.id, l: `${r.name}, ${r.room_type}${r.rate != null ? ', ' + money(r.rate) + ' a night' : ''}` }))] },
   { k: 'start_time', l: 'Time', t: 'time' }, { k: 'status', l: 'Status', t: 'select', opts: Object.entries(STATUS).map(([v, l]) => ({ v, l })), def: 'confirmed' },
   { k: 'source', l: 'Booked via', t: 'select', opts: Object.entries(SOURCE).map(([v, l]) => ({ v, l })), def: 'phone' },
+  { k: 'total_amount', l: 'Agreed price (Pula)', t: 'money', help: 'Filled in from the estimate. Change it if you agreed a different price.' },
   { k: 'marketing_consent', l: 'Customer agreed to marketing', t: 'bool' },
   { k: 'notes', l: 'Customer requirements', t: 'textarea', rows: 3, full: true, max: 2000 }, { k: 'admin_notes', l: 'Staff notes', t: 'textarea', rows: 3, full: true, max: 4000 }];
-function bookingForm(b) {
-  const v = b ? { ...b, start_time: b.start_time ? String(b.start_time).slice(0, 5) : '' } : {};
+function bookingForm(b, pre = {}) {
+  const v = b ? { ...b, start_time: b.start_time ? String(b.start_time).slice(0, 5) : '' } : { ...pre };
   openModal(b ? `Edit booking ${b.reference}` : 'Add booking', html`<form data-form="bk-save" data-id="${b ? b.id : ''}" novalidate>
-    <div class="form-grid">${BK_FIELDS().map(f => fieldHtml(f, v[f.k]))}</div><p class="err" data-err role="alert"></p>
+    <div class="est" id="bk-est" aria-live="polite"></div><div class="form-grid">${BK_FIELDS().map(f => fieldHtml(f, v[f.k]))}</div><p class="err" data-err role="alert"></p>
     <div class="row between">${b && can(CAT) ? html`<button type="button" class="btn sm danger" data-act="bk-del" data-id="${b.id}">${icon('trash')} Delete</button>` : html`<span></span>`}
       <div class="row"><button type="button" class="btn ghost" data-act="modal-close">Cancel</button><button class="btn" type="submit">Save</button></div></div></form>`, { cls: 'wide' });
+  updateEstimate($('form[data-form="bk-save"]'));
 }
 async function availabilityWarning(o, prev) {
   if (!['pending', 'confirmed'].includes(o.status)) return true;
@@ -1544,6 +1620,7 @@ function custRows(q) {
 }
 
 ADM.reports = async () => {
+  if (!can([...OPS, 'finance'])) return statsReport();
   const r = A.rep ||= { from: addDays(todayISO(), -29), to: addDays(todayISO(), 30), basis: 'booking_date', group: 'week' };
   fill(html`${admTop('Reports', 'Booking activity, popular experiences and customers.')}
     <div class="card pad" style="margin-bottom:18px"><div class="row" style="margin-bottom:12px">${[['today', 'Today'], ['week', 'This week'], ['month', 'This month'], ['30', 'Last 30 days'], ['next30', 'Next 30 days'], ['year', 'This year']].map(([k, l]) => html`<button class="btn xs ghost" data-act="rep-preset" data-p="${k}">${l}</button>`)}</div>
@@ -1693,7 +1770,7 @@ async function outstandingData() {
   const list = data || [], paid = await paysFor(list.map(b => b.id));
   return list.map(b => ({ ...b, paid: paid[b.id] || 0, bal: Math.max(0, Number(b.total_amount) - (paid[b.id] || 0)) })).filter(b => b.bal > 0.004).sort((a, z) => z.bal - a.bal);
 }
-function refreshAfterFile() { const sec = location.hash.split('/')[2] || 'dashboard'; if (['reception', 'bookings', 'payments', 'dashboard'].includes(sec)) ADM[sec]?.(); }
+function refreshAfterFile() { const sec = location.hash.split('/')[2] || 'dashboard'; if (['reception', 'bookings', 'payments', 'dashboard', 'planner'].includes(sec)) ADM[sec]?.(); }
 
 /* Enquiry reply times */
 function slaCell(e) {
@@ -1785,25 +1862,6 @@ async function fileRoom(sel) {
   if (error) { toast(errText(error), 'error'); return; }
   b.room_id = rid; toast(rid ? `Room ${roomName(b)} assigned.` : 'Room removed.'); drawFile(); refreshAfterFile();
 }
-async function checkIn() {
-  const b = A.file.b;
-  if (!['pending', 'confirmed'].includes(b.status)) { toast('Only pending or confirmed bookings can be checked in.', 'error'); return; }
-  if (b.status === 'pending' && !(await confirmDialog('This booking is still waiting for approval. Confirm it and check the guest in?', 'Confirm and check in'))) { drawFile(); return; }
-  const patch = { checked_in_at: new Date().toISOString(), status: 'confirmed' };
-  const { error } = await sb.from('bookings').update(patch).eq('id', b.id);
-  if (error) { toast(errText(error), 'error'); return; }
-  Object.assign(b, patch); toast(`${b.customer_name} is checked in.`); drawFile(); refreshAfterFile();
-}
-async function checkOut() {
-  const b = A.file.b, t = fileTotals();
-  if (A.file.dirty && !(await saveItems(true))) return;
-  if (t.bal > 0.004 && !(await confirmDialog(`${pm(t.bal)} is still unpaid. Check out anyway? The balance stays on the guest's account and shows in Balances owing.`, 'Check out unpaid', true))) { drawFile(); return; }
-  const patch = { checked_out_at: new Date().toISOString(), status: 'completed' };
-  const { error } = await sb.from('bookings').update(patch).eq('id', b.id);
-  if (error) { toast(errText(error), 'error'); return; }
-  Object.assign(b, patch); toast(t.bal > 0.004 ? `Checked out with ${pm(t.bal)} still owing.` : 'Checked out and fully paid.'); drawFile(); refreshAfterFile();
-}
-
 /* Printed documents */
 function docHead(title, no, date) { return html`<h1>${title}</h1><p class="doc-no">${no ? html`<b>${no}</b>, ` : ''}${fmtDate(date)}</p>`; }
 function docCustomer(b) {
@@ -1899,7 +1957,7 @@ ADM.payments = async () => {
 /* Revenue section in Reports */
 async function revenueReport() {
   const r = A.rep, out = $('#rep-out'); if (!out) return;
-  const { data, error } = await sb.from('payments').select('amount,kind,method,received_at,services(name),bookings(services(name))').gte('received_at', r.from + 'T00:00:00').lte('received_at', r.to + 'T23:59:59').limit(10000);
+  const { data, error } = await sb.from('payments').select('amount,kind,method,received_at,received_by_name,services(name),bookings(services(name))').gte('received_at', r.from + 'T00:00:00').lte('received_at', r.to + 'T23:59:59').limit(10000);
   if (error) return;
   const owing = await outstandingData();
   const grp = (f) => { const m = {}; data.forEach(p => { const k = f(p); m[k] = (m[k] || 0) + sign(p); }); return Object.entries(m).sort((a, z) => z[1] - a[1]); };
@@ -1907,6 +1965,8 @@ async function revenueReport() {
   const pkey = p => { const d = p.received_at.slice(0, 10); if (r.group === 'month') return d.slice(0, 7); if (r.group === 'week') { const x = parseISO(d); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return iso(x); } return d; };
   const byPer = grp(pkey).sort(([a], [z]) => a < z ? -1 : 1);
   const plabel = k => r.group === 'month' ? parseISO(k + '-01').toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : r.group === 'week' ? 'Week of ' + fmtDate(k) : fmtDay(k);
+  const byStaff = {}; data.forEach(p => { const k = p.received_by_name || 'Not recorded'; byStaff[k] ||= { total: 0 }; byStaff[k].total += sign(p); byStaff[k][p.method] = (byStaff[k][p.method] || 0) + sign(p); });
+  const usedM = Object.keys(METHOD).filter(m => data.some(p => p.method === m));
   const net = paidOf(data), maxM = Math.max(1, ...byMethod.map(x => x[1])), maxS = Math.max(1, ...bySvc.map(x => x[1]));
   A.revRows = { byPer: byPer.map(([k, v]) => [plabel(k), v]), bySvc, byMethod };
   const box = document.createElement('div');
@@ -1916,6 +1976,7 @@ async function revenueReport() {
       <div class="card pad"><div class="row between"><h2 class="h-sm">By payment method</h2><button class="btn xs ghost" data-act="rev-csv" data-k="byMethod">Export</button></div><div class="bars">${byMethod.length ? byMethod.map(([k, v]) => html`<div class="bar"><span>${k}</span><span class="track"><span class="fill" style="width:${Math.round(Math.max(0, v) / maxM * 100)}%"></span></span><b style="font-size:.9rem">${pm(v)}</b></div>`) : html`<p class="muted small">No payments.</p>`}</div></div></div>
     <div class="grid g2" style="margin-top:14px"><div class="card pad"><div class="row between"><h2 class="h-sm">Collected by ${r.group}</h2><button class="btn xs ghost" data-act="rev-csv" data-k="byPer">Export</button></div><table><tbody>${byPer.length ? byPer.map(([k, v]) => html`<tr><td>${plabel(k)}</td><td style="text-align:right"><b>${pm(v)}</b></td></tr>`) : html`<tr><td class="muted">Nothing collected.</td></tr>`}</tbody></table></div>
       <div class="card pad"><h2 class="h-sm">Balances owing</h2>${owing.length ? html`<ul class="list-plain">${owing.slice(0, 12).map(b => html`<li><div><button class="linkbtn" data-act="file-open" data-id="${b.id}">${b.customer_name}</button><br><span class="faint small">${b.reference}, ${b.services?.name}, ${fmtDate(b.booking_date)}</span></div><b>${pm(b.bal)}</b></li>`)}</ul>` : html`<p class="muted small">Nothing owing.</p>`}</div></div>`);
+  box.insertAdjacentHTML('beforeend', String(html`<div class="card pad" style="margin-top:14px"><h2 class="h-sm">Taken by each staff member (cash-up)</h2>${Object.keys(byStaff).length ? html`<div class="tbl-wrap"><table><thead><tr><th>Staff member</th>${usedM.map(m => html`<th style="text-align:right">${METHOD[m]}</th>`)}<th style="text-align:right">Total</th></tr></thead><tbody>${Object.entries(byStaff).map(([n, v]) => html`<tr><td>${n}</td>${usedM.map(m => html`<td style="text-align:right">${v[m] ? pm(v[m]) : ''}</td>`)}<td style="text-align:right"><b>${pm(v.total)}</b></td></tr>`)}</tbody></table></div>` : html`<p class="muted small">No payments in this period.</p>`}</div>`));
   out.append(box);
 }
 async function dashMoney() {
@@ -1942,7 +2003,7 @@ async function renderDashCal() {
   for (let i = 0; i < off; i++) cells.push(html`<div class="cell out"></div>`);
   for (let dd = 1; dd <= days; dd++) {
     const ds = `${y}-${pad(m + 1)}-${pad(dd)}`, list = data.filter(b => inDay(b, ds));
-    cells.push(html`<div class="cell ${ds === t ? 'today' : ''}"><span class="dn">${dd}</span>${list.slice(0, 3).map(b => html`<button class="cb ${b.status}" data-act="file-open" data-id="${b.id}" title="${b.services?.name}: ${b.customer_name}, ${STATUS[b.status]}">${b.start_time ? String(b.start_time).slice(0, 5) + ' ' : ''}${short(b.services?.name)} ${firstName(b.customer_name)}</button>`)}${list.length > 3 ? html`<button class="cb more" data-act="cal-day" data-d="${ds}">${list.length - 3} more</button>` : ''}</div>`);
+    cells.push(html`<div class="cell ${ds === t ? 'today' : ''}"><span class="dn">${dd}</span>${can(OPS) && ds >= t ? html`<button class="cell-add" data-act="cal-new" data-d="${ds}" aria-label="New booking on ${fmtDay(ds)}">+</button>` : ''}${list.slice(0, 3).map(b => html`<button class="cb ${b.status}" data-act="file-open" data-id="${b.id}" title="${b.services?.name}: ${b.customer_name}, ${STATUS[b.status]}">${b.start_time ? String(b.start_time).slice(0, 5) + ' ' : ''}${short(b.services?.name)} ${firstName(b.customer_name)}</button>`)}${list.length > 3 ? html`<button class="cb more" data-act="cal-day" data-d="${ds}">${list.length - 3} more</button>` : ''}</div>`);
   }
   el.innerHTML = String(html`<div class="row between" style="margin-bottom:8px"><div class="row"><button class="icon-btn" data-act="cal-move" data-dir="-1" aria-label="Previous month">${icon('back')}</button><h2 class="h-sm" style="margin:0;min-width:170px;text-align:center">${c.month.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}</h2><button class="icon-btn" data-act="cal-move" data-dir="1" aria-label="Next month">${icon('arrow')}</button><button class="btn xs ghost" data-act="cal-today">This month</button></div>
     <div class="row"><span class="legend-s"><span><i class="confirmed"></i>Confirmed ${cnt('confirmed')}</span><span><i class="pending"></i>Waiting ${cnt('pending')}</span><span><i class="completed"></i>Completed ${cnt('completed')}</span></span>
@@ -1953,22 +2014,6 @@ function dayModal(d) {
   const list = (A.calData || []).filter(b => inDay(b, d));
   openModal(fmtDay(d), html`<ul class="list-plain">${list.map(b => html`<li><div><b>${b.services?.name}</b>${b.start_time ? `, ${String(b.start_time).slice(0, 5)}` : ''}<br><span class="muted small">${b.customer_name}, ${b.guests} guests, ${b.reference}</span></div><div class="row">${pill(b.status, STATUS[b.status])}<button class="btn xs ghost" data-act="file-open" data-id="${b.id}">Open</button></div></li>`)}</ul>`);
 }
-async function renderRoomsBoard() {
-  const el = $('#rooms-board'); if (!el) return;
-  if (!A.rooms) await loadRooms();
-  const rooms = A.rooms.filter(r => r.active), accIds = A.services.filter(s => s.resource === 'rooms').map(s => s.id);
-  if (!rooms.length || !accIds.length) { el.remove(); return; }
-  const start = todayISO(), days = Array.from({ length: 14 }, (_, i) => addDays(start, i)), end = days[13];
-  const { data } = await sb.from('bookings').select('id,reference,customer_name,booking_date,end_date,status,room_id').in('service_id', accIds).in('status', ['pending', 'confirmed', 'completed']).lte('booking_date', end).or(`end_date.gt.${start},booking_date.gte.${start}`).limit(1000);
-  const list = data || [], night = (b, d) => d >= b.booking_date && d < (b.end_date || addDays(b.booking_date, 1));
-  const occ = (r, d) => list.find(b => b.room_id === r.id && night(b, d));
-  const tonight = rooms.filter(r => occ(r, start)).length;
-  el.innerHTML = String(html`<div class="row between" style="margin-bottom:8px"><h2 class="h-sm" style="margin:0">Rooms, next 14 nights</h2><span class="muted small">${tonight} of ${rooms.length} rooms taken tonight</span></div>
-    <div style="overflow-x:auto"><table class="rb"><thead><tr><th>Room</th>${days.map(d => html`<th>${fmtDate(d, { weekday: 'short' })}<br>${parseISO(d).getDate()}</th>`)}</tr></thead><tbody>
-    ${rooms.map(r => html`<tr><td>${r.name}</td>${days.map(d => { const b = occ(r, d); return b ? html`<td class="o-${b.status}"><button class="linkbtn" data-act="file-open" data-id="${b.id}" title="${b.customer_name}, ${b.reference}, ${STATUS[b.status]}">${b.customer_name.split(/\s+/).map(w => w[0]).join('').slice(0, 2)}</button></td>` : html`<td></td>`; })}</tr>`)}
-    <tr><td class="muted">Not assigned yet</td>${days.map(d => { const n = list.filter(b => !b.room_id && night(b, d)).length; return html`<td>${n || ''}</td>`; })}</tr></tbody></table></div>`);
-}
-
 /* Actions and forms for this part (merged into ACT and FORMS later) */
 const RX_ACT = {
   'file-open': b => bookingFile(b.dataset.id),
@@ -2031,7 +2076,7 @@ const RX_FORMS = {
     const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind, method: v.method, reference: v.reference.trim(), received_by_name: staffName() }).select().single();
     btn.disabled = false;
     if (error) { err.textContent = errText(error); return; }
-    A.file.pays.push(data); toast(`${KIND[data.kind]} recorded. Receipt ${data.receipt_no}.`); drawFile(); refreshAfterFile();
+    A.file.pays.push(data); toast(`${KIND[data.kind]} recorded. Receipt ${data.receipt_no}.`); if (f.dataset.return === 'checkout') openCheckout(); else drawFile(); refreshAfterFile();
   },
   walkin: async f => {
     const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), amt = Math.round(Number(v.amount) * 100) / 100;
@@ -2042,6 +2087,184 @@ const RX_FORMS = {
     closeModal(); toast(`Sale recorded. Receipt ${data.receipt_no}.`); printReceipt(data, null, null); refreshAfterFile();
   },
   'pay-filter': f => { const v = Object.fromEntries(new FormData(f)); if (!v.from || !v.to || v.to < v.from) { toast('Choose a valid date range.', 'error'); return; } Object.assign(A.pf, v); ADM.payments(); }
+};
+
+/* ================= Room planner, check-in, check-out, estimates, staff reports ================= */
+const mondayOf = d => { const x = parseISO(d); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return iso(x); };
+async function roomFree(roomId, start, end, excludeId) {
+  const e = end || addDays(start, 1);
+  let q = sb.from('bookings').select('reference,customer_name').eq('room_id', roomId).in('status', ['pending', 'confirmed', 'completed']).lt('booking_date', e).or(`end_date.gt.${start},and(end_date.is.null,booking_date.gte.${start})`).limit(1);
+  if (excludeId) q = q.neq('id', excludeId);
+  const { data } = await q;
+  if (!data || !data.length) return true;
+  return confirmDialog(`${roomName({ room_id: roomId }) || 'That room'} is already given to ${data[0].customer_name} (${data[0].reference}) on some of these nights. Save anyway?`, 'Save anyway', true);
+}
+function estDesc(o) {
+  const s = A.services.find(x => x.id === o.service_id), p = A.packages.find(x => x.id === o.package_id), n = o.end_date ? nights(o.booking_date, o.end_date) : 0;
+  return `${s ? s.name : 'Booking'}${p ? ': ' + p.name : ''}${n ? `, ${n} night(s)` : ''}${o.room_id ? `, ${roomName(o)}` : ''}`;
+}
+function updateEstimate(form) {
+  if (!form) return; const box = $('#bk-est', form); if (!box) return;
+  const g = n => (form.elements[n] && form.elements[n].value) || '';
+  const s = A.services.find(x => x.id === g('service_id'));
+  if (!s) { box.textContent = 'Choose an experience to see the price.'; return; }
+  const p = A.packages.find(x => x.id === g('package_id') && x.service_id === s.id), room = s.stay_mode ? (A.rooms || []).find(r => r.id === g('room_id')) : null;
+  const n = g('booking_date') && g('end_date') ? nights(g('booking_date'), g('end_date')) : 0;
+  const est = estimate(s, p, g('guests'), n, room), tot = form.elements.total_amount;
+  box.innerHTML = String(est ? html`Estimated price: <b>${money(est.amount)}</b> <span class="muted small">${est.text}</span>` : html`<span class="muted">This experience has no set price. Enter the agreed price below.</span>`);
+  if (est && tot && (tot.dataset.auto === '1' || tot.value === '')) { tot.value = est.amount.toFixed(2); tot.dataset.auto = '1'; }
+}
+
+/* Room planner */
+ADM.planner = async () => {
+  const pl = A.pl ||= { start: todayISO(), span: 14 };
+  if (!A.rooms) await loadRooms();
+  fill(html`${admTop('Room planner', 'Click an empty night to book that room. Click a booking to open, amend, check in or check out.', html`<div class="row" role="group" aria-label="View">${[[7, 'Week'], [14, '2 weeks'], [31, 'Month']].map(([n, l]) => html`<button class="btn xs ${pl.span === n ? '' : 'ghost'}" data-act="pl-span" data-n="${n}" aria-pressed="${tf(pl.span === n)}">${l}</button>`)}</div>
+    <button class="icon-btn" data-act="pl-move" data-dir="-1" aria-label="Earlier">${icon('back')}</button><button class="btn xs ghost" data-act="pl-today">Today</button><button class="icon-btn" data-act="pl-move" data-dir="1" aria-label="Later">${icon('arrow')}</button>`)}
+    <div id="planner" class="card pad"><div class="skel" style="height:300px"></div></div>`);
+  await renderRoomsBoard('#planner', pl.start, pl.span, true);
+};
+async function renderRoomsBoard(sel = '#rooms-board', start = todayISO(), span = 14, full = false) {
+  const el = $(sel); if (!el) return;
+  if (!A.rooms) await loadRooms();
+  const rooms = A.rooms.filter(r => r.active), accIds = A.services.filter(s => s.resource === 'rooms').map(s => s.id);
+  if (!rooms.length || !accIds.length) { el.innerHTML = String(html`<p class="muted small">Add rooms, and an overnight experience using the space key "rooms", to use the planner.</p>`); return; }
+  const days = Array.from({ length: span }, (_, i) => addDays(start, i)), end = days[span - 1], t = todayISO();
+  const { data } = await sb.from('bookings').select('id,reference,customer_name,booking_date,end_date,status,room_id,checked_in_at,checked_out_at').in('service_id', accIds).in('status', ['pending', 'confirmed', 'completed']).lte('booking_date', end).or(`end_date.gt.${start},booking_date.gte.${start}`).limit(2000);
+  const list = data || [], night = (b, d) => d >= b.booking_date && d < (b.end_date || addDays(b.booking_date, 1));
+  const occ = (r, d) => list.find(b => b.room_id === r.id && night(b, d));
+  const un = list.filter(b => !b.room_id), tonight = rooms.filter(r => occ(r, t)).length;
+  const booked = rooms.reduce((a, r) => a + days.filter(d => occ(r, d)).length, 0);
+  const ini = b => b.customer_name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  el.innerHTML = String(html`<div class="row between" style="margin-bottom:6px"><h2 class="h-sm" style="margin:0">${full ? `${fmtDate(start)} to ${fmtDate(end)}` : `Rooms, next ${span} nights`}</h2>
+      <span class="muted small">${tonight} of ${rooms.length} rooms taken tonight, ${Math.round(booked / (rooms.length * span) * 100)}% of nights booked in this view${full ? '' : html`. <a href="#/admin/planner">Open the planner</a>`}</span></div>
+    <div class="legend-s" style="margin-bottom:6px"><span><i class="confirmed"></i>Confirmed</span><span><i class="pending"></i>Waiting for approval</span><span><i class="completed"></i>Checked out</span>${can(OPS) ? html`<span>Click an empty night to book it</span>` : ''}</div>
+    <div style="overflow-x:auto"><table class="rb"><thead><tr><th>Room</th>${days.map(d => html`<th class="${d === t ? 'tday' : ''} ${[0, 6].includes(parseISO(d).getDay()) ? 'wknd' : ''}">${fmtDate(d, { weekday: 'short' })}<br>${parseISO(d).getDate()}</th>`)}</tr></thead><tbody>
+    ${rooms.map(r => html`<tr><td title="${r.room_type}, sleeps ${r.sleeps}">${r.name}</td>${days.map(d => {
+      const b = occ(r, d);
+      if (!b) return can(OPS) && d >= t ? html`<td><button class="cell-new" data-act="room-new" data-room="${r.id}" data-d="${d}" aria-label="Book ${r.name} on ${fmtDay(d)}"></button></td>` : html`<td></td>`;
+      const first = d === b.booking_date || d === start;
+      return html`<td class="o-${b.checked_out_at ? 'completed' : b.status}"><button class="linkbtn" data-act="file-open" data-id="${b.id}" title="${b.customer_name}, ${b.reference}, ${fmtDate(b.booking_date)} to ${fmtDate(b.end_date || addDays(b.booking_date, 1))}${b.checked_in_at && !b.checked_out_at ? ', checked in' : ''}">${first ? ini(b) : html`<span class="sr">${b.customer_name}</span>`}</button></td>`;
+    })}</tr>`)}
+    <tr><td class="muted">Not assigned</td>${days.map(d => { const n = un.filter(b => night(b, d)); return html`<td>${n.length ? html`<button class="linkbtn" data-act="file-open" data-id="${n[0].id}" title="${n.map(b => b.customer_name).join(', ')}">${n.length}</button>` : ''}</td>`; })}</tr></tbody></table></div>`);
+}
+
+/* Check-in: show what has been paid and collect payment properly */
+async function checkIn() {
+  const b = A.file.b, stay = b.services?.stay_mode;
+  if (!['pending', 'confirmed'].includes(b.status)) { toast('Only bookings that are waiting or confirmed can be checked in.', 'error'); return; }
+  if (can(OPS) && A.file.dirty && !(await saveItems(true))) return;
+  if (!A.rooms) await loadRooms();
+  const t = fileTotals();
+  const st = t.total <= 0 ? ['bad', 'No charges recorded yet'] : t.bal <= 0.004 ? ['ok', 'Paid in full'] : t.paid > 0 ? ['warn', `Part paid, ${pm(t.bal)} still due`] : ['bad', `Not paid, ${pm(t.bal)} due`];
+  openModal(`Check in ${b.customer_name}`, html`<form data-form="checkin" novalidate>
+    <dl class="facts"><div><dt>Booking</dt><dd>${b.reference}, ${b.services?.name}</dd></div><div><dt>Total</dt><dd>${pm(t.total)}</dd></div><div><dt>Paid so far</dt><dd>${pm(t.paid)}</dd></div><div><dt>Payment status</dt><dd>${pill(st[0], st[1])}</dd></div></dl>
+    ${b.status === 'pending' ? html`<p class="small" style="color:var(--amber)">This booking is still waiting for approval. Checking in will confirm it.</p>` : ''}
+    ${t.total <= 0 ? html`<p class="small muted">There are no charges on this booking. Go back and add them if the guest should pay now.</p>` : ''}
+    ${stay ? html`<div class="field"><label for="ci-room">Room<span class="req" aria-hidden="true">*</span></label><select id="ci-room" name="room_id" required><option value="">Choose a room</option>${A.rooms.filter(r => r.active || r.id === b.room_id).map(r => html`<option value="${r.id}" ${r.id === b.room_id ? 'selected' : ''}>${r.name} (${r.room_type})</option>`)}</select></div>` : ''}
+    ${t.bal > 0.004 ? html`<fieldset class="choice"><legend class="lbl">Payment at check-in</legend>
+      <label class="check"><input type="radio" name="pay" value="now" checked data-change="ci-pay"> Collect payment now</label>
+      <div class="form-grid" id="ci-paynow"><div class="field"><label for="ci-a">Amount</label><input id="ci-a" name="amount" type="number" min="0.01" step="0.01" value="${t.bal}"></div>${methodSelect('ci-m')}
+        <div class="field"><label for="ci-k">Type</label><select id="ci-k" name="kind"><option value="payment">Payment</option><option value="deposit">Deposit</option></select></div>
+        <div class="field"><label for="ci-r">Reference</label><input id="ci-r" name="reference" maxlength="120" placeholder="Slip or transaction ID"></div></div>
+      <label class="check"><input type="radio" name="pay" value="later" data-change="ci-pay"> Guest will pay at check-out</label></fieldset>` : ''}
+    <p class="err" data-err role="alert"></p><div class="row end"><button type="button" class="btn ghost" data-act="file-back">Back</button><button class="btn" type="submit">Check in</button></div></form>`, { cls: 'wide', noFocus: true });
+}
+
+/* Check-out: add extras such as meals, take payment, then complete */
+async function checkOut() {
+  if (!A.menuItems) { const { data } = await sb.from('menu_items').select('name,price,section').eq('available', true).order('section').order('sort'); A.menuItems = data || []; }
+  openCheckout();
+}
+function openCheckout() {
+  const { b, items } = A.file, t = fileTotals(), ops = can(OPS), secs = [...new Set(A.menuItems.map(m => m.section))];
+  openModal(`Check out ${b.customer_name}`, html`<p class="muted small" style="margin-top:0">${b.reference}, ${b.services?.name}${roomName(b) ? `, ${roomName(b)}` : ''}. Add anything else the guest used, take payment, then complete the check-out.</p>
+    <div class="tbl-wrap"><table><thead><tr><th>Charge</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead><tbody>${items.map(i => html`<tr><td>${i.desc}</td><td>${i.qty}</td><td style="text-align:right">${pm(i.qty * i.price)}</td></tr>`)}</tbody>
+      <tfoot><tr><td colspan="2">Total</td><td style="text-align:right">${pm(t.total)}</td></tr><tr><td colspan="2">Paid</td><td style="text-align:right">${pm(t.paid)}</td></tr><tr><td colspan="2"><b>Balance due</b></td><td style="text-align:right"><b>${pm(t.bal)}</b></td></tr></tfoot></table></div>
+    ${ops ? html`<h3 class="h-sm" style="margin-top:14px">Add extras used</h3><form data-form="extra" class="pay-form" novalidate>
+      <div class="field" style="flex:2;min-width:180px"><label for="x-i">From the menu</label><select id="x-i" name="menu_item" data-change="extra-item"><option value="">Choose an item</option>${secs.map(s => html`<optgroup label="${s}">${A.menuItems.filter(m => m.section === s).map(m => html`<option value="${m.name}" data-price="${m.price ?? ''}">${m.name}${m.price != null ? `, ${money(m.price)}` : ''}</option>`)}</optgroup>`)}</select></div>
+      <div class="field" style="flex:2;min-width:160px"><label for="x-d">Or describe it</label><input id="x-d" name="desc" maxlength="120" placeholder="Laundry, room service, late check-out"></div>
+      <div class="field" style="max-width:80px"><label for="x-q">Qty</label><input id="x-q" name="qty" type="number" min="1" step="1" value="1"></div>
+      <div class="field" style="max-width:120px"><label for="x-p">Unit price</label><input id="x-p" name="price" type="number" min="0" step="0.01"></div>
+      <button class="btn sm" type="submit">Add</button><p class="err" data-err role="alert" style="flex-basis:100%"></p></form>` : ''}
+    ${ops && t.bal > 0.004 ? html`<h3 class="h-sm" style="margin-top:14px">Take payment</h3><form data-form="pay" data-return="checkout" class="pay-form" novalidate><div class="field"><label for="co-a">Amount</label><input id="co-a" name="amount" type="number" min="0.01" step="0.01" value="${t.bal}" required></div>${methodSelect('co-m')}<input type="hidden" name="kind" value="payment"><div class="field"><label for="co-r">Reference</label><input id="co-r" name="reference" maxlength="120" placeholder="Slip or transaction ID"></div><button class="btn sm" type="submit">Record payment</button><p class="err" data-err role="alert" style="flex-basis:100%"></p></form>` : ''}
+    <div class="row between" style="margin-top:16px"><button class="btn ghost" data-act="file-back">Back to booking</button>${ops ? html`<button class="btn ${t.bal > 0.004 ? 'danger' : ''}" data-act="co-complete">${t.bal > 0.004 ? `Check out with ${pm(t.bal)} owing` : 'Complete check-out'}</button>` : ''}</div>`, { cls: 'wide', noFocus: true });
+}
+async function completeCheckout() {
+  const b = A.file.b, t = fileTotals();
+  if (t.bal > 0.004 && !(await confirmDialog(`${pm(t.bal)} is still unpaid. Check out anyway? The balance stays on the guest's account and shows under Balances owing.`, 'Check out unpaid', true))) { openCheckout(); return; }
+  const now = new Date().toISOString(), patch = { checked_out_at: now, status: 'completed' };
+  if (!b.checked_in_at) patch.checked_in_at = now;
+  const { error } = await sb.from('bookings').update(patch).eq('id', b.id);
+  if (error) { toast(errText(error), 'error'); return; }
+  Object.assign(b, patch); toast(t.bal > 0.004 ? `Checked out with ${pm(t.bal)} still owing.` : 'Checked out and fully paid.'); drawFile(); refreshAfterFile();
+}
+function extraPick(sel) {
+  const o = sel.selectedOptions[0], f = sel.form; if (!o || !o.value) return;
+  f.elements.desc.value = o.value; if (o.dataset.price !== '') f.elements.price.value = o.dataset.price; f.elements.qty.focus();
+}
+
+/* Reports for staff who cannot see customer details */
+async function statsReport() {
+  const r = A.rep ||= { from: addDays(todayISO(), -29), to: addDays(todayISO(), 30), basis: 'booking_date', group: 'week' };
+  fill(html`${admTop('Reports', 'Bookings and enquiries by experience and channel. Customer details are not shown for your role.')}
+    <form class="toolbar" data-form="stats"><div class="field"><label for="sr-f">From</label><input id="sr-f" type="date" name="from" value="${r.from}" required></div><div class="field"><label for="sr-t">To</label><input id="sr-t" type="date" name="to" value="${r.to}" required></div><button class="btn sm" type="submit">Run report</button></form>
+    <div id="rep-out"><div class="skel" style="height:200px"></div></div>`);
+  const { data, error } = await sb.rpc('staff_stats', { p_from: r.from, p_to: r.to }), out = $('#rep-out');
+  if (!out) return;
+  if (error) { out.innerHTML = String(html`<p class="err">${errText(error)}</p>`); return; }
+  const bars = (rows, key) => { const max = Math.max(1, ...rows.map(x => x.n)); return rows.length ? rows.map(x => html`<div class="bar"><span>${key(x)}</span><span class="track"><span class="fill" style="width:${Math.round(x.n / max * 100)}%"></span></span><b>${x.n}</b></div>`) : html`<p class="muted small">No data for this period.</p>`; };
+  out.innerHTML = String(html`<div class="kpis">${[['Bookings', data.total], ['Confirmed', data.confirmed], ['Waiting for approval', data.pending], ['Guests expected', data.guests], ['Enquiries', data.enquiries], ['Marketing opt-ins', data.consents]].map(([l, v]) => html`<div class="kpi"><span>${l}</span><b>${v}</b></div>`)}</div>
+    <div class="grid g3"><div class="card pad"><h2 class="h-sm">Bookings by experience</h2><div class="bars">${bars(data.by_service, x => x.name)}</div></div>
+      <div class="card pad"><h2 class="h-sm">How people book</h2><div class="bars">${bars(data.by_source, x => SOURCE[x.source] || x.source)}</div></div>
+      <div class="card pad"><h2 class="h-sm">Enquiries by topic</h2><div class="bars">${bars(data.enq_by_service, x => x.name)}</div></div></div>`);
+}
+
+const MORE_ACT = {
+  'room-new': b => { const s = A.services.find(x => x.resource === 'rooms' && x.stay_mode); bookingForm(null, { service_id: s ? s.id : '', room_id: b.dataset.room, booking_date: b.dataset.d, end_date: addDays(b.dataset.d, 1), guests: 2, status: 'confirmed', source: 'walk_in' }); },
+  'cal-new': b => bookingForm(null, { booking_date: b.dataset.d, guests: 2, status: 'confirmed', source: 'phone' }),
+  'pl-span': b => { const n = Number(b.dataset.n); A.pl.span = n; if (n === 31) { const d = parseISO(A.pl.start); A.pl.start = iso(new Date(d.getFullYear(), d.getMonth(), 1)); } else if (n === 7) A.pl.start = mondayOf(A.pl.start < todayISO() ? todayISO() : A.pl.start); else if (A.pl.start < todayISO()) A.pl.start = todayISO(); ADM.planner(); },
+  'pl-move': b => { const dir = Number(b.dataset.dir); if (A.pl.span === 31) { const d = parseISO(A.pl.start); A.pl.start = iso(new Date(d.getFullYear(), d.getMonth() + dir, 1)); } else A.pl.start = addDays(A.pl.start, dir * A.pl.span); ADM.planner(); },
+  'pl-today': () => { A.pl.start = A.pl.span === 31 ? iso(new Date(new Date().getFullYear(), new Date().getMonth(), 1)) : A.pl.span === 7 ? mondayOf(todayISO()) : todayISO(); ADM.planner(); },
+  'file-back': () => drawFile(),
+  'co-complete': () => completeCheckout()
+};
+const MORE_FORMS = {
+  checkin: async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), b = A.file.b, t = fileTotals();
+    if (b.services?.stay_mode && !v.room_id) { err.textContent = 'Choose a room for this guest.'; f.elements.room_id.focus(); return; }
+    let amt = 0;
+    if (v.pay === 'now') {
+      amt = Math.round(Number(v.amount) * 100) / 100;
+      if (!(amt > 0)) { err.textContent = 'Enter the amount collected, or choose "Guest will pay at check-out".'; return; }
+      if (!v.method) { err.textContent = 'Choose how the guest paid.'; return; }
+      if (amt > t.bal + 0.004) { err.textContent = `That is more than the ${pm(t.bal)} due. Check the amount.`; return; }
+    }
+    if (v.room_id && v.room_id !== b.room_id && !(await roomFree(v.room_id, b.booking_date, b.end_date, b.id))) { checkIn(); return; }
+    let receipt = '';
+    if (amt > 0) {
+      const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind || 'payment', method: v.method, reference: (v.reference || '').trim(), received_by_name: staffName() }).select().single();
+      if (error) { toast(errText(error), 'error'); return; }
+      A.file.pays.push(data); receipt = data.receipt_no;
+    }
+    const patch = { checked_in_at: new Date().toISOString(), status: 'confirmed', room_id: v.room_id || b.room_id || null };
+    const { error } = await sb.from('bookings').update(patch).eq('id', b.id);
+    if (error) { toast(errText(error), 'error'); return; }
+    Object.assign(b, patch);
+    const left = fileTotals().bal;
+    toast(`${b.customer_name} is checked in${receipt ? `. Receipt ${receipt}` : ''}${left > 0.004 ? `. ${pm(left)} to pay at check-out` : ''}.`);
+    drawFile(); refreshAfterFile();
+  },
+  extra: async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), desc = (v.desc || v.menu_item || '').trim(), qty = Number(v.qty), price = Number(v.price);
+    if (!desc) { err.textContent = 'Choose a menu item or describe the extra.'; return; }
+    if (!(qty >= 1) || !Number.isInteger(qty)) { err.textContent = 'Quantity must be a whole number of 1 or more.'; return; }
+    if (v.price === '' || !(price >= 0)) { err.textContent = 'Enter the unit price.'; return; }
+    A.file.items.push({ desc, qty, price }); A.file.dirty = true;
+    if (!(await saveItems(true))) return;
+    toast(`${desc} added.`); openCheckout(); refreshAfterFile();
+  },
+  stats: f => { const v = Object.fromEntries(new FormData(f)); if (!v.from || !v.to || v.to < v.from) { toast('Choose a valid date range.', 'error'); return; } Object.assign(A.rep, { from: v.from, to: v.to }); statsReport(); }
 };
 
 /* ================= Events ================= */
@@ -2166,6 +2389,17 @@ const FORMS = {
     if (!f.checkValidity()) { err.textContent = 'Please complete the required fields.'; f.reportValidity(); return; }
     const o = collect(BK_FIELDS(), f);
     if (o.end_date && o.end_date <= o.booking_date) { err.textContent = 'Check-out must be after the booking date.'; return; }
+    if (o.customer_name.length < 2 || !/[a-z]/i.test(o.customer_name)) { err.textContent = 'Enter the customer name.'; f.elements.customer_name.focus(); return; }
+    const ph = normPhone(o.phone); if (!ph) { err.textContent = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; f.elements.phone.focus(); return; }
+    o.phone = ph;
+    if (o.email) { const em = emailIssue(o.email); if (em) { err.textContent = em; f.elements.email.focus(); return; } o.email = o.email.toLowerCase(); }
+    const svcB = A.services.find(s => s.id === o.service_id);
+    if (svcB && svcB.stay_mode && !o.end_date) { err.textContent = 'Choose a check-out date for this stay.'; return; }
+    if (!svcB || !svcB.stay_mode) o.room_id = null;
+    if (o.guests < 1 || (svcB && o.guests > svcB.max_guests)) { err.textContent = `Guests must be between 1 and ${svcB ? svcB.max_guests : 5000}.`; return; }
+    const prevB = id ? A.bookings.find(x => x.id === id) : null;
+    if (o.room_id && (!prevB || prevB.room_id !== o.room_id || prevB.booking_date !== o.booking_date || prevB.end_date !== o.end_date) && !(await roomFree(o.room_id, o.booking_date, o.end_date, id))) return;
+    if (o.total_amount != null && (!prevB || Number(prevB.total_amount) !== o.total_amount) && (!prevB || (prevB.items || []).length <= 1)) o.items = [{ desc: estDesc(o), qty: 1, price: o.total_amount }];
     const prev = id ? A.bookings.find(x => x.id === id) : null;
     if (!(await availabilityWarning(o, prev))) return;
     const { data, error } = id ? await sb.from('bookings').update(o).eq('id', id).select('*, services(name)').single() : await sb.from('bookings').insert(o).select('*, services(name)').single();
@@ -2219,7 +2453,7 @@ const FORMS = {
     closeModal(); toast('Password updated. Share it privately with the staff member.');
   }
 };
-Object.assign(ACT, RX_ACT); Object.assign(FORMS, RX_FORMS);
+Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS);
 document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); FORMS[f.dataset.form]?.(f, e); });
 
 const redrawCust = debounce(q => { const b = $('#cs-body'); if (b) b.innerHTML = ser(custRows(q)); }, 150);
@@ -2232,6 +2466,8 @@ document.addEventListener('input', e => {
   if (t.hasAttribute('data-cust-q')) redrawCust(t.value);
   if (t.dataset.crudQ) redrawCrud(t.dataset.crudQ, t.value);
   if (t.dataset.item) fileItemInput(t);
+  if (t.name === 'total_amount') t.dataset.auto = '0';
+  if (t.form && t.form.dataset.form === 'bk-save' && t.name !== 'total_amount') updateEstimate(t.form);
   if (t.hasAttribute('data-staff-q')) { A.sq = t.value; const sbd = $('#staff-body'); if (sbd) sbd.innerHTML = ser(staffRows()); }
 });
 document.addEventListener('change', async e => {
@@ -2263,6 +2499,9 @@ document.addEventListener('change', async e => {
   }
   if (t.hasAttribute('data-staff-f')) { A.sf = t.value; const sbd = $('#staff-body'); if (sbd) sbd.innerHTML = ser(staffRows()); }
   if (t.dataset.change === 'file-room') fileRoom(t);
+  if (t.form && t.form.dataset.form === 'bk-save' && t.name !== 'total_amount') updateEstimate(t.form);
+  if (t.dataset.change === 'extra-item') extraPick(t);
+  if (t.dataset.change === 'ci-pay') { const p = $('#ci-paynow'); if (p) p.hidden = t.value !== 'now'; }
   if (t.dataset.change === 'cal-svc') { A.cal.svc = t.value; renderDashCal(); }
   if (t.dataset.change === 'rx-date') { A.rx = t.value || todayISO(); ADM.reception(); }
   if (t.dataset.change === 'enq-status') { const { error } = await sb.from('enquiries').update({ status: t.value }).eq('id', t.dataset.id); if (error) return toast(errText(error), 'error'); toast('Status updated.'); refreshCounts(); }
@@ -2270,6 +2509,15 @@ document.addEventListener('change', async e => {
   if (t.dataset.change === 'staff-active') { const { error } = await sb.from('staff').update({ active: t.checked }).eq('user_id', t.dataset.id); if (error) { t.checked = !t.checked; return toast(errText(error), 'error'); } toast(t.checked ? 'Access switched on.' : 'Access switched off.'); }
 });
 
+/* Check mobile numbers and emails as soon as a field is left */
+document.addEventListener('focusout', e => {
+  const t = e.target, k = t.dataset && t.dataset.b; if (k !== 'phone' && k !== 'email') return;
+  const v = t.value.trim(); let msg = '';
+  if (v) { if (k === 'phone') { const n = normPhone(v); if (n) { t.value = n; B.phone = n; } else msg = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; } else msg = emailIssue(v); }
+  let s = document.getElementById('err-' + k);
+  if (msg) { B.errors[k] = msg; t.setAttribute('aria-invalid', 'true'); if (!s) { s = document.createElement('span'); s.className = 'err'; s.id = 'err-' + k; t.after(s); } s.textContent = msg; t.setAttribute('aria-describedby', 'err-' + k); }
+  else { delete B.errors[k]; t.removeAttribute('aria-invalid'); s?.remove(); }
+});
 /* Sign staff out after 30 minutes without activity */
 ['pointerdown', 'keydown', 'scroll'].forEach(ev => document.addEventListener(ev, () => { A.lastActive = Date.now(); }, { passive: true }));
 setInterval(async () => { if (A.staff && Date.now() - A.lastActive > IDLE_LIMIT_MS) { await sb.auth.signOut(); A.staff = null; toast('Signed out after 30 minutes without activity.'); if (location.hash.startsWith('#/admin')) render(); } }, 60000);
@@ -2304,6 +2552,7 @@ async function render() {
   const heroPage = pg === '' || (pg === 'services' && path[1] && safeUrl((svcBySlug(path[1]) || {}).image_url));
   document.body.classList.toggle('has-hero', !!heroPage);
   renderChrome(path);
+  showCookie();
   let view;
   switch (pg) {
     case '': view = pageHome(); break;
