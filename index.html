@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-Q9gMjyDBos6I8cHycmNj/P7hCUIgOr4ZXSji8W3AEUQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-Wn34QNd2kp97WOfNBqZuhgOiolduW+J84JWf96IHY/s='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -1267,6 +1267,9 @@ const SECTIONS = [
   { k: 'enquiries', l: 'Enquiries', i: 'inbox', r: OPS, c: 'enq' },
   { k: 'customers', l: 'Customers', i: 'users', r: [...OPS, 'finance'] },
   { k: 'reports', l: 'Reports', i: 'chart', r: ALL_ROLES },
+  { g: 'Finance' },
+  { k: 'receivables', l: 'Receivables', i: 'mail', r: ['super_admin', 'manager', 'finance', 'receptionist'] },
+  { k: 'reconcile', l: 'Reconcile', i: 'check', r: ['super_admin', 'manager', 'finance'] },
   { g: 'Catalogue' },
   { k: 'services', l: 'Experiences', i: 'sparkle', r: CAT },
   { k: 'packages', l: 'Packages & pricing', i: 'tag', r: CAT },
@@ -1468,7 +1471,7 @@ function notifyModal(b, status, custom) {
 const ADM = {};
 ADM.dashboard = async () => {
   const t = todayISO(), in30 = addDays(t, 30), hr = new Date().getHours();
-  const greet = `Good ${hr < 12 ? 'morning' : hr < 17 ? 'afternoon' : 'evening'}, ${firstName(A.staff.full_name) || 'team'}`;
+  const greet = firstName(A.staff.full_name) ? `Welcome, ${cap(firstName(A.staff.full_name))}` : 'Welcome';
   if (!can([...OPS, 'finance'])) {
     fill(html`${admTop(greet, 'Keep the website fresh: adverts, promotions, photos and menu.')}
       <div class="grid g3">${SECTIONS.filter(s => s.k && s.k !== 'dashboard' && can(s.r)).map(s => html`<a class="kpi" href="#/admin/${s.k}"><span>${icon(s.i)}</span><b style="font-size:1.5rem">${s.l}</b></a>`)}</div>`);
@@ -1490,7 +1493,7 @@ ADM.dashboard = async () => {
     <div id="dash-cal" class="card pad" style="margin-bottom:12px"><div class="skel" style="height:320px"></div></div><div id="rooms-board" class="card pad" style="margin-bottom:12px"></div>
     <div class="grid g2">
       <div class="card pad"><div class="row between"><h2 class="h-sm" style="margin:0">Waiting for approval</h2>${pill('pending', String(pending.length))}</div>
-        ${pending.length ? html`<ul class="list-plain">${pending.slice(0, 8).map(b => html`<li><div><button class="linkbtn" data-act="file-open" data-id="${b.id}"><b>${b.customer_name}</b></button>, ${b.services?.name}<br><span class="muted small">${fmtDay(b.booking_date)}, ${b.guests} guests, <span class="mono">${b.reference}</span></span></div>${ops ? html`<div class="row"><button class="btn xs" data-act="bk-status" data-id="${b.id}" data-s="confirmed">Approve</button><button class="btn xs ghost" data-act="bk-status" data-id="${b.id}" data-s="rejected">Reject</button></div>` : ''}</li>`)}</ul>` : html`<p class="muted" style="margin-top:12px">Nothing waiting.</p>`}</div>
+        ${pending.length ? html`<ul class="list-plain">${pending.slice(0, 8).map(b => html`<li><div><button class="linkbtn" data-act="file-open" data-id="${b.id}"><b>${b.customer_name}</b></button>, ${b.services?.name}<br><span class="muted small">${fmtDay(b.booking_date)}, ${b.guests} guests, <span class="mono">${b.reference}</span></span></div>${ops ? html`<div class="row"><button class="btn xs" data-act="bk-status" data-id="${b.id}" data-s="confirmed">Approve</button><button class="btn xs ghost" data-act="bk-status" data-id="${b.id}" data-s="rejected">Respond</button></div>` : ''}${b.follow_up ? html`<br>${pill('info', b.follow_up)}` : ''}</li>`)}</ul>` : html`<p class="muted" style="margin-top:12px">Nothing waiting.</p>`}</div>
       
       ${ops ? html`<div class="card pad"><div class="row between"><h2 class="h-sm" style="margin:0">Latest enquiries</h2><a class="small" href="#/admin/enquiries">View all</a></div>${(enq.data || []).length ? html`<ul class="list-plain">${enq.data.map(e => html`<li><div><b>${e.name}</b>${e.subject ? html` <span class="muted">${e.subject}</span>` : ''}<br><span class="muted small">${e.message.slice(0, 90)}</span></div>${pill(e.status, e.status.replace('_', ' '))}</li>`)}</ul>` : html`<p class="muted">No enquiries yet.</p>`}</div>` : ''}
     </div>`);
@@ -1510,8 +1513,8 @@ function bookingRows() {
     <td><b>${b.customer_name}</b><br><span class="muted small">${b.phone}${b.email ? html`<br>${b.email}` : ''}</span></td>
     <td>${b.services?.name || svcName(b.service_id)}${b.packages?.name ? html`<br><span class="faint small">${b.packages.name}</span>` : ''}</td>
     <td style="white-space:nowrap">${fmtDay(b.booking_date)}${b.end_date ? html`<br>to ${fmtDay(b.end_date)}` : ''}${b.start_time ? html`<br>${String(b.start_time).slice(0, 5)}` : ''}</td>
-    <td>${b.guests}</td><td>${pill(b.status, STATUS[b.status])}</td>
-    <td><div class="row">${ops && b.status === 'pending' ? html`<button class="btn xs" data-act="bk-status" data-id="${b.id}" data-s="confirmed">Approve</button><button class="btn xs ghost" data-act="bk-status" data-id="${b.id}" data-s="rejected">Reject</button>` : ''}
+    <td>${b.guests}</td><td>${pill(b.status, STATUS[b.status])}${b.follow_up && b.status === 'pending' ? html`<br>${pill('info', b.follow_up)}` : ''}</td>
+    <td><div class="row">${ops && b.status === 'pending' ? html`<button class="btn xs" data-act="bk-status" data-id="${b.id}" data-s="confirmed">Approve</button><button class="btn xs ghost" data-act="bk-status" data-id="${b.id}" data-s="rejected">Respond</button>` : ''}
       ${ops && b.status === 'confirmed' ? html`<button class="btn xs ghost" data-act="bk-status" data-id="${b.id}" data-s="completed">Completed</button>` : ''}
       ${ops ? html`<button class="icon-btn" style="width:34px;height:34px" data-act="bk-edit" data-id="${b.id}" aria-label="Edit booking ${b.reference}">${icon('edit')}</button>` : ''}
       <button class="icon-btn" style="width:34px;height:34px;color:var(--wa)" data-act="bk-notify" data-id="${b.id}" aria-label="Message ${b.customer_name}">${icon('whatsapp')}</button></div></td></tr>`);
@@ -1562,11 +1565,12 @@ async function availabilityWarning(o, prev) {
   return confirmDialog(`Careful: ${bad.map(d => fmtDate(d.day) + (d.state === 'full' ? ' is already fully booked' : ' is blocked')).join(', ')} for this experience. Save anyway? This may double-book.`, 'Save anyway', true);
 }
 async function setBookingStatus(id, status) {
+  if (status === 'rejected') return rejectFlow(id);
   let b = A.bookings.find(x => x.id === id);
   if (!b) { const r = await sb.from('bookings').select('*, services(name)').eq('id', id).single(); b = r.data; }
   if (!b) return;
   if (['rejected', 'cancelled'].includes(status) && !(await confirmDialog(`Mark booking ${b.reference} as ${STATUS[status].toLowerCase()}?`, STATUS[status], true))) return;
-  const { error } = await sb.from('bookings').update({ status }).eq('id', id);
+  const { error } = await sb.from('bookings').update(status === 'confirmed' ? { status, follow_up: '', follow_up_at: null } : { status }).eq('id', id);
   if (error) return toast(errText(error), 'error');
   b.status = status;
   toast(`Booking ${b.reference} is now ${STATUS[status].toLowerCase()}.`);
@@ -2309,6 +2313,242 @@ const MORE_FORMS = {
   stats: f => { const v = Object.fromEntries(new FormData(f)); if (!v.from || !v.to || v.to < v.from) { toast('Choose a valid date range.', 'error'); return; } Object.assign(A.rep, { from: v.from, to: v.to }); statsReport(); }
 };
 
+/* ================= Finance: reconcile, receivables, payment requests. Booking follow-ups ================= */
+const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+const PERIOD = { day: 'Day', week: 'Week', month: 'Month', quarter: 'Quarter' };
+function periodRange(type, anchor) {
+  const d = parseISO(anchor);
+  if (type === 'day') return [anchor, anchor];
+  if (type === 'week') { const s = mondayOf(anchor); return [s, addDays(s, 6)]; }
+  if (type === 'month') return [iso(new Date(d.getFullYear(), d.getMonth(), 1)), iso(new Date(d.getFullYear(), d.getMonth() + 1, 0))];
+  const q = Math.floor(d.getMonth() / 3) * 3;
+  return [iso(new Date(d.getFullYear(), q, 1)), iso(new Date(d.getFullYear(), q + 3, 0))];
+}
+function periodLabel(type, s) {
+  const d = parseISO(s);
+  if (type === 'day') return fmtDay(s);
+  if (type === 'week') return `Week of ${fmtDate(s)}`;
+  if (type === 'month') return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  return `Quarter ${Math.floor(d.getMonth() / 3) + 1}, ${d.getFullYear()}`;
+}
+const varCell = v => Math.abs(v) < 0.005 ? pill('ok', 'Balanced') : pill(v > 0 ? 'warn' : 'bad', `${v > 0 ? 'Over' : 'Short'} by ${pm(Math.abs(v))}`);
+
+/* Reconcile */
+ADM.reconcile = async () => {
+  const rc = A.rc ||= { type: 'day', anchor: todayISO() };
+  const [s, e] = periodRange(rc.type, rc.anchor);
+  const [pv, hist] = await Promise.all([sb.rpc('recon_preview', { p_type: rc.type, p_start: s, p_end: e }), sb.from('reconciliations').select('*').order('reconciled_at', { ascending: false }).limit(60)]);
+  if (pv.error) throw pv.error;
+  const data = pv.data, ex = Object.fromEntries(data.existing.map(r => [r.method, r]));
+  const methods = [...new Set([...data.methods.map(m => m.method), ...data.existing.map(r => r.method)])];
+  const fig = m => data.methods.find(y => y.method === m) || { expected: 0, payments: 0, unreconciled: 0 };
+  const totalExp = methods.reduce((a, m) => a + Number(fig(m).expected), 0), unrec = methods.reduce((a, m) => a + Number(fig(m).unreconciled), 0);
+  const done = methods.length > 0 && methods.every(m => ex[m]) && unrec === 0, future = e > todayISO();
+  A.rcHist = hist.data || [];
+  fill(html`${admTop('Reconcile', 'Compare what the system recorded with the cash counted and the money that reached the bank, then sign the period off.', html`<button class="btn sm ghost" data-act="rc-csv">${icon('download')} Export sign-offs</button>`)}
+    <div class="row" style="margin-bottom:10px"><div class="row" role="group" aria-label="Period">${Object.entries(PERIOD).map(([k, l]) => html`<button class="btn xs ${rc.type === k ? '' : 'ghost'}" data-act="rc-type" data-t="${k}" aria-pressed="${tf(rc.type === k)}">${l}</button>`)}</div>
+      <button class="icon-btn" data-act="rc-move" data-dir="-1" aria-label="Previous period">${icon('back')}</button><input type="date" value="${rc.anchor}" max="${todayISO()}" data-change="rc-date" aria-label="A date in the period" style="width:auto"><button class="icon-btn" data-act="rc-move" data-dir="1" aria-label="Next period">${icon('arrow')}</button></div>
+    <div class="card pad"><div class="row between"><h2 class="h-sm" style="margin:0">${periodLabel(rc.type, s)} <span class="muted small">${fmtDate(s)} to ${fmtDate(e)}</span></h2>${done ? pill('ok', 'Reconciled') : methods.length ? pill('warn', `${unrec} payment(s) not yet reconciled`) : pill('', 'No payments')}</div>
+      ${methods.length ? html`<form data-form="reconcile" novalidate><div class="tbl-wrap" style="margin-top:10px"><table><thead><tr><th>Paid by</th><th style="text-align:right">Recorded in system</th><th style="text-align:right">Payments</th><th style="width:170px">Counted or in bank</th><th style="text-align:right">Difference</th><th>Last signed off</th></tr></thead><tbody>
+        ${methods.map(m => { const x = fig(m), r = ex[m], act = r ? Number(r.actual) : Number(x.expected); return html`<tr><td><b>${METHOD[m]}</b></td><td style="text-align:right">${pm(x.expected)}</td><td style="text-align:right">${x.payments}${x.unreconciled ? html`<br><span class="small" style="color:var(--amber)">${x.unreconciled} new</span>` : ''}</td>
+          <td><input type="number" step="0.01" min="0" name="${m}" data-rc data-exp="${x.expected}" value="${act.toFixed(2)}" aria-label="Amount counted or in the bank for ${METHOD[m]}"></td><td style="text-align:right" class="rc-var" data-m="${m}">${varCell(act - x.expected)}</td><td class="small">${r ? `${r.reconciled_by_name}, ${fmtDT(r.reconciled_at)}` : 'Not yet'}</td></tr>`; })}
+        </tbody><tfoot><tr><td><b>Total</b></td><td style="text-align:right"><b>${pm(totalExp)}</b></td><td></td><td id="rc-act-total"></td><td id="rc-var-total" style="text-align:right"></td><td></td></tr></tfoot></table></div>
+        <div class="field" style="margin-top:12px"><label for="rc-note">Notes, for example why an amount is different</label><textarea id="rc-note" name="note" rows="2" maxlength="1000">${data.existing[0] ? data.existing[0].note : ''}</textarea></div>
+        <p class="err" data-err role="alert"></p><div class="row end">${future ? html`<span class="muted small">This period has not ended yet.</span>` : ''}<button type="button" class="btn ghost" data-act="rc-payments">See these payments</button><button class="btn" type="submit" ${future ? 'disabled' : ''}>${done ? 'Sign off again' : 'Sign off this period'}</button></div></form>`
+        : html`<p class="muted" style="margin-top:10px">No payments were recorded in this period.</p>`}</div>
+    <div class="card pad" style="margin-top:14px"><h2 class="h-sm">Recent sign-offs</h2>${A.rcHist.length ? html`<div class="tbl-wrap"><table><thead><tr><th>Period</th><th>Paid by</th><th style="text-align:right">Recorded</th><th style="text-align:right">Counted</th><th>Difference</th><th>Signed off</th></tr></thead><tbody>
+      ${A.rcHist.map(r => html`<tr><td>${periodLabel(r.period_type, r.period_start)}</td><td>${METHOD[r.method]}</td><td style="text-align:right">${pm(r.expected)}</td><td style="text-align:right">${pm(r.actual)}</td><td>${varCell(Number(r.variance))}${r.note ? html`<br><span class="small muted">${r.note}</span>` : ''}</td><td class="small">${r.reconciled_by_name}, ${fmtDT(r.reconciled_at)}</td></tr>`)}</tbody></table></div>` : html`<p class="muted small">Nothing signed off yet.</p>`}</div>`);
+  A.rcPeriod = [s, e];
+  rcTotals();
+};
+function rcTotals() {
+  let act = 0, exp = 0;
+  $$('[data-rc]').forEach(i => { const a = Number(i.value) || 0, x = Number(i.dataset.exp) || 0; act += a; exp += x; const c = $(`.rc-var[data-m="${i.name}"]`); if (c) c.innerHTML = String(varCell(a - x)); });
+  const t1 = $('#rc-act-total'), t2 = $('#rc-var-total');
+  if (t1) t1.innerHTML = String(html`<b>${pm(act)}</b>`); if (t2) t2.innerHTML = String(varCell(act - exp));
+}
+function rcMove(dir) {
+  const rc = A.rc, d = parseISO(rc.anchor);
+  if (rc.type === 'day') rc.anchor = addDays(rc.anchor, dir);
+  else if (rc.type === 'week') rc.anchor = addDays(rc.anchor, 7 * dir);
+  else rc.anchor = iso(new Date(d.getFullYear(), d.getMonth() + (rc.type === 'month' ? 1 : 3) * dir, 1));
+  if (rc.anchor > todayISO()) rc.anchor = todayISO();
+  ADM.reconcile();
+}
+
+/* Receivables and payment requests */
+const nextWeek = () => addDays(todayISO(), 7);
+function preqText(b, amount, due) {
+  return `Hello ${firstName(b.customer_name)}, this is a payment request from ${set('business_name')} for your booking ${b.reference} (${b.services?.name || 'booking'}, ${fmtDate(b.booking_date)}). Amount due: ${pm(amount)} by ${fmtDate(due)}. ${set('payment_instructions')} Thank you.`;
+}
+ADM.receivables = async () => {
+  const m0 = iso(new Date(new Date().getFullYear(), new Date().getMonth(), 1));
+  const [owing, reqs, mp] = await Promise.all([outstandingData(), sb.from('payment_requests').select('*, bookings(id,reference,customer_name,phone,email,booking_date,services(name))').order('created_at', { ascending: false }).limit(500), sb.from('payments').select('amount,kind').gte('received_at', m0 + 'T00:00:00')]);
+  if (reqs.error) throw reqs.error;
+  A.owing = owing; A.rows.preqs = reqs.data;
+  const t = todayISO(), open = reqs.data.filter(r => r.status === 'open'), overdue = open.filter(r => r.due_date < t);
+  const lastReq = id => reqs.data.find(r => r.booking_id === id && r.status !== 'cancelled');
+  fill(html`${admTop('Receivables', 'What customers still owe. Send payment requests and record money as it arrives.')}
+    <div class="kpis"><div class="kpi"><span>Total owing</span><b>${pm(owing.reduce((a, b) => a + b.bal, 0))}</b></div><div class="kpi"><span>Customers owing</span><b>${owing.length}</b></div><div class="kpi"><span>Open requests</span><b>${open.length}</b></div><div class="kpi"><span>Overdue requests</span><b>${overdue.length}</b></div><div class="kpi"><span>Collected this month</span><b>${pm(paidOf(mp.data))}</b></div></div>
+    <div class="card pad"><h2 class="h-sm">Balances owing</h2>${owing.length ? html`<div class="tbl-wrap"><table><thead><tr><th>Customer</th><th>Booking</th><th style="text-align:right">Total</th><th style="text-align:right">Paid</th><th style="text-align:right">Balance</th><th>Last request</th><th>Actions</th></tr></thead><tbody>
+      ${owing.map(b => { const r = lastReq(b.id); return html`<tr><td><b>${b.customer_name}</b></td><td><button class="linkbtn" data-act="file-open" data-id="${b.id}">${b.reference}</button><br><span class="small muted">${b.services?.name}, ${fmtDate(b.booking_date)}</span></td>
+        <td style="text-align:right">${pm(b.total_amount)}</td><td style="text-align:right">${pm(b.paid)}</td><td style="text-align:right"><b>${pm(b.bal)}</b></td>
+        <td class="small">${r ? html`${r.request_no}<br>${r.status === 'paid' ? pill('ok', 'Paid') : r.due_date < t ? pill('bad', `Overdue since ${fmtDate(r.due_date)}`) : pill('warn', `Due ${fmtDate(r.due_date)}`)}` : 'None sent'}</td>
+        <td><div class="row"><button class="btn xs" data-act="preq-new" data-id="${b.id}">Request payment</button><button class="btn xs ghost" data-act="fin-pay" data-id="${b.id}">Record payment</button></div></td></tr>`; })}</tbody></table></div>` : html`<p class="muted small">Nobody owes anything. Well done.</p>`}</div>
+    <div class="card pad" style="margin-top:14px"><h2 class="h-sm">Payment requests</h2>${reqs.data.length ? html`<div class="tbl-wrap"><table><thead><tr><th>Request</th><th>Customer</th><th style="text-align:right">Amount</th><th>Due</th><th>Status</th><th>Sent by</th><th>Actions</th></tr></thead><tbody>
+      ${reqs.data.map(r => html`<tr><td class="mono">${r.request_no}<br><span class="small muted">${fmtDate(r.created_at.slice(0, 10))}</span></td><td>${r.bookings?.customer_name}<br><span class="small muted">${r.bookings?.reference}</span></td><td style="text-align:right">${pm(r.amount)}</td><td>${fmtDate(r.due_date)}</td>
+        <td>${r.status === 'paid' ? pill('ok', 'Paid') : r.status === 'cancelled' ? pill('', 'Cancelled') : r.due_date < t ? pill('bad', 'Overdue') : pill('warn', 'Waiting')}</td><td class="small">${r.requested_by_name}</td>
+        <td><div class="row">${r.status === 'open' ? html`<button class="btn xs ghost" data-act="preq-send" data-id="${r.id}">Send again</button><button class="btn xs ghost" data-act="fin-pay" data-id="${r.booking_id}" data-req="${r.id}">Mark paid</button>` : ''}<button class="icon-btn" style="width:32px;height:32px" data-act="preq-print" data-id="${r.id}" aria-label="Print request ${r.request_no}">${icon('print')}</button>${r.status === 'open' ? html`<button class="icon-btn" style="width:32px;height:32px" data-act="preq-cancel" data-id="${r.id}" aria-label="Cancel request ${r.request_no}">${icon('close')}</button>` : ''}</div></td></tr>`)}</tbody></table></div>` : html`<p class="muted small">No payment requests yet.</p>`}</div>`);
+};
+async function finBooking(id) {
+  const { data, error } = await sb.from('bookings').select('id,reference,customer_name,phone,email,booking_date,end_date,start_time,guests,service_id,room_id,total_amount,services(name)').eq('id', id).single();
+  if (error) { toast(errText(error), 'error'); return null; }
+  const paid = (await paysFor([id]))[id] || 0;
+  data.bal = Math.max(0, Number(data.total_amount || 0) - paid);
+  return data;
+}
+async function preqForm(id) {
+  const b = await finBooking(id); if (!b) return;
+  A.pq = b;
+  openModal(`Payment request for ${b.customer_name}`, html`<form data-form="preq" novalidate><p class="muted" style="margin-top:0">${b.reference}, ${b.services?.name}, ${fmtDate(b.booking_date)}. Balance owing ${pm(b.bal)}.</p>
+    <div class="form-grid"><div class="field"><label for="pq-a">Amount requested</label><input id="pq-a" name="amount" type="number" min="0.01" step="0.01" value="${b.bal.toFixed(2)}" required></div>
+      <div class="field"><label for="pq-d">Pay by</label><input id="pq-d" name="due" type="date" min="${todayISO()}" value="${nextWeek()}" required></div>
+      <div class="field full"><label for="pq-c">Send by</label><select id="pq-c" name="channel"><option value="whatsapp" ${digits(b.phone) ? 'selected' : ''}>WhatsApp</option><option value="email" ${!digits(b.phone) && b.email ? 'selected' : ''} ${b.email ? '' : 'disabled'}>Email${b.email ? '' : ' (no email on file)'}</option><option value="both" ${b.email ? '' : 'disabled'}>WhatsApp and email</option><option value="print">Print only</option></select></div>
+      <div class="field full"><label for="pq-m">Message (you can edit it)</label><textarea id="pq-m" name="message" rows="5" maxlength="2000">${preqText(b, b.bal, nextWeek())}</textarea></div></div>
+    <p class="err" data-err role="alert"></p><div class="row end"><button type="button" class="btn ghost" data-act="modal-close">Cancel</button><button class="btn" type="submit">Save and send</button></div></form>`, { cls: 'wide' });
+}
+function preqMsg(f) { const m = f.elements.message; if (m.dataset.edited === '1' || !A.pq) return; m.value = preqText(A.pq, Number(f.elements.amount.value) || 0, f.elements.due.value || nextWeek()); }
+function sendPreq(r, b, channel) {
+  const msg = r.message || preqText(b, r.amount, r.due_date);
+  if ((channel === 'whatsapp' || channel === 'both') && digits(b.phone)) window.open(`https://wa.me/${digits(b.phone)}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  if ((channel === 'email' || channel === 'both') && b.email) location.href = `mailto:${encodeURIComponent(b.email)}?subject=${encodeURIComponent(`Payment request ${r.request_no} for booking ${b.reference}`)}&body=${encodeURIComponent(msg)}`;
+  if (channel === 'print') printPreq(r, b);
+}
+function printPreq(r, b) {
+  printDoc(html`${docHead('Payment request', r.request_no, (r.created_at || '').slice(0, 10) || todayISO())}
+    <div class="doc-meta"><div><b>To</b><br>${b.customer_name}<br>${b.phone || ''}${b.email ? html`<br>${b.email}` : ''}</div><div><b>Booking ${b.reference}</b><br>${b.services?.name || ''}<br>${fmtDay(b.booking_date)}</div></div>
+    <table><tbody><tr><td>Amount due</td><td class="num"><b>${pm(r.amount)}</b></td></tr><tr><td>Please pay by</td><td class="num">${fmtDay(r.due_date)}</td></tr><tr><td>Reference to use</td><td class="num">${b.reference}</td></tr></tbody></table>
+    <p>${set('payment_instructions')}</p>`);
+}
+async function finPayForm(id, reqId) {
+  const b = await finBooking(id); if (!b) return;
+  const { data: reqs } = await sb.from('payment_requests').select('id,request_no,amount,due_date').eq('booking_id', id).eq('status', 'open').order('due_date');
+  A.fp = { b, reqs: reqs || [] };
+  const pre = (reqs || []).find(r => r.id === reqId);
+  openModal(`Record payment from ${b.customer_name}`, html`<form data-form="fin-pay" novalidate><p class="muted" style="margin-top:0">${b.reference}, ${b.services?.name}. Balance owing ${pm(b.bal)}.</p>
+    <div class="form-grid"><div class="field"><label for="fp-a">Amount received</label><input id="fp-a" name="amount" type="number" min="0.01" step="0.01" value="${(pre ? Number(pre.amount) : b.bal).toFixed(2)}" required></div>
+      <div class="field"><label for="fp-d">Date received</label><input id="fp-d" name="date" type="date" max="${todayISO()}" value="${todayISO()}" required></div>${methodSelect('fp-m', 'bank_transfer')}
+      <div class="field"><label for="fp-r">Reference</label><input id="fp-r" name="reference" maxlength="120" placeholder="Bank or mobile money reference"></div>
+      ${(reqs || []).length ? html`<div class="field full"><label for="fp-q">Settles payment request</label><select id="fp-q" name="request"><option value="">None</option>${reqs.map(r => html`<option value="${r.id}" ${r.id === reqId ? 'selected' : ''}>${r.request_no}, ${pm(r.amount)}, due ${fmtDate(r.due_date)}</option>`)}</select></div>` : ''}</div>
+    <p class="err" data-err role="alert"></p><div class="row end"><button type="button" class="btn ghost" data-act="modal-close">Cancel</button><button class="btn" type="submit">Record payment</button></div></form>`, { cls: 'wide' });
+}
+
+/* Responding to a booking request instead of a plain rejection */
+const RJ_REASON = { booked: 'the date is fully booked', unavailable: 'the venue is not available on that date', size: 'the group is larger than this experience allows', details: 'we could not confirm the details of the request', other: '' };
+async function rejectFlow(id) {
+  let b = A.bookings.find(x => x.id === id);
+  if (!b || !b.services) { const r = await sb.from('bookings').select('*, services(name)').eq('id', id).single(); b = r.data; }
+  if (!b) return;
+  A.rj = b;
+  openModal(`Respond to ${b.customer_name}`, html`<form data-form="reject" novalidate><p class="muted" style="margin-top:0">${b.services?.name}, ${fmtDay(b.booking_date)}, ${b.guests} guests, ${b.reference}.</p>
+    <fieldset class="choice"><legend class="lbl">What would you like to do?</legend>
+      <label class="check"><input type="radio" name="act" value="suggest" checked data-change="rj-act"> Suggest other dates (the request stays open)</label>
+      <label class="check"><input type="radio" name="act" value="info" data-change="rj-act"> Ask for more information (the request stays open)</label>
+      <label class="check"><input type="radio" name="act" value="reject" data-change="rj-act"> Decline the booking</label></fieldset>
+    <div data-rj="suggest"><div class="form-grid">${[0, 1, 2].map(i => html`<div class="field"><label for="rj-d${i}">Date option ${i + 1}</label><input id="rj-d${i}" type="date" name="d${i}" min="${todayISO()}" data-rjd><span class="small" id="rj-s${i}"></span></div>`)}</div></div>
+    <div data-rj="info" hidden><div class="field"><label for="rj-q">What do you need to know?</label><textarea id="rj-q" name="question" rows="2" maxlength="400" placeholder="For example: the final number of guests and your preferred menu"></textarea></div></div>
+    <div data-rj="reject" hidden><div class="field"><label for="rj-r">Reason</label><select id="rj-r" name="reason"><option value="booked">The date is fully booked</option><option value="unavailable">The venue is not available</option><option value="size">The group is too large</option><option value="details">We could not confirm the details</option><option value="other">Other (explain in the message)</option></select></div></div>
+    <div class="field"><label for="rj-m">Message to the customer (you can edit it)</label><textarea id="rj-m" name="msg" rows="5" maxlength="1500"></textarea></div>
+    <p class="err" data-err role="alert"></p><div class="row end"><button type="button" class="btn ghost" data-act="modal-close">Cancel</button><button class="btn" type="submit">Save and send</button></div></form>`, { cls: 'wide', noFocus: true });
+  rjMsg(true);
+}
+function rjMsg(force) {
+  const f = $('form[data-form="reject"]'), b = A.rj; if (!f || !b) return;
+  const m = f.elements.msg; if (!force && m.dataset.edited === '1') return;
+  const act = f.elements.act.value, n = firstName(b.customer_name), svc = b.services?.name || 'booking', d = fmtDate(b.booking_date), biz = set('business_name');
+  const dates = ['d0', 'd1', 'd2'].map(k => f.elements[k].value).filter(Boolean).map(x => fmtDay(x));
+  m.value = act === 'suggest' ? `Hello ${n}, thank you for your ${svc} request (${b.reference}). Unfortunately ${d} is not available. We can offer ${dates.length ? dates.join(', or ') : '[choose dates above]'}. Please reply with the date that suits you and we will confirm. ${biz}`
+    : act === 'info' ? `Hello ${n}, thank you for your ${svc} request (${b.reference}) for ${d}. Before we can confirm, could you please let us know: ${f.elements.question.value.trim() || '[your question]'} ${biz}`
+    : `Hello ${n}, thank you for choosing ${biz}. Unfortunately we cannot accept your ${svc} request (${b.reference}) for ${d}${RJ_REASON[f.elements.reason.value] ? ' because ' + RJ_REASON[f.elements.reason.value] : ''}. We would love to welcome you on another occasion.`;
+  if (force) m.dataset.edited = '';
+}
+async function rjCheck(inp) {
+  const b = A.rj, i = inp.name.slice(1), out = $('#rj-s' + i); rjMsg();
+  if (!out || !inp.value) { if (out) out.textContent = ''; return; }
+  const { data } = await sb.rpc('get_availability', { p_service_id: b.service_id, p_from: inp.value, p_to: inp.value });
+  const st = (data || [])[0]?.state;
+  out.innerHTML = String(st === 'full' || st === 'blocked' ? html`<span style="color:var(--rose)">Not available</span>` : st === 'limited' ? html`<span style="color:var(--amber)">Few spaces left</span>` : html`<span style="color:#22603d">Available</span>`);
+}
+
+const FIN_ACT = {
+  'rc-type': b => { A.rc.type = b.dataset.t; if (A.rc.anchor > todayISO()) A.rc.anchor = todayISO(); ADM.reconcile(); },
+  'rc-move': b => rcMove(Number(b.dataset.dir)),
+  'rc-payments': () => { A.pf = { from: A.rcPeriod[0], to: A.rcPeriod[1], method: '' }; location.hash = '#/admin/payments'; },
+  'rc-csv': () => download(`reconciliations-${todayISO()}.csv`, toCSV(A.rcHist, [['Period type', r => PERIOD[r.period_type]], ['From', r => r.period_start], ['To', r => r.period_end], ['Paid by', r => METHOD[r.method]], ['Recorded', r => r.expected], ['Counted', r => r.actual], ['Difference', r => r.variance], ['Payments', r => r.payments_count], ['Note', r => r.note], ['Signed off by', r => r.reconciled_by_name], ['Signed off at', r => r.reconciled_at]])),
+  'preq-new': b => preqForm(b.dataset.id),
+  'preq-send': b => { const r = A.rows.preqs.find(x => x.id === b.dataset.id); if (r) sendPreq(r, r.bookings, digits(r.bookings.phone) ? 'whatsapp' : 'email'); },
+  'preq-print': b => { const r = A.rows.preqs.find(x => x.id === b.dataset.id); if (r) printPreq(r, r.bookings); },
+  'preq-cancel': async b => { if (!(await confirmDialog('Cancel this payment request? The balance stays on the booking.', 'Cancel request', true))) return; const { error } = await sb.from('payment_requests').update({ status: 'cancelled' }).eq('id', b.dataset.id); if (error) return toast(errText(error), 'error'); toast('Request cancelled.'); ADM.receivables(); },
+  'fin-pay': b => finPayForm(b.dataset.id, b.dataset.req)
+};
+const FIN_FORMS = {
+  reconcile: async f => {
+    const err = $('[data-err]', f), lines = $$('[data-rc]', f).map(i => ({ method: i.name, actual: Math.round((Number(i.value) || 0) * 100) / 100, exp: Number(i.dataset.exp) || 0 }));
+    if (lines.some(l => l.actual < 0)) { err.textContent = 'Amounts cannot be negative.'; return; }
+    const off = lines.filter(l => Math.abs(l.actual - l.exp) >= 0.005);
+    if (off.length && !f.elements.note.value.trim()) { err.textContent = `Explain the difference for ${off.map(l => METHOD[l.method]).join(', ')} in the notes before signing off.`; f.elements.note.focus(); return; }
+    const [s, e] = A.rcPeriod, btn = $('button[type=submit]', f); btn.disabled = true;
+    const { data, error } = await sb.rpc('reconcile_period', { p_type: A.rc.type, p_start: s, p_end: e, p_lines: lines.map(({ method, actual }) => ({ method, actual })), p_note: f.elements.note.value.trim() });
+    btn.disabled = false;
+    if (error) { err.textContent = errText(error); return; }
+    toast(Math.abs(data.variance) < 0.005 ? 'Signed off. Everything balances.' : `Signed off with a difference of ${pm(data.variance)}.`);
+    ADM.reconcile();
+  },
+  preq: async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), b = A.pq, amt = Math.round(Number(v.amount) * 100) / 100;
+    if (!(amt > 0)) { err.textContent = 'Enter the amount to request.'; return; }
+    if (amt > b.bal + 0.004 && !(await confirmDialog(`${pm(amt)} is more than the ${pm(b.bal)} balance. Request it anyway?`, 'Request anyway'))) { preqForm(b.id); return; }
+    if (!v.due || v.due < todayISO()) { err.textContent = 'Choose a date from today onwards.'; return; }
+    if (!v.message.trim()) { err.textContent = 'The message is empty.'; return; }
+    const { data, error } = await sb.from('payment_requests').insert({ booking_id: b.id, amount: amt, due_date: v.due, channel: v.channel, message: v.message.trim(), requested_by_name: staffName() }).select().single();
+    if (error) { err.textContent = errText(error); return; }
+    closeModal(); toast(`Payment request ${data.request_no} saved.`); sendPreq(data, b, v.channel);
+    if (location.hash.includes('receivables')) ADM.receivables();
+  },
+  'fin-pay': async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), { b, reqs } = A.fp, amt = Math.round(Number(v.amount) * 100) / 100;
+    if (!(amt > 0)) { err.textContent = 'Enter the amount received.'; return; }
+    if (!v.date || v.date > todayISO()) { err.textContent = 'The date received cannot be in the future.'; return; }
+    if (amt > b.bal + 0.004 && !(await confirmDialog(`${pm(amt)} is more than the ${pm(b.bal)} balance. Record it anyway?`, 'Record anyway'))) { finPayForm(b.id, v.request); return; }
+    const received_at = v.date === todayISO() ? new Date().toISOString() : `${v.date}T12:00:00+02:00`;
+    const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: 'payment', method: v.method, reference: (v.reference || '').trim(), note: v.request ? `Request ${(reqs.find(r => r.id === v.request) || {}).request_no || ''}` : '', received_by_name: staffName(), received_at }).select().single();
+    if (error) { err.textContent = errText(error); return; }
+    const left = Math.max(0, b.bal - amt), done = reqs.filter(r => r.id === v.request || left < 0.005).map(r => r.id);
+    if (done.length) await sb.from('payment_requests').update({ status: 'paid', paid_at: new Date().toISOString() }).in('id', done);
+    openModal('Payment recorded', html`<p>${pm(amt)} from ${b.customer_name} is recorded. Receipt <b>${data.receipt_no}</b>.</p><p class="muted">${left > 0.004 ? `${pm(left)} is still owing.` : 'The booking is now fully paid.'}</p><div class="row end"><button class="btn ghost" data-act="fp-receipt">${icon('print')} Print receipt</button><button class="btn" data-act="modal-close">Done</button></div>`);
+    A.fpLast = { p: data, b, left };
+    const sec = location.hash.split('/')[2]; if (['receivables', 'payments', 'reconcile', 'reception'].includes(sec)) ADM[sec]();
+  },
+  reject: async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), b = A.rj, dates = [v.d0, v.d1, v.d2].filter(Boolean);
+    if (v.act === 'suggest' && !dates.length) { err.textContent = 'Choose at least one other date.'; return; }
+    if (v.act === 'info' && !v.question.trim()) { err.textContent = 'Write what you need to know.'; return; }
+    if (!v.msg.trim() || /\[(choose|your question)/.test(v.msg)) { err.textContent = 'Complete the message before sending.'; return; }
+    const note = v.act === 'suggest' ? `Offered other dates: ${dates.map(x => fmtDate(x)).join(', ')}` : v.act === 'info' ? `Asked for more information: ${v.question.trim()}` : `Declined: ${RJ_REASON[v.reason] || 'other reason'}`;
+    const patch = { admin_notes: `${b.admin_notes || ''}\n[${fmtDT(new Date().toISOString())}, ${staffName()}] ${note}`.trim().slice(-4000) };
+    if (v.act === 'reject') Object.assign(patch, { status: 'rejected', follow_up: '', follow_up_at: null });
+    else Object.assign(patch, { follow_up: v.act === 'suggest' ? 'Other dates offered' : 'More information requested', follow_up_at: new Date().toISOString() });
+    const { error } = await sb.from('bookings').update(patch).eq('id', b.id);
+    if (error) { err.textContent = errText(error); return; }
+    Object.assign(b, patch);
+    toast(v.act === 'reject' ? `Booking ${b.reference} declined.` : `Saved. The request stays open while you wait for ${firstName(b.customer_name)}.`);
+    notifyModal(b, b.status, v.msg.trim());
+    const sec = location.hash.split('/')[2] || 'dashboard';
+    if (sec === 'bookings') redrawBookings(); else ADM[sec]?.();
+  }
+};
+FIN_ACT['fp-receipt'] = () => { const x = A.fpLast; if (x) printReceipt(x.p, x.b, x.left); };
+
 /* ================= Events ================= */
 const ACT = {
   'nav-toggle': b => { const n = $('#nav-links'); const o = n.classList.toggle('open'); b.setAttribute('aria-expanded', tf(o)); b.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); },
@@ -2495,7 +2735,7 @@ const FORMS = {
     closeModal(); toast('Password updated. Share it privately with the staff member.');
   }
 };
-Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS);
+Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT, FIN_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS, FIN_FORMS);
 document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); FORMS[f.dataset.form]?.(f, e); });
 
 const redrawCust = debounce(q => { const b = $('#cs-body'); if (b) b.innerHTML = ser(custRows(q)); }, 150);
@@ -2508,6 +2748,9 @@ document.addEventListener('input', e => {
   if (t.hasAttribute('data-cust-q')) redrawCust(t.value);
   if (t.dataset.crudQ) redrawCrud(t.dataset.crudQ, t.value);
   if (t.dataset.item) fileItemInput(t);
+  if (t.hasAttribute('data-rc')) rcTotals();
+  if (t.form && t.form.dataset.form === 'reject') { if (t.name === 'msg') t.dataset.edited = '1'; else if (!t.hasAttribute('data-rjd')) rjMsg(); }
+  if (t.form && t.form.dataset.form === 'preq') { if (t.name === 'message') t.dataset.edited = '1'; else preqMsg(t.form); }
   if (t.name === 'total_amount') t.dataset.auto = '0';
   if (t.form && t.form.dataset.form === 'bk-save' && t.name !== 'total_amount') updateEstimate(t.form);
   if (t.hasAttribute('data-staff-q')) { A.sq = t.value; const sbd = $('#staff-body'); if (sbd) sbd.innerHTML = ser(staffRows()); }
@@ -2541,6 +2784,10 @@ document.addEventListener('change', async e => {
   }
   if (t.hasAttribute('data-staff-f')) { A.sf = t.value; const sbd = $('#staff-body'); if (sbd) sbd.innerHTML = ser(staffRows()); }
   if (t.dataset.change === 'file-room') fileRoom(t);
+  if (t.dataset.change === 'rc-date') { A.rc.anchor = t.value && t.value <= todayISO() ? t.value : todayISO(); ADM.reconcile(); }
+  if (t.dataset.change === 'rj-act') { $$('[data-rj]', t.form).forEach(d => { d.hidden = d.dataset.rj !== t.value; }); rjMsg(true); }
+  if (t.hasAttribute('data-rjd')) rjCheck(t);
+  if (t.form && t.form.dataset.form === 'reject' && t.name === 'reason') rjMsg();
   if (t.form && t.form.dataset.form === 'bk-save' && t.name !== 'total_amount') updateEstimate(t.form);
   if (t.dataset.change === 'extra-item') extraPick(t);
   if (t.dataset.change === 'ci-pay') { const p = $('#ci-paynow'); if (p) p.hidden = t.value !== 'now'; }
