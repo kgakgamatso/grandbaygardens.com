@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-tnpPuvrvSRzbiivKSEZIpw3XXtHzA+/Ms/9bhjcBIgM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-YQrN0a62potX0J1rGGm695R/CxnFPGFjv/rRHkxgtxw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -1729,7 +1729,7 @@ const pwField = (id, name, label, ac, extra = '') => html`<div class="field"><la
 function loginView() {
   const img = heroImages()[0] || '';
   return html`<div class="login"><div class="ph">${img ? html`<img src="${img}" alt="">` : ''}${logoHtml()}</div>
-    <div class="fm"><form data-form="login" novalidate><span class="kicker">Management portal</span><h1 style="font-size:2.6rem">Staff sign in</h1>
+    <div class="fm"><form data-form="login" novalidate data-shown="${Date.now()}"><div class="hp" aria-hidden="true"><label for="l-web">Website</label><input id="l-web" name="website" tabindex="-1" autocomplete="off"></div><span class="kicker">Management portal</span><h1 style="font-size:2.6rem">Staff sign in</h1>
       <div class="field"><label for="l-e">Email</label><input id="l-e" name="email" type="email" autocomplete="username" required maxlength="200"></div>
       ${pwField('l-p', 'password', 'Password', 'current-password')}
       <p class="err" data-err role="alert"></p><button class="btn" type="submit" style="width:100%">Sign in</button>
@@ -3272,17 +3272,33 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#nav-links')?.classList.contains('open')) { $('#nav-links').classList.remove('open'); $('.menu-btn')?.focus(); } });
 
+function loginGuard() {
+  try { const g = JSON.parse(localStorage.getItem('gb_login') || 'null'); if (g && Date.now() - (g.at || 0) < 864e5) return { fails: g.fails | 0, locks: g.locks | 0, until: +g.until || 0 }; } catch {}
+  return { fails: 0, locks: 0, until: 0 };
+}
+function saveLoginGuard(g) { try { localStorage.setItem('gb_login', JSON.stringify({ ...g, at: Date.now() })); } catch {} }
 const FORMS = {
   quick: f => { const v = Object.fromEntries(new FormData(f)); if (!v.service) { toast('Please choose what you are planning.', 'error'); f.service.focus(); return; } location.hash = `#/book?service=${encodeURIComponent(v.service)}${v.date ? '&date=' + v.date : ''}${v.guests ? '&guests=' + encodeURIComponent(v.guests) : ''}`; },
   enquiry: submitEnquiry,
   login: async f => {
-    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f);
-    if (Date.now() < A.lockUntil) { err.textContent = `Too many attempts. Please wait ${Math.ceil((A.lockUntil - Date.now()) / 1000)} seconds.`; return; }
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), g = loginGuard();
+    const wait = ms => { const m = Math.ceil(ms / 60000); return ms > 90000 ? `${m} minutes` : `${Math.ceil(ms / 1000)} seconds`; };
+    if (Date.now() < g.until) { err.textContent = `Sign-in is paused after too many failed attempts. Please try again in ${wait(g.until - Date.now())}.`; return; }
+    if (v.website) return; // bot trap: people never see this field
+    if (Date.now() - Number(f.dataset.shown || 0) < 1000) { err.textContent = 'Please try again.'; return; }
     if (!v.email || !v.password) { err.textContent = 'Enter your email and password.'; return; }
     const btn = $('button[type=submit]', f); btn.disabled = true; btn.textContent = 'Signing in';
-    const { error } = await sb.auth.signInWithPassword({ email: v.email.trim(), password: v.password });
-    if (error) { btn.disabled = false; btn.textContent = 'Sign in'; A.loginFails++; if (A.loginFails >= 5) { A.lockUntil = Date.now() + 60000; A.loginFails = 0; } err.textContent = 'That email and password do not match.'; return; }
-    A.loginFails = 0; A.lastActive = Date.now(); A.staff = null;
+    const { error } = await sb.auth.signInWithPassword({ email: String(v.email).trim().slice(0, 200), password: String(v.password).slice(0, 128) });
+    if (error) {
+      btn.disabled = false; btn.textContent = 'Sign in';
+      if (error.status === 429) { saveLoginGuard({ ...g, until: Date.now() + 5 * 60000 }); err.textContent = 'Too many sign-in attempts from this connection. Please wait 5 minutes.'; return; }
+      g.fails++;
+      if (g.fails >= 5) { g.locks++; g.fails = 0; g.until = Date.now() + [1, 5, 15, 60][Math.min(g.locks, 4) - 1] * 60000; }
+      saveLoginGuard(g);
+      err.textContent = g.until > Date.now() ? `Too many failed attempts. Sign-in is paused for ${wait(g.until - Date.now())}.` : `That email and password do not match. ${5 - g.fails} attempt${5 - g.fails === 1 ? '' : 's'} left before a pause.`;
+      return;
+    }
+    saveLoginGuard({ fails: 0, locks: 0, until: 0 }); A.lastActive = Date.now(); A.staff = null;
     if (!location.hash.startsWith('#/admin')) location.hash = '#/admin'; else renderAdmin(location.hash.split('/')[2]);
   },
   'new-pass': async f => {
