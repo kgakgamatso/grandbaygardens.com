@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-qYqOirsOTHGTq+DTGyStmYB9zJUIuVZyG8/PeTM5azw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-eBUyLpI34obLhmqaQ9421D6b9nqJ8TP/014y+6Skup4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -501,6 +501,8 @@ td .row{gap:6px;flex-wrap:nowrap}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero .slide.on{transform:none}}
 #print-area{display:none}
+.add-more{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;padding:12px 14px;background:var(--sage);border:1px solid var(--line)}
+.rev-items{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .stars-in{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
 .stars-in label{cursor:pointer;font-size:2rem;line-height:1;color:#c9c2b0}
 .stars-in label:hover,.stars-in label:hover~label,.stars-in label:has(input:checked),.stars-in label:has(input:checked)~label{color:#b8862b}
@@ -1109,12 +1111,13 @@ function stepHtml() {
   const s = svcById(B.sid);
   if (B.step === 1) {
     const pk = s ? S.packages.filter(p => p.service_id === s.id) : [];
-    return html`<h2>What would you like to book?</h2>
+    return html`<h2>${B.cart.length ? 'Add another experience' : 'What would you like to book?'}</h2>
+      <p class="muted">${B.cart.length ? `You have ${B.cart.length} experience${B.cart.length > 1 ? 's' : ''} in your booking. Choose another one, or continue to your details.` : 'You can book several experiences together, for example a room, a spa day and a dinner table.'}</p>
       <div class="opt-grid" role="radiogroup" aria-label="Experience">${S.services.map(x => html`<button class="opt" role="radio" aria-checked="${tf(x.id === B.sid)}" data-act="b-svc" data-id="${x.id}"><span class="oi">${safeUrl(x.image_url) ? html`<img src="${safeUrl(x.image_url)}" alt="" loading="lazy">` : icon(x.icon)}</span><span><b>${x.name}</b><small>${priceText(x)}</small></span></button>`)}</div>${fErr('sid')}
       ${pk.length ? html`<h3 style="margin-top:28px">Choose a package <span class="muted small" style="font-family:var(--sans)">(optional)</span></h3><div class="opt-grid" role="radiogroup" aria-label="Package">
         <button class="opt slot" role="radio" aria-checked="${tf(!B.pid)}" data-act="b-pkg" data-id=""><span><b>Not sure yet</b><small>We will help you choose</small></span></button>
         ${pk.map(p => html`<button class="opt slot" role="radio" aria-checked="${tf(p.id === B.pid)}" data-act="b-pkg" data-id="${p.id}"><span><b>${p.name}</b><small>${p.price != null ? money(p.price) + (p.price_note ? ' ' + p.price_note : '') : (p.price_note || 'On request')}</small></span></button>`)}</div>` : ''}
-      ${navBtns()}`;
+      ${navBtns(!s && B.cart.length ? 'Continue to your details' : 'Continue')}`;
   }
   if (B.step === 2) {
     const slots = s.time_slots ? s.time_slots.split(',').map(t => t.trim()).filter(Boolean) : [];
@@ -1122,13 +1125,15 @@ function stepHtml() {
       <p class="muted">${s.stay_mode ? 'Select your check-in date, then your check-out date.' : 'Dates that are fully booked are crossed out.'}</p>
       <div id="cal">${calHtml()}</div>${fErr('date')}
       ${slots.length ? html`<h3 style="margin-top:26px">Start time</h3><div class="slots" role="radiogroup" aria-label="Time slot">${slots.map(t => html`<button class="opt slot" role="radio" aria-checked="${tf(t === B.time)}" data-act="b-time" data-t="${t}"><b>${t}</b></button>`)}</div>${fErr('time')}` : ''}
+      <div class="field" style="max-width:260px;margin-top:22px"><label for="b-guests">${s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`}<span class="req" aria-hidden="true">*</span></label><input id="b-guests" data-b="guests" value="${B.guests}" type="number" min="1" max="${s.max_guests}" inputmode="numeric" ${B.errors.guests ? raw('aria-invalid="true" aria-describedby="err-guests"') : ''}>${fErr('guests')}</div>
+      ${B.cart.length < 4 ? html`<div class="add-more"><span class="small muted">Booking more than one?</span>${s.stay_mode ? html`<button class="btn sm ghost" data-act="b-add-room">${icon('plus')} Add another room, same dates</button>` : ''}<button class="btn sm ghost" data-act="b-add">${icon('plus')} Add another experience</button></div>` : ''}
       ${navBtns()}`;
   }
   if (B.step === 3) {
     const inp = (k, l, attrs) => html`<div class="field"><label for="b-${k}">${l}<span class="req" aria-hidden="true">*</span></label><input id="b-${k}" data-b="${k}" value="${B[k]}" ${raw(attrs)} ${B.errors[k] ? raw(`aria-invalid="true" aria-describedby="err-${k}"`) : ''}>${fErr(k)}</div>`;
     return html`<h2>Your details</h2><p class="muted">We use these to confirm your booking.</p>
       <div class="form-grid">${inp('name', 'Full name', 'autocomplete="name" maxlength="120"')}${inp('phone', 'Phone or WhatsApp', 'type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx"')}
-        ${inp('email', 'Email', 'type="email" autocomplete="email" maxlength="200"')}${inp('guests', s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`, `type="number" min="1" max="${s.max_guests}" inputmode="numeric"`)}
+        ${inp('email', 'Email', 'type="email" autocomplete="email" maxlength="200"')}
         <div class="field"><label for="b-country">Country you are travelling from</label><select id="b-country" data-b="country"><option value="">Choose (optional)</option>${COUNTRIES.map(([n]) => html`<option value="${n}" ${B.country === n ? 'selected' : ''}>${n}</option>`)}</select></div>
         <div class="field"><label for="b-purpose">Purpose of your visit</label><select id="b-purpose" data-b="purpose"><option value="">Choose one (optional)</option>${PURPOSES.map(x => html`<option value="${x}" ${B.purpose === x ? 'selected' : ''}>${x}</option>`)}</select></div>
         <div class="field full"><label for="b-heard">How did you hear about us? <span class="muted small">(optional)</span></label><select id="b-heard" data-b="heard"><option value="">Choose one</option>${HEARD.map(x => html`<option value="${x}" ${B.heard === x ? 'selected' : ''}>${x}</option>`)}</select></div>
@@ -1139,7 +1144,8 @@ function stepHtml() {
   }
   const p = S.packages.find(x => x.id === B.pid);
   return html`<h2>Review and send</h2><p class="muted">Please check everything is correct.</p>
-    <div class="summary card pad"><dl><dt>Experience</dt><dd>${s.name}</dd>${p ? html`<dt>Package</dt><dd>${p.name}</dd>` : ''}
+    ${B.cart.length ? html`<div class="card pad" style="margin-bottom:10px"><h3 class="h-sm">Your experiences (${B.cart.length + 1})</h3><ol class="rev-items">${[...B.cart, { sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests }].map(c => { const cs = svcById(c.sid), est = itemEst(c); return html`<li><b>${cs ? cs.name : ''}</b> <span class="muted">${fmtDay(c.date)}${c.end ? ` to ${fmtDay(c.end)}` : ''}${c.time ? `, ${c.time}` : ''}, ${c.guests} guest${Number(c.guests) === 1 ? '' : 's'}${est ? `, about ${money(est.amount)}` : ''}</span></li>`; })}</ol></div>` : ''}
+    <div class="summary card pad"><dl><dt>${B.cart.length ? 'Last added' : 'Experience'}</dt><dd>${s.name}</dd>${p ? html`<dt>Package</dt><dd>${p.name}</dd>` : ''}
       <dt>${s.stay_mode ? 'Stay' : 'Date'}</dt><dd>${fmtDay(B.date)}${B.end ? html` to ${fmtDay(B.end)}` : ''}</dd>${B.time ? html`<dt>Time</dt><dd>${B.time}</dd>` : ''}
       <dt>Guests</dt><dd>${B.guests}</dd><dt>Name</dt><dd>${B.name}</dd><dt>Phone</dt><dd>${B.phone}</dd><dt>Email</dt><dd>${B.email}</dd>
       ${B.notes ? html`<dt>Notes</dt><dd style="white-space:pre-line">${B.notes}</dd>` : ''}${estRow(s, p)}</dl>
@@ -1188,18 +1194,18 @@ function redrawStep(focusErr) {
 }
 function validateStep() {
   const s = svcById(B.sid), e = {};
-  if (B.step === 1 && !s) e.sid = 'Please choose an experience.';
+  if (B.step === 1 && !s && !B.cart.length) e.sid = 'Please choose an experience.';
   if (B.step === 2) {
     if (!B.date) e.date = s.stay_mode ? 'Please choose your check-in date.' : 'Please choose a date.';
     else if (s.stay_mode && !B.end) e.date = 'Please choose your check-out date.';
     if (s.time_slots && !B.time) e.time = 'Please choose a start time.';
+    const g = Number(B.guests);
+    if (!Number.isInteger(g) || g < 1 || g > s.max_guests) e.guests = s.stay_mode ? `Each room sleeps up to ${s.max_guests} guests. For more guests, use "Add another room".` : `Enter between 1 and ${s.max_guests} guests.`;
   }
   if (B.step === 3) {
     if (B.name.trim().length < 2 || !/[a-z]/i.test(B.name)) e.name = 'Please enter your full name.';
     if (!normPhone(B.phone)) e.phone = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; else B.phone = normPhone(B.phone);
     { const em = emailIssue(B.email); if (em) e.email = em; }
-    const g = Number(B.guests);
-    if (!Number.isInteger(g) || g < 1 || g > s.max_guests) e.guests = s.stay_mode ? `Each room sleeps up to ${s.max_guests} guests. For more guests, use "Add another experience" to book another room.` : `Enter between 1 and ${s.max_guests} guests.`;
     if (!B.agree) e.agree = 'Please accept the booking terms to continue.';
   }
   B.errors = e;
@@ -1475,6 +1481,7 @@ function vaAnswer(q) {
 const GUEST_ACT = {
   'b-add': () => {
     if (B.cart.length >= 4) return;
+    if (B.step === 2 && !validateStep()) return redrawStep(true);
     const s = svcById(B.sid);
     if (!s.stay_mode && B.cart.some(c => c.sid === B.sid && c.date === B.date)) { toast('This experience and date is already in your booking.', 'error'); return; }
     B.cart.push({ sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests });
@@ -1549,9 +1556,10 @@ async function payOnline(btn) {
 GUEST_ACT['pay-online'] = b => payOnline(b);
 GUEST_ACT['b-add-room'] = () => {
   if (B.cart.length >= 4) return;
+  if (B.step === 2 && !validateStep()) return redrawStep(true);
   const s = svcById(B.sid);
   B.cart.push({ sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests });
-  Object.assign(B, { guests: '', step: 3, errors: {} });
+  Object.assign(B, { guests: '', step: 2, errors: {} });
   redrawStep(); toast(`Room added. Enter the guests for the next ${s.name.toLowerCase()} room.`);
   $('#b-guests')?.focus();
 };
@@ -3222,7 +3230,7 @@ const ACT = {
   'b-month': b => { B.month = new Date(B.month.getFullYear(), B.month.getMonth() + Number(b.dataset.dir), 1); $('#cal').innerHTML = String(calHtml()); loadAvail(); },
   'b-time': b => { B.time = b.dataset.t; B.errors = {}; redrawStep(); },
   'b-back': () => { B.step--; B.errors = {}; redrawStep(); focusStep(); },
-  'b-next': () => { if (B.step === 4) return submitBooking(); if (!validateStep()) return redrawStep(true); B.step++; redrawStep(); focusStep(); },
+  'b-next': () => { if (B.step === 4) return submitBooking(); if (B.step === 1 && !B.sid && B.cart.length) { Object.assign(B, B.cart.pop(), { errors: {}, step: 3 }); redrawStep(); return focusStep(); } if (!validateStep()) return redrawStep(true); B.step++; redrawStep(); focusStep(); },
   'b-new': () => { resetBooking(); location.hash = '#/book'; render(); },
   /* admin */
   'logout': async () => { await sb.auth.signOut(); A.staff = null; location.hash = '#/admin'; render(); },
