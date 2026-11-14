@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-4CoKFBeg4vUy7ubt6CA76IG6S88YzNHOei9V67nmNJs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-xHJdlX8ac0oe+r7WPRM/5EZ/Rwcj3167/ZbwZjUodVk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -591,6 +591,10 @@ body.is-admin .cookie{display:none}
 .doc{font:14px/1.5 var(--sans);color:#1c2420;max-width:760px;margin:0 auto}
 .doc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:12px;margin-bottom:16px;color:#1f3d2b;border-bottom:1px solid #c9bfa8}
 .doc-head svg{height:74px;width:auto}.doc-head img{height:70px}
+.doc-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.doc-qr{flex:none;display:flex;flex-direction:column;align-items:center;gap:2px}
+.doc-qr svg{width:22mm;height:22mm}
+.doc-qr small{font-size:8pt;color:#5d6a61}
 .doc-biz{text-align:right;font-size:14px;white-space:pre-line}
 .doc h1{font-size:26px;margin:0 0 2px}
 .doc .doc-no{margin:0 0 10px;color:#5d6a61}
@@ -1290,8 +1294,32 @@ const PUB_ACT = {
 function printDoc(body) {
   const logo = safeUrl(set('logo_url'));
   const p = $('#print-area');
-  p.innerHTML = String(html`<div class="doc"><header class="doc-head">${logo ? html`<img src="${logo}" alt="">` : logoSvg()}<div class="doc-biz"><b>${set('business_name')}</b>\n${set('address')}\n${phones().join(' | ')}${set('email') ? '\n' + set('email') : ''}</div></header>${body}<footer class="doc-foot">${set('receipt_footer')}</footer></div>`);
-  setTimeout(() => window.print(), 60);
+  p.innerHTML = String(html`<div class="doc"><header class="doc-head">${logo ? html`<img src="${logo}" alt="">` : logoSvg()}<div class="doc-biz"><b>${set('business_name')}</b>\n${set('address')}\n${phones().join(' | ')}${set('email') ? '\n' + set('email') : ''}</div></header>${body}<footer class="doc-foot"><span>${set('receipt_footer')}</span><span class="doc-qr" aria-hidden="true"></span></footer></div>`);
+  const doc = $('.doc', p), title = $('h1', doc)?.textContent.trim() || '', no = $('.doc-no', doc)?.textContent.trim() || '';
+  const ref = (doc.textContent.match(/GB-[A-Z0-9]{8}/) || [])[0];
+  const text = [set('business_name'), `${title}: ${no}`, ref && !no.includes(ref) ? `Booking ${ref}` : '', phones()[0] ? `Questions: ${phones()[0]}` : '', location.origin + location.pathname].filter(Boolean).join('\n');
+  qrSvg(text).then(svg => { const q = $('.doc-qr', p); if (q && svg) q.innerHTML = svg + '<small>Scan for details</small>'; }).finally(() => setTimeout(() => window.print(), 60));
+}
+let qrLib;
+function loadQrLib() {
+  return qrLib ??= new Promise((res, rej) => {
+    if (window.qrcode) return res(window.qrcode);
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js';
+    s.integrity = 'sha384-8FWZA6BGMXhsfO+BLtrJK0We6gg5o1JyO8xQm6peWDEUs17ACA5ziE/NIAkl9z2k';
+    s.crossOrigin = 'anonymous'; s.referrerPolicy = 'no-referrer';
+    s.onload = () => window.qrcode ? res(window.qrcode) : rej(new Error('QR library missing'));
+    s.onerror = () => { qrLib = null; rej(new Error('QR library failed to load')); };
+    document.head.appendChild(s);
+  });
+}
+async function qrSvg(text) {
+  try {
+    const q = (await loadQrLib())(0, 'M'); q.addData(unescape(encodeURIComponent(text)).slice(0, 600)); q.make();
+    const n = q.getModuleCount(), m = 2; let d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) { if (!q.isDark(y, x)) continue; let r = 1; while (x + r < n && q.isDark(y, x + r)) r++; d += `M${x + m} ${y + m}h${r}v1h-${r}z`; x += r - 1; }
+    return `<svg viewBox="0 0 ${n + m * 2} ${n + m * 2}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#141b17"/></svg>`;
+  } catch { return ''; }
 }
 function printBookingDone() {
   const r = B.result; if (!r) return;
