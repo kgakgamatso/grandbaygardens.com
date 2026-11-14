@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-eBUyLpI34obLhmqaQ9421D6b9nqJ8TP/014y+6Skup4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-4CoKFBeg4vUy7ubt6CA76IG6S88YzNHOei9V67nmNJs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -501,6 +501,10 @@ td .row{gap:6px;flex-wrap:nowrap}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero .slide.on{transform:none}}
 #print-area{display:none}
+.opt.pick{align-items:center}
+.pick-tag{margin-left:auto;flex:none;font:600 .875rem var(--sans);color:var(--forest);border:1px solid var(--forest);padding:3px 10px}
+.opt.pick[aria-pressed="true"]{border-color:var(--forest);background:var(--sage);box-shadow:inset 0 0 0 1px var(--forest)}
+.opt.pick[aria-pressed="true"] .pick-tag{background:var(--forest);color:#fff}
 .add-more{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;padding:12px 14px;background:var(--sage);border:1px solid var(--line)}
 .rev-items{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .stars-in{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
@@ -1073,9 +1077,9 @@ async function submitEnquiry(f) {
 }
 
 /* Booking wizard */
-const B = { heard: '', country: '', cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
-function resetBooking() { Object.assign(B, { cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', notes: '', agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} }); }
-const STEPS = ['Experience', 'Date', 'Your details', 'Review'];
+const B = { picks: [], queue: [], heard: '', country: '', cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
+function resetBooking() { Object.assign(B, { picks: [], queue: [], cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', notes: '', agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} }); }
+const STEPS = ['Experiences', 'Dates and guests', 'Your details', 'Review'];
 function pageBook(q) {
   if (q.service) {
     const s = svcBySlug(q.service);
@@ -1110,24 +1114,26 @@ const fErr = k => B.errors[k] ? html`<span class="err" id="err-${k}">${B.errors[
 function stepHtml() {
   const s = svcById(B.sid);
   if (B.step === 1) {
-    const pk = s ? S.packages.filter(p => p.service_id === s.id) : [];
-    return html`<h2>${B.cart.length ? 'Add another experience' : 'What would you like to book?'}</h2>
-      <p class="muted">${B.cart.length ? `You have ${B.cart.length} experience${B.cart.length > 1 ? 's' : ''} in your booking. Choose another one, or continue to your details.` : 'You can book several experiences together, for example a room, a spa day and a dinner table.'}</p>
-      <div class="opt-grid" role="radiogroup" aria-label="Experience">${S.services.map(x => html`<button class="opt" role="radio" aria-checked="${tf(x.id === B.sid)}" data-act="b-svc" data-id="${x.id}"><span class="oi">${safeUrl(x.image_url) ? html`<img src="${safeUrl(x.image_url)}" alt="" loading="lazy">` : icon(x.icon)}</span><span><b>${x.name}</b><small>${priceText(x)}</small></span></button>`)}</div>${fErr('sid')}
-      ${pk.length ? html`<h3 style="margin-top:28px">Choose a package <span class="muted small" style="font-family:var(--sans)">(optional)</span></h3><div class="opt-grid" role="radiogroup" aria-label="Package">
-        <button class="opt slot" role="radio" aria-checked="${tf(!B.pid)}" data-act="b-pkg" data-id=""><span><b>Not sure yet</b><small>We will help you choose</small></span></button>
-        ${pk.map(p => html`<button class="opt slot" role="radio" aria-checked="${tf(p.id === B.pid)}" data-act="b-pkg" data-id="${p.id}"><span><b>${p.name}</b><small>${p.price != null ? money(p.price) + (p.price_note ? ' ' + p.price_note : '') : (p.price_note || 'On request')}</small></span></button>`)}</div>` : ''}
-      ${navBtns(!s && B.cart.length ? 'Continue to your details' : 'Continue')}`;
+    const n = B.picks.length;
+    return html`<h2>${B.cart.length ? 'Add more experiences' : 'What would you like to book?'}</h2>
+      <p class="muted">Add every experience you would like to your cart. On the next screen you choose the date, time and guests for each one.</p>
+      <div class="opt-grid" aria-label="Experiences">${S.services.map(x => { const on = B.picks.includes(x.id); return html`<button class="opt pick" aria-pressed="${tf(on)}" data-act="b-svc" data-id="${x.id}"><span class="oi">${safeUrl(x.image_url) ? html`<img src="${safeUrl(x.image_url)}" alt="" loading="lazy">` : icon(x.icon)}</span><span><b>${x.name}</b><small>${priceText(x)}</small></span><span class="pick-tag">${on ? 'In cart' : 'Add'}</span></button>`; })}</div>${fErr('sid')}
+      ${navBtns(n ? `Continue with ${n} experience${n > 1 ? 's' : ''}` : B.cart.length ? 'Continue to your details' : 'Continue')}`;
   }
   if (B.step === 2) {
     const slots = s.time_slots ? s.time_slots.split(',').map(t => t.trim()).filter(Boolean) : [];
-    return html`<h2>${s.stay_mode ? 'Choose your arrival and departure' : 'Pick a date'}</h2>
+    const pk = S.packages.filter(p => p.service_id === s.id), total = B.cart.length + 1 + B.queue.length;
+    return html`${total > 1 ? html`<p class="small muted" style="margin:0 0 4px"><b>Experience ${B.cart.length + 1} of ${total}</b></p>` : ''}<h2>${s.name}</h2>
+      ${pk.length ? html`<h3 style="margin-top:6px">Package <span class="muted small" style="font-family:var(--sans)">(optional)</span></h3><div class="opt-grid" role="radiogroup" aria-label="Package">
+        <button class="opt slot" role="radio" aria-checked="${tf(!B.pid)}" data-act="b-pkg" data-id=""><span><b>Not sure yet</b><small>We will help you choose</small></span></button>
+        ${pk.map(p => html`<button class="opt slot" role="radio" aria-checked="${tf(p.id === B.pid)}" data-act="b-pkg" data-id="${p.id}"><span><b>${p.name}</b><small>${p.price != null ? money(p.price) + (p.price_note ? ' ' + p.price_note : '') : (p.price_note || 'On request')}</small></span></button>`)}</div>` : ''}
+      <h3 style="margin-top:22px">${s.stay_mode ? 'Arrival and departure' : 'Date'}</h3>
       <p class="muted">${s.stay_mode ? 'Select your check-in date, then your check-out date.' : 'Dates that are fully booked are crossed out.'}</p>
       <div id="cal">${calHtml()}</div>${fErr('date')}
       ${slots.length ? html`<h3 style="margin-top:26px">Start time</h3><div class="slots" role="radiogroup" aria-label="Time slot">${slots.map(t => html`<button class="opt slot" role="radio" aria-checked="${tf(t === B.time)}" data-act="b-time" data-t="${t}"><b>${t}</b></button>`)}</div>${fErr('time')}` : ''}
       <div class="field" style="max-width:260px;margin-top:22px"><label for="b-guests">${s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`}<span class="req" aria-hidden="true">*</span></label><input id="b-guests" data-b="guests" value="${B.guests}" type="number" min="1" max="${s.max_guests}" inputmode="numeric" ${B.errors.guests ? raw('aria-invalid="true" aria-describedby="err-guests"') : ''}>${fErr('guests')}</div>
-      ${B.cart.length < 4 ? html`<div class="add-more"><span class="small muted">Booking more than one?</span>${s.stay_mode ? html`<button class="btn sm ghost" data-act="b-add-room">${icon('plus')} Add another room, same dates</button>` : ''}<button class="btn sm ghost" data-act="b-add">${icon('plus')} Add another experience</button></div>` : ''}
-      ${navBtns()}`;
+      ${s.stay_mode && B.cart.length + B.queue.length < 4 ? html`<div class="add-more"><span class="small muted">Need more than one room?</span><button class="btn sm ghost" data-act="b-add-room">${icon('plus')} Add another room, same dates</button></div>` : ''}
+      ${navBtns(B.queue.length ? `Next: ${svcById(B.queue[0])?.name || 'next experience'}` : 'Continue')}`;
   }
   if (B.step === 3) {
     const inp = (k, l, attrs) => html`<div class="field"><label for="b-${k}">${l}<span class="req" aria-hidden="true">*</span></label><input id="b-${k}" data-b="${k}" value="${B[k]}" ${raw(attrs)} ${B.errors[k] ? raw(`aria-invalid="true" aria-describedby="err-${k}"`) : ''}>${fErr(k)}</div>`;
@@ -1194,7 +1200,7 @@ function redrawStep(focusErr) {
 }
 function validateStep() {
   const s = svcById(B.sid), e = {};
-  if (B.step === 1 && !s && !B.cart.length) e.sid = 'Please choose an experience.';
+  if (B.step === 1 && !s && !B.cart.length && !B.picks.length) e.sid = 'Please add at least one experience.';
   if (B.step === 2) {
     if (!B.date) e.date = s.stay_mode ? 'Please choose your check-in date.' : 'Please choose a date.';
     else if (s.stay_mode && !B.end) e.date = 'Please choose your check-out date.';
@@ -1321,8 +1327,9 @@ function bookSummary() {
   const cart = B.cart.length ? html`<span class="kicker">Already in your booking</span><ul class="list-plain" style="margin-bottom:12px">${B.cart.map((c, i) => { const cs = svcById(c.sid), est = itemEst(c); return html`<li><div><b>${cs ? cs.name : ''}</b><br><span class="small muted">${fmtDay(c.date)}${c.end ? ` to ${fmtDay(c.end)}` : ''}${c.time ? `, ${c.time}` : ''}, ${c.guests} guest(s)${est ? `, about ${money(est.amount)}` : ''}</span></div><button class="linkbtn" data-act="b-cart-del" data-i="${i}" aria-label="Remove ${cs ? cs.name : 'item'}">${icon('close')}</button></li>`; })}</ul>` : '';
   const ests = [...B.cart.map(itemEst), s && B.date ? estimate(s, p, B.guests, s.stay_mode && B.date && B.end ? nights(B.date, B.end) : 0, null) : null].filter(Boolean);
   const grand = B.cart.length && ests.length ? html`<p style="margin:10px 0 0"><b>Estimated total for everything: ${money(ests.reduce((a, e) => a + e.amount, 0))}</b></p>${fxNote()}` : '';
-  if (!s) return html`${cart}${B.cart.length ? html`<p class="muted">Choose the next experience to add.</p>` : html`<span class="kicker">Your booking</span><p class="muted">Choose an experience to begin.</p>`}${grand}`;
-  return html`${cart}<div class="sum-img">${media(s.image_url, '', s.icon)}</div><span class="kicker">${B.cart.length ? 'Adding now' : 'Your booking'}</span><h3>${s.name}</h3><dl>
+  const picks = B.picks.length ? html`<span class="kicker">In your cart</span><ul class="list-plain">${B.picks.map(id => html`<li><b>${svcById(id)?.name}</b></li>`)}</ul><p class="small muted">You choose dates and guests next.</p>` : '';
+  if (!s) return html`${cart}${picks || (B.cart.length ? html`<p class="muted">Add more experiences, or continue to your details.</p>` : html`<span class="kicker">Your cart</span><p class="muted">Add the experiences you would like.</p>`)}${grand}`;
+  return html`${cart}${B.queue.length ? html`<p class="small muted" style="margin:0 0 10px">Still to come: ${B.queue.map(id => svcById(id)?.name).join(', ')}</p>` : ''}<div class="sum-img">${media(s.image_url, '', s.icon)}</div><span class="kicker">${B.cart.length ? 'Adding now' : 'Your booking'}</span><h3>${s.name}</h3><dl>
       ${p ? html`<dt>Package</dt><dd>${p.name}</dd>` : ''}
       <dt>${s.stay_mode ? 'Check-in' : 'Date'}</dt><dd>${B.date ? fmtDay(B.date) : 'Not chosen'}</dd>
       ${s.stay_mode ? html`<dt>Check-out</dt><dd>${B.end ? fmtDay(B.end) : 'Not chosen'}</dd>${B.date && B.end ? html`<dt>Nights</dt><dd>${nights(B.date, B.end)}</dd>` : ''}` : ''}
@@ -1555,7 +1562,7 @@ async function payOnline(btn) {
 }
 GUEST_ACT['pay-online'] = b => payOnline(b);
 GUEST_ACT['b-add-room'] = () => {
-  if (B.cart.length >= 4) return;
+  if (B.cart.length + B.queue.length >= 4) return;
   if (B.step === 2 && !validateStep()) return redrawStep(true);
   const s = svcById(B.sid);
   B.cart.push({ sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests });
@@ -3213,7 +3220,12 @@ const ACT = {
   'ics': downloadICS,
   'pw-toggle': b => { const i = document.getElementById(b.getAttribute('aria-controls')); const show = i.type === 'password'; i.type = show ? 'text' : 'password'; b.textContent = show ? 'Hide' : 'Show'; b.setAttribute('aria-pressed', tf(show)); b.setAttribute('aria-label', show ? 'Hide password' : 'Show password'); i.focus(); },
   'pw-gen': b => { document.getElementById(b.getAttribute('aria-controls')).value = genPassword(); },
-  'b-svc': b => { if (B.sid !== b.dataset.id) { Object.assign(B, { sid: b.dataset.id, pid: null, date: null, end: null, time: '', avail: {}, availKey: '', month: null }); } B.errors = {}; if (!S.packages.some(p => p.service_id === B.sid)) B.step = 2; redrawStep(); },
+  'b-svc': b => {
+    const id = b.dataset.id, i = B.picks.indexOf(id);
+    if (i >= 0) B.picks.splice(i, 1);
+    else { if (B.cart.length + B.picks.length >= 5) return toast('You can book up to 5 experiences at once. For more, please contact us.', 'error'); B.picks.push(id); }
+    B.errors = {}; redrawStep(); $(`[data-act="b-svc"][data-id="${id}"]`)?.focus();
+  },
   'b-pkg': b => { B.pid = b.dataset.id || null; redrawStep(); },
   'b-day': b => {
     const d = b.dataset.d, s = svcById(B.sid);
@@ -3229,8 +3241,25 @@ const ACT = {
   },
   'b-month': b => { B.month = new Date(B.month.getFullYear(), B.month.getMonth() + Number(b.dataset.dir), 1); $('#cal').innerHTML = String(calHtml()); loadAvail(); },
   'b-time': b => { B.time = b.dataset.t; B.errors = {}; redrawStep(); },
-  'b-back': () => { B.step--; B.errors = {}; redrawStep(); focusStep(); },
-  'b-next': () => { if (B.step === 4) return submitBooking(); if (B.step === 1 && !B.sid && B.cart.length) { Object.assign(B, B.cart.pop(), { errors: {}, step: 3 }); redrawStep(); return focusStep(); } if (!validateStep()) return redrawStep(true); B.step++; redrawStep(); focusStep(); },
+  'b-back': () => {
+    B.errors = {};
+    if (B.step === 2 && B.cart.length) { B.queue.unshift(B.sid); Object.assign(B, B.cart.pop(), { month: null, avail: {}, availKey: '' }); }
+    else if (B.step === 2) { B.picks = [B.sid, ...B.queue].filter(Boolean); Object.assign(B, { queue: [], sid: null, pid: null, date: null, end: null, time: '', month: null, avail: {}, availKey: '', step: 1 }); }
+    else B.step--;
+    redrawStep(); focusStep();
+  },
+  'b-next': () => {
+    if (B.step === 4) return submitBooking();
+    if (B.step === 1) {
+      if (B.picks.length) { if (B.sid && B.date) B.cart.push(curItem()); B.queue = B.picks.slice(); B.picks = []; nextInQueue(); B.step = 2; redrawStep(); return focusStep(); }
+      if (!B.sid && B.cart.length) { Object.assign(B, B.cart.pop(), { errors: {}, step: 3 }); redrawStep(); return focusStep(); }
+      if (B.sid) { B.step = 2; redrawStep(); return focusStep(); }
+      B.errors = { sid: 'Please add at least one experience.' }; return redrawStep(true);
+    }
+    if (!validateStep()) return redrawStep(true);
+    if (B.step === 2 && B.queue.length) { B.cart.push(curItem()); nextInQueue(); redrawStep(); return focusStep(); }
+    B.step++; redrawStep(); focusStep();
+  },
   'b-new': () => { resetBooking(); location.hash = '#/book'; render(); },
   /* admin */
   'logout': async () => { await sb.auth.signOut(); A.staff = null; location.hash = '#/admin'; render(); },
@@ -3295,6 +3324,11 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#nav-links')?.classList.contains('open')) { $('#nav-links').classList.remove('open'); $('.menu-btn')?.focus(); } });
 
+const curItem = () => ({ sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests });
+function nextInQueue() {
+  const prevDate = B.date, prevGuests = B.guests, s = svcById(B.queue[0]);
+  Object.assign(B, { sid: B.queue.shift(), pid: null, date: prevDate && prevDate >= todayISO() ? prevDate : null, end: null, time: '', guests: s && Number(prevGuests) <= s.max_guests ? prevGuests : '', month: null, avail: {}, availKey: '', errors: {} });
+}
 function loginGuard() {
   try { const g = JSON.parse(localStorage.getItem('gb_login') || 'null'); if (g && Date.now() - (g.at || 0) < 864e5) return { fails: g.fails | 0, locks: g.locks | 0, until: +g.until || 0 }; } catch {}
   return { fails: 0, locks: 0, until: 0 };
