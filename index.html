@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-Oh+4d0dGItsAabozD0tC2SWIthZsLkvcKQfRbSHsfB8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-L/RAJg/Nsyaqk9uffI9WXlwKG+pWzNZZ7LlxftKtBgo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -1438,7 +1438,7 @@ function vaAnswer(q) {
   if (has('contact', 'phone', 'call', 'whatsapp', 'email', 'number', 'talk to')) return html`Call ${phones().join(' or ')}${set('email') ? `, email ${set('email')}` : ''}, or <a href="${waLink()}" target="_blank" rel="noopener noreferrer">chat on WhatsApp</a>.`;
   if (has('book', 'reserve', 'reservation', 'availab')) return html`You can book online in a few steps and see which dates are free: ${link('#/book', 'start a booking')}. You can add more than one experience to the same booking.`;
   const svc = S.services.find(s => `${s.name} ${s.slug}`.toLowerCase().split(/[\s&,()-]+/).filter(w => w.length > 2 && !['the', 'and', 'day', 'for', 'full', 'booking', 'experience', 'garden', 'gardens', 'party', 'parties', 'table'].includes(w)).some(w => t.includes(w)));
-  if (svc) return html`<b>${svc.name}</b>: ${svc.tagline}. Price: ${priceText(svc)}. ${link('#/services/' + svc.slug, 'Read more')} or ${link('#/book?service=' + svc.slug, 'book it')}.`;
+  if (svc) return html`<b>${svc.name}</b>: ${svc.tagline.replace(/[.!]+$/, '')}. Price: ${priceText(svc)}. ${link('#/services/' + svc.slug, 'Read more')} or ${link('#/book?service=' + svc.slug, 'book it')}.`;
   if (has('activit', 'things to do', 'what do you offer', 'experience', 'service', 'fun', 'children', 'kids', 'family')) return html`Here is what you can enjoy at Grand Bay:<ul>${S.services.map(s => html`<li>${link('#/services/' + s.slug, s.name)}: ${s.tagline}</li>`)}</ul>`;
   if (has('price', 'cost', 'how much', 'rate', 'fee', 'charge')) return html`Prices at a glance:<ul>${S.services.map(s => html`<li>${s.name}: ${priceText(s)}</li>`)}</ul>${link('#/packages', 'See all packages')}.`;
   const words = t.split(/\W+/).filter(w => w.length > 3);
