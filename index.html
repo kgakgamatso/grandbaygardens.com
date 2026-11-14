@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-SlN5Qoty1xW9PmMhBBaqdo01m5kVUezai7K7Hvtpp6Q='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-qYqOirsOTHGTq+DTGyStmYB9zJUIuVZyG8/PeTM5azw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -369,10 +369,12 @@ input[type=checkbox]{width:20px;height:20px;min-height:0;accent-color:var(--fore
 @media (max-width:540px){.foot-grid{grid-template-columns:1fr}}
 
 /* WhatsApp FAB */
-.fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:45;display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 22px 0 18px;border-radius:2px;background:var(--wa);color:#fff;font:500 .95rem var(--sans);box-shadow:0 12px 30px -10px rgba(31,170,89,.7);text-decoration:none!important}
+.fab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:45;display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--wa);color:#fff;box-shadow:0 8px 20px -8px rgba(20,27,23,.5);text-decoration:none!important;transition:opacity .25s,transform .25s}
 .fab:hover{color:#fff;transform:translateY(-2px)}
-.fab .ic{width:24px;height:24px}
-@media (max-width:560px){.fab span{display:none}.fab{width:58px;padding:0;justify-content:center}}
+.fab .ic{width:30px;height:30px}
+.fab:focus-visible{outline:2px solid var(--forest);outline-offset:3px}
+body.foot-in .fab{opacity:0;transform:translateY(12px);pointer-events:none}
+@media (max-width:560px){.fab{width:52px;height:52px;right:14px;bottom:max(14px,env(safe-area-inset-bottom))}}
 
 /* Toast & modal */
 #toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:200;display:grid;gap:10px;width:min(92vw,440px)}
@@ -510,7 +512,6 @@ td .row{gap:6px;flex-wrap:nowrap}
 .cur select{min-height:36px;padding:4px 30px 4px 10px;width:auto;font-size:.9rem;background-color:transparent;color:inherit;border-color:currentColor}
 .cur select option{color:#141b17}
 .foot-bottom .cur select{min-height:32px}
-.fab{display:none!important}
 .va-btn{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:46;display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border:1px solid rgba(255,255,255,.18);border-radius:3px;background:var(--forest);color:#fff;font:500 .95rem var(--sans);cursor:pointer;box-shadow:0 8px 22px -12px rgba(20,27,23,.55);transition:opacity .25s,transform .25s}
 .va-btn:hover{background:var(--forest-2)}
 .va-btn:focus-visible{outline:2px solid var(--brass-2);outline-offset:3px}
@@ -524,11 +525,11 @@ body.foot-in .va-btn[aria-expanded="false"]{opacity:0;transform:translateY(12px)
 .va-wa small{font-size:.875rem;color:var(--muted)}
 .va-sub{margin:12px 12px 0;font-size:.875rem;color:var(--muted)}
 .va-btn .ic{width:20px;height:20px}
-.va{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:80px;z-index:56;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line-2);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+.va{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:88px;z-index:56;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line-2);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
 .va[hidden]{display:none}
 .va-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--forest);color:#fff}
 .va-head b{font:600 1rem var(--sans)}
-.va-log{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.95rem}
+.va-log{flex:1;min-height:220px;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.95rem}
 .va-msg{max-width:90%;padding:8px 12px;line-height:1.45}
 .va-msg.bot{background:#f0ebdf;align-self:flex-start}
 .va-msg.me{background:var(--forest);color:#fff;align-self:flex-end}
@@ -539,7 +540,7 @@ body.foot-in .va-btn[aria-expanded="false"]{opacity:0;transform:translateY(12px)
 .va form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
 .va form input{min-height:42px}
 body.is-admin .va-btn,body.is-admin .va{display:none!important}
-@media (max-width:560px){.va-btn{right:14px;bottom:max(14px,env(safe-area-inset-bottom));height:46px;padding:0 14px 0 12px}.va{left:8px;right:8px;width:auto;bottom:70px}}
+@media (max-width:560px){.va-btn{right:14px;bottom:max(14px,env(safe-area-inset-bottom));height:46px;padding:0 14px 0 12px}.va{left:8px;right:8px;width:auto;bottom:76px}}
 pre.bank{white-space:pre-line;font:500 .95rem/1.5 var(--sans);background:#f6f1e6;padding:10px 12px;margin:8px 0}
 /* Readability: plain font for prices, figures and labels */
 .price,.kpi b,.stat b,.bar b,.ref,.menu-item .mt span:last-child,.exp .cap .price,.summary .price,.mono{font-family:var(--sans)!important;font-style:normal!important;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:0}
@@ -818,7 +819,7 @@ function renderChrome(path) {
       ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
   <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}. Developed by <a href="https://www.cyberjayainvest.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Cyberjaya Investments</a></span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
 }
-function setFab(msg) { const f = $('#fab'); f.href = waLink(msg); f.innerHTML = String(html`${icon('whatsapp')}<span>WhatsApp us</span>`); }
+function setFab(msg) { const f = $('#fab'); f.href = waLink(msg); f.innerHTML = String(icon('whatsapp')); }
 const pageHead = (kicker, title, lead, crumbs) => html`<header class="page-head"><div class="wrap">
   ${crumbs ? html`<nav class="crumbs" aria-label="Breadcrumb"><a href="#/">Home</a>${crumbs.map(c => html`<span aria-hidden="true">/</span>${c[0] ? html`<a href="${c[0]}">${c[1]}</a>` : html`<span aria-current="page">${c[1]}</span>`}`)}</nav>` : ''}
   ${kicker ? html`<span class="kicker">${kicker}</span>` : ''}<h1 tabindex="-1">${title}</h1>${lead ? html`<p class="lead">${lead}</p>` : ''}</div></header>`;
@@ -1418,18 +1419,15 @@ function pageFaq() {
 /* Website assistant: answers from the website's own data, no outside service */
 const VA = { log: [] };
 function vaMount() {
-  if ($('#va-btn')) return;
+  if ($('#va')) return;
   const ft = $('#ftr');
   if (ft && 'IntersectionObserver' in window) new IntersectionObserver(es => document.body.classList.toggle('foot-in', es[0].isIntersecting), { rootMargin: '0px 0px -40px 0px' }).observe(ft);
-  document.body.insertAdjacentHTML('beforeend', String(html`<button id="va-btn" class="va-btn" data-act="va-open" aria-controls="va" aria-expanded="false">${icon('chat')}<span>Need help?</span></button><section id="va" class="va" role="dialog" aria-label="Grand Bay assistant" hidden></section>`));
+  document.body.insertAdjacentHTML('beforeend', String(html`<section id="va" class="va" role="dialog" aria-label="Grand Bay assistant" hidden></section>`));
 }
 const VA_CHIPS = ['Menu', 'Prices', 'Activities', 'Rooms', 'Check-in times', 'Opening hours', 'Directions', 'Payment', 'Contact'];
 function vaRender() {
   const el = $('#va'); if (!el) return;
-  const wa = $('#fab')?.href || waLink(), mins = Number(set('reply_whatsapp_minutes', '60')) || 60;
-  el.innerHTML = String(html`<div class="va-head"><b>How can we help?</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close">${icon('close')}</button></div>
-    <a class="va-wa" href="${wa}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')}<span><b>Chat with our team on WhatsApp</b><small>We usually reply within ${mins >= 60 ? (mins / 60 === 1 ? 'an hour' : mins / 60 + ' hours') : mins + ' minutes'}</small></span></a>
-    <p class="va-sub">Or ask our assistant a quick question</p>
+  el.innerHTML = String(html`<div class="va-head"><b>Grand Bay assistant</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close assistant">${icon('close')}</button></div>
     <div class="va-log" id="va-log" aria-live="polite">${VA.log.map(m => html`<div class="va-msg ${m.who}">${m.who === 'me' ? m.text : raw(m.html)}</div>`)}</div>
     <div class="va-chips">${VA_CHIPS.map(c => html`<button data-act="va-ask" data-q="${c}">${c}</button>`)}</div>
     <form data-form="va" novalidate><label class="sr" for="va-q">Your question</label><input id="va-q" name="q" maxlength="200" autocomplete="off" placeholder="Type a question"><button class="btn sm" type="submit">Send</button></form>`);
@@ -1438,9 +1436,9 @@ function vaRender() {
 function vaOpen() {
   const el = $('#va'); if (!el) return;
   if (!VA.log.length) VA.log.push({ who: 'bot', html: String(html`${set('assistant_greeting', 'Hello! How can I help?')}`) });
-  el.hidden = false; $('#va-btn').setAttribute('aria-expanded', 'true'); vaRender(); $('#va-q')?.focus();
+  el.hidden = false; vaRender(); $('#va-q')?.focus();
 }
-function vaClose() { const el = $('#va'); if (el) el.hidden = true; $('#va-btn')?.setAttribute('aria-expanded', 'false'); $('#va-btn')?.focus(); }
+function vaClose() { const el = $('#va'); if (el) el.hidden = true; }
 function vaAsk(q) { q = String(q || '').trim(); if (!q) return; VA.log.push({ who: 'me', text: q }, { who: 'bot', html: String(vaAnswer(q)) }); if (VA.log.length > 40) VA.log.splice(0, VA.log.length - 40); vaRender(); $('#va-q')?.focus(); }
 function vaAnswer(q) {
   const t = q.toLowerCase(), has = (...w) => w.some(x => t.includes(x));
