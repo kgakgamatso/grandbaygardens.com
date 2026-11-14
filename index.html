@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-YQrN0a62potX0J1rGGm695R/CxnFPGFjv/rRHkxgtxw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-nJNRXVOXMa16I7lScwA/u8TFCJnn2hCeZrmQcTHvxD0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -804,7 +804,7 @@ function renderChrome(path) {
     <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="#/contact">Directions</a></li><li><a href="#/feedback">Share your feedback</a></li></ul></div>
     <div><h4>Contact</h4><ul>${phones().map(p => html`<li><a href="${telHref(p)}">${p}</a></li>`)}${set('email') ? html`<li><a href="mailto:${set('email')}">${set('email')}</a></li>` : ''}
       ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
-  <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}</span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
+  <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}. Developed by <a href="https://www.cyberjayainvest.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Cyberjaya Investments</a></span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
 }
 function setFab(msg) { const f = $('#fab'); f.href = waLink(msg); f.innerHTML = String(html`${icon('whatsapp')}<span>WhatsApp us</span>`); }
 const pageHead = (kicker, title, lead, crumbs) => html`<header class="page-head"><div class="wrap">
