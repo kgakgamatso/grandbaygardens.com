@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-L/RAJg/Nsyaqk9uffI9WXlwKG+pWzNZZ7LlxftKtBgo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-jlzapSKt5SyXuGWbakO7Q9dPP3p8qxQdxxxipgfjymA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -2835,6 +2835,7 @@ FIN_ACT['fp-receipt'] = () => { const x = A.fpLast; if (x) printReceipt(x.p, x.b
 /* ================= Operations: housekeeping, inventory, maintenance. Booking file sending ================= */
 ALL_ROLES.push('housekeeping', 'kitchen', 'maintenance');
 METHOD.online = 'Online (card)'; METHOD.paypal = 'PayPal';
+SOURCE.booking_com = 'Booking.com';
 {
   const at = SECTIONS.findIndex(s => s.g === 'Catalogue');
   SECTIONS.splice(at, 0, { g: 'Operations' },
