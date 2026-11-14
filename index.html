@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-nJNRXVOXMa16I7lScwA/u8TFCJnn2hCeZrmQcTHvxD0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-SlN5Qoty1xW9PmMhBBaqdo01m5kVUezai7K7Hvtpp6Q='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -510,9 +510,21 @@ td .row{gap:6px;flex-wrap:nowrap}
 .cur select{min-height:36px;padding:4px 30px 4px 10px;width:auto;font-size:.9rem;background-color:transparent;color:inherit;border-color:currentColor}
 .cur select option{color:#141b17}
 .foot-bottom .cur select{min-height:32px}
-.va-btn{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:86px;z-index:46;display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 16px;border-radius:2px;border:1px solid var(--forest);background:var(--paper);color:var(--forest);font:600 .95rem var(--sans);cursor:pointer;box-shadow:0 10px 26px -14px rgba(0,0,0,.45)}
+.fab{display:none!important}
+.va-btn{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:46;display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border:1px solid rgba(255,255,255,.18);border-radius:3px;background:var(--forest);color:#fff;font:500 .95rem var(--sans);cursor:pointer;box-shadow:0 8px 22px -12px rgba(20,27,23,.55);transition:opacity .25s,transform .25s}
+.va-btn:hover{background:var(--forest-2)}
+.va-btn:focus-visible{outline:2px solid var(--brass-2);outline-offset:3px}
+.va-btn[aria-expanded="true"]{background:var(--forest-2)}
+body.foot-in .va-btn[aria-expanded="false"]{opacity:0;transform:translateY(12px);pointer-events:none}
+.va-wa{display:flex;gap:12px;align-items:center;margin:12px 12px 0;padding:12px;border:1px solid var(--line-2);background:#fff;color:var(--ink);text-decoration:none!important}
+.va-wa:hover{border-color:var(--forest)}
+.va-wa .ic{width:26px;height:26px;color:var(--wa);flex:none}
+.va-wa span{display:flex;flex-direction:column;gap:2px}
+.va-wa b{font:600 .95rem var(--sans);color:var(--forest)}
+.va-wa small{font-size:.875rem;color:var(--muted)}
+.va-sub{margin:12px 12px 0;font-size:.875rem;color:var(--muted)}
 .va-btn .ic{width:20px;height:20px}
-.va{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:142px;z-index:56;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line-2);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+.va{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:80px;z-index:56;width:min(380px,calc(100vw - 32px));max-height:min(70vh,560px);display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line-2);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
 .va[hidden]{display:none}
 .va-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--forest);color:#fff}
 .va-head b{font:600 1rem var(--sans)}
@@ -527,7 +539,7 @@ td .row{gap:6px;flex-wrap:nowrap}
 .va form{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line)}
 .va form input{min-height:42px}
 body.is-admin .va-btn,body.is-admin .va{display:none!important}
-@media (max-width:560px){.va-btn span{display:none}.va-btn{width:48px;padding:0;justify-content:center}.va{left:8px;right:8px;width:auto}}
+@media (max-width:560px){.va-btn{right:14px;bottom:max(14px,env(safe-area-inset-bottom));height:46px;padding:0 14px 0 12px}.va{left:8px;right:8px;width:auto;bottom:70px}}
 pre.bank{white-space:pre-line;font:500 .95rem/1.5 var(--sans);background:#f6f1e6;padding:10px 12px;margin:8px 0}
 /* Readability: plain font for prices, figures and labels */
 .price,.kpi b,.stat b,.bar b,.ref,.menu-item .mt span:last-child,.exp .cap .price,.summary .price,.mono{font-family:var(--sans)!important;font-style:normal!important;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:0}
@@ -1407,12 +1419,17 @@ function pageFaq() {
 const VA = { log: [] };
 function vaMount() {
   if ($('#va-btn')) return;
-  document.body.insertAdjacentHTML('beforeend', String(html`<button id="va-btn" class="va-btn" data-act="va-open" aria-controls="va" aria-expanded="false">${icon('chat')}<span>Ask us</span></button><section id="va" class="va" role="dialog" aria-label="Grand Bay assistant" hidden></section>`));
+  const ft = $('#ftr');
+  if (ft && 'IntersectionObserver' in window) new IntersectionObserver(es => document.body.classList.toggle('foot-in', es[0].isIntersecting), { rootMargin: '0px 0px -40px 0px' }).observe(ft);
+  document.body.insertAdjacentHTML('beforeend', String(html`<button id="va-btn" class="va-btn" data-act="va-open" aria-controls="va" aria-expanded="false">${icon('chat')}<span>Need help?</span></button><section id="va" class="va" role="dialog" aria-label="Grand Bay assistant" hidden></section>`));
 }
 const VA_CHIPS = ['Menu', 'Prices', 'Activities', 'Rooms', 'Check-in times', 'Opening hours', 'Directions', 'Payment', 'Contact'];
 function vaRender() {
   const el = $('#va'); if (!el) return;
-  el.innerHTML = String(html`<div class="va-head"><b>Grand Bay assistant</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close assistant">${icon('close')}</button></div>
+  const wa = $('#fab')?.href || waLink(), mins = Number(set('reply_whatsapp_minutes', '60')) || 60;
+  el.innerHTML = String(html`<div class="va-head"><b>How can we help?</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close">${icon('close')}</button></div>
+    <a class="va-wa" href="${wa}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')}<span><b>Chat with our team on WhatsApp</b><small>We usually reply within ${mins >= 60 ? (mins / 60 === 1 ? 'an hour' : mins / 60 + ' hours') : mins + ' minutes'}</small></span></a>
+    <p class="va-sub">Or ask our assistant a quick question</p>
     <div class="va-log" id="va-log" aria-live="polite">${VA.log.map(m => html`<div class="va-msg ${m.who}">${m.who === 'me' ? m.text : raw(m.html)}</div>`)}</div>
     <div class="va-chips">${VA_CHIPS.map(c => html`<button data-act="va-ask" data-q="${c}">${c}</button>`)}</div>
     <form data-form="va" novalidate><label class="sr" for="va-q">Your question</label><input id="va-q" name="q" maxlength="200" autocomplete="off" placeholder="Type a question"><button class="btn sm" type="submit">Send</button></form>`);
