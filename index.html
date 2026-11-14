@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-jlzapSKt5SyXuGWbakO7Q9dPP3p8qxQdxxxipgfjymA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-tnpPuvrvSRzbiivKSEZIpw3XXtHzA+/Ms/9bhjcBIgM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -499,6 +499,14 @@ td .row{gap:6px;flex-wrap:nowrap}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.hero .slide.on{transform:none}}
 #print-area{display:none}
+.stars-in{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
+.stars-in label{cursor:pointer;font-size:2rem;line-height:1;color:#c9c2b0}
+.stars-in label:hover,.stars-in label:hover~label,.stars-in label:has(input:checked),.stars-in label:has(input:checked)~label{color:#b8862b}
+.stars-in input:focus-visible+span{outline:2px solid var(--brass);outline-offset:2px}
+.fb-stars{color:#b8862b;font-size:1.1rem;letter-spacing:1px}
+.fb-photos{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.fb-photos figure{margin:0;display:flex;flex-direction:column;gap:4px}
+.fb-photos img{width:130px;height:100px;object-fit:cover;border:1px solid var(--line)}
 .cur select{min-height:36px;padding:4px 30px 4px 10px;width:auto;font-size:.9rem;background-color:transparent;color:inherit;border-color:currentColor}
 .cur select option{color:#141b17}
 .foot-bottom .cur select{min-height:32px}
@@ -793,7 +801,7 @@ function renderChrome(path) {
     <div>${logoHtml()}<p style="max-width:340px">${set('tagline')}</p><p class="small" style="white-space:pre-line;opacity:.8">${set('address')}</p>
       <div class="socials">${socials.map(s => html`<a href="${safeUrl(set(s[0]))}" target="_blank" rel="noopener noreferrer" aria-label="${s[2]}">${icon(s[1])}</a>`)}</div></div>
     <div><h4>Explore</h4><ul>${NAV.map(([h, l]) => html`<li><a href="${h}">${l}</a></li>`)}</ul></div>
-    <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="#/contact">Directions</a></li></ul></div>
+    <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="#/contact">Directions</a></li><li><a href="#/feedback">Share your feedback</a></li></ul></div>
     <div><h4>Contact</h4><ul>${phones().map(p => html`<li><a href="${telHref(p)}">${p}</a></li>`)}${set('email') ? html`<li><a href="mailto:${set('email')}">${set('email')}</a></li>` : ''}
       ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
   <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}</span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
@@ -1050,7 +1058,7 @@ async function submitEnquiry(f) {
 }
 
 /* Booking wizard */
-const B = { country: '', cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
+const B = { heard: '', country: '', cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', name: '', phone: '', email: '', notes: '', consent: false, agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} };
 function resetBooking() { Object.assign(B, { cart: [], proof: null, purpose: '', t0: Date.now(), hp: '', step: 1, sid: null, pid: null, date: null, end: null, time: '', guests: '', notes: '', agree: false, month: null, avail: {}, availKey: '', busy: false, result: null, errors: {} }); }
 const STEPS = ['Experience', 'Date', 'Your details', 'Review'];
 function pageBook(q) {
@@ -1110,6 +1118,7 @@ function stepHtml() {
         ${inp('email', 'Email', 'type="email" autocomplete="email" maxlength="200"')}${inp('guests', s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`, `type="number" min="1" max="${s.max_guests}" inputmode="numeric"`)}
         <div class="field"><label for="b-country">Country you are travelling from</label><select id="b-country" data-b="country"><option value="">Choose (optional)</option>${COUNTRIES.map(([n]) => html`<option value="${n}" ${B.country === n ? 'selected' : ''}>${n}</option>`)}</select></div>
         <div class="field"><label for="b-purpose">Purpose of your visit</label><select id="b-purpose" data-b="purpose"><option value="">Choose one (optional)</option>${PURPOSES.map(x => html`<option value="${x}" ${B.purpose === x ? 'selected' : ''}>${x}</option>`)}</select></div>
+        <div class="field full"><label for="b-heard">How did you hear about us? <span class="muted small">(optional)</span></label><select id="b-heard" data-b="heard"><option value="">Choose one</option>${HEARD.map(x => html`<option value="${x}" ${B.heard === x ? 'selected' : ''}>${x}</option>`)}</select></div>
         <div class="field full"><label for="b-notes">Special requirements</label><textarea id="b-notes" data-b="notes" maxlength="2000" placeholder="Theme, dietary needs, set-up, arrival time">${B.notes}</textarea></div></div>
       <div class="hp" aria-hidden="true"><label>Company website<input data-b="hp" tabindex="-1" autocomplete="off"></label></div><label class="check"><input type="checkbox" data-b="agree" ${B.agree ? 'checked' : ''}><span>I agree to the <a href="#/terms" target="_blank">booking terms</a> and <a href="#/privacy" target="_blank">privacy policy</a>.<span class="req" aria-hidden="true">*</span></span></label>${fErr('agree')}
       <label class="check"><input type="checkbox" data-b="consent" ${B.consent ? 'checked' : ''}><span>Send me occasional news and offers (optional).</span></label>
@@ -1326,7 +1335,7 @@ async function submitBooking() {
   const done = [], failed = [];
   for (const it of items) {
     const s = svcById(it.sid);
-    const { data, error } = await sb.rpc('create_booking', { p_service_id: it.sid, p_package_id: it.pid || null, p_name: B.name, p_phone: B.phone, p_email: B.email, p_guests: Number(it.guests), p_date: it.date, p_end_date: s.stay_mode ? it.end : null, p_time: it.time || null, p_notes: B.notes, p_consent: !!B.consent, p_hp: B.hp || '', p_elapsed: Date.now() - (B.t0 || 0), p_purpose: B.purpose || '', p_group: group, p_country: B.country || '' });
+    const { data, error } = await sb.rpc('create_booking', { p_service_id: it.sid, p_package_id: it.pid || null, p_name: B.name, p_phone: B.phone, p_email: B.email, p_guests: Number(it.guests), p_date: it.date, p_end_date: s.stay_mode ? it.end : null, p_time: it.time || null, p_notes: B.notes, p_consent: !!B.consent, p_hp: B.hp || '', p_elapsed: Date.now() - (B.t0 || 0), p_purpose: B.purpose || '', p_group: group, p_country: B.country || '', p_heard: B.heard || '' });
     if (error) failed.push({ name: s.name, date: it.date, msg: errText(error) });
     else done.push({ ...data, date: it.date, end: s.stay_mode ? it.end : null, time: it.time, guests: it.guests, stay: !!s.stay_mode });
   }
@@ -1359,7 +1368,7 @@ function bookDone() {
       <label class="btn sm ghost">${icon('upload')} Upload proof of payment<input type="file" class="sr" accept="image/jpeg,image/png,image/webp,application/pdf" data-proof-later></label></div>
     <div class="row center" style="margin-top:18px"><a class="btn wa" href="${waLink(msg)}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')} Send to us on WhatsApp</a>
       <button class="btn ghost" data-act="ics">${icon('calendar')} Add to calendar</button><button class="btn ghost" data-act="print">${icon('print')} Print</button></div>
-    <p style="margin-top:20px"><button class="btn sm ghost" data-act="b-new">Make another booking</button></p></div></section>`;
+    <p class="muted" style="margin-top:18px">After your visit, <a href="#/feedback?ref=${items[0].reference}">share your feedback and photos</a> with us.</p><p style="margin-top:10px"><button class="btn sm ghost" data-act="b-new">Make another booking</button></p></div></section>`;
 }
 function printBookingDone() {
   const r = B.result; if (!r) return;
@@ -1736,7 +1745,7 @@ function notifyText(b, status) {
     pending: `Hello ${n}, we have received your booking request ${b.reference} for ${svc} on ${d}. Our team will confirm shortly. ${biz}`,
     rejected: `Hello ${n}, unfortunately we cannot accommodate booking ${b.reference} for ${svc} on ${d}. Please reply and we will gladly help you find another date. ${biz}`,
     cancelled: `Hello ${n}, your booking ${b.reference} for ${svc} on ${d} has been cancelled. Please contact us if you have any questions. ${biz}`,
-    completed: `Hello ${n}, thank you for visiting ${biz}. We hope you enjoyed ${svc} and would love your feedback.`
+    completed: `Hello ${n}, thank you for visiting ${biz}. We hope you enjoyed ${svc}. We would love to hear about your visit and see your photos: ${feedbackLink(b)}`
   }[status] || '';
 }
 function notifyModal(b, status, custom) {
@@ -1940,7 +1949,7 @@ ADM.reports = async () => {
 };
 async function runReport() {
   const r = A.rep;
-  let q = sb.from('bookings').select('id,reference,service_id,customer_name,phone,email,guests,booking_date,status,source,created_at,services(name)').limit(10000);
+  let q = sb.from('bookings').select('id,reference,service_id,customer_name,phone,email,guests,booking_date,status,source,heard_from,created_at,services(name)').limit(10000);
   q = r.basis === 'created_at' ? q.gte('created_at', r.from + 'T00:00:00').lte('created_at', r.to + 'T23:59:59') : q.gte('booking_date', r.from).lte('booking_date', r.to);
   const { data, error } = await q, out = $('#rep-out'); if (!out) return;
   if (error) { out.innerHTML = String(html`<p class="err">${errText(error)}</p>`); return; }
@@ -1959,6 +1968,7 @@ async function runReport() {
       <div class="card pad"><h2 style="font-size:1.5rem">How people book</h2><div class="bars">${src.length ? src.map(s => html`<div class="bar"><span>${s.k}</span><span class="track"><span class="fill" style="width:${Math.round(s.n / Math.max(1, data.length) * 100)}%"></span></span><b>${s.n}</b></div>`) : html`<p class="muted">No data.</p>`}</div></div></div>
     <div class="card pad" style="margin-top:18px"><div class="row between"><h2 style="font-size:1.5rem;margin:0">Bookings by ${r.group}</h2><div class="row"><button class="btn xs ghost" data-act="rep-csv" data-k="per">Export summary</button><button class="btn xs ghost" data-act="rep-csv" data-k="all">Export all bookings</button></div></div>
       <div class="tbl-wrap" style="margin-top:14px"><table><thead><tr><th>Period</th><th>Total</th><th>Pending</th><th>Confirmed</th><th>Cancelled</th><th>Guests</th><th style="width:28%"><span class="sr">Chart</span></th></tr></thead><tbody>${per.length ? per.map(p => html`<tr><td>${p.label}</td><td><b>${p.n}</b></td><td>${p.p}</td><td>${p.c}</td><td>${p.x}</td><td>${p.g}</td><td><span class="track"><span class="fill" style="width:${Math.round(p.n / maxp * 100)}%"></span></span></td></tr>`) : html`<tr><td colspan="7" class="muted">No bookings in this period.</td></tr>`}</tbody></table></div></div>`);
+  out.insertAdjacentHTML('beforeend', String(heardCard(data)));
   A.repSvc = svc; A.repPer = per;
   revenueReport();
 }
@@ -2527,7 +2537,7 @@ async function statsReport() {
   out.innerHTML = String(html`<div class="kpis">${[['Bookings', data.total], ['Confirmed', data.confirmed], ['Waiting for approval', data.pending], ['Guests expected', data.guests], ['Enquiries', data.enquiries], ['Marketing opt-ins', data.consents]].map(([l, v]) => html`<div class="kpi"><span>${l}</span><b>${v}</b></div>`)}</div>
     <div class="grid g3"><div class="card pad"><h2 class="h-sm">Bookings by experience</h2><div class="bars">${bars(data.by_service, x => x.name)}</div></div>
       <div class="card pad"><h2 class="h-sm">How people book</h2><div class="bars">${bars(data.by_source, x => SOURCE[x.source] || x.source)}</div></div>
-      <div class="card pad"><h2 class="h-sm">Enquiries by topic</h2><div class="bars">${bars(data.enq_by_service, x => x.name)}</div></div></div>`);
+      <div class="card pad"><h2 class="h-sm">Enquiries by topic</h2><div class="bars">${bars(data.enq_by_service, x => x.name)}</div></div></div><div class="card pad" style="margin-top:14px"><h2 class="h-sm">How guests heard about us</h2><div class="bars">${bars(data.by_heard || [], x => x.heard)}</div></div>`);
 }
 
 const pwRule = p => p.length < 10 ? 'Use at least 10 characters.' : !/[a-z]/i.test(p) || !/\d/.test(p) ? 'Use both letters and numbers.' : '';
@@ -2994,7 +3004,7 @@ async function fileExtras() {
   const body = $('#modal .m-body'); if (!body || !A.file) return;
   const b = A.file.b, last = body.lastElementChild;
   const box = document.createElement('div');
-  box.innerHTML = String(html`${b.purpose ? html`<p class="small" style="margin:6px 0"><b>Purpose of visit:</b> ${b.purpose}</p>` : ''}${b.country ? html`<p class="small" style="margin:6px 0"><b>Travelling from:</b> ${b.country}</p>` : ''}${b.group_ref ? html`<p class="small" style="margin:6px 0"><b>Booked together with other experiences</b> (group ${b.group_ref}).</p>` : ''}
+  box.innerHTML = String(html`${b.purpose ? html`<p class="small" style="margin:6px 0"><b>Purpose of visit:</b> ${b.purpose}</p>` : ''}${b.country ? html`<p class="small" style="margin:6px 0"><b>Travelling from:</b> ${b.country}</p>` : ''}${b.heard_from ? html`<p class="small" style="margin:6px 0"><b>Heard about us from:</b> ${b.heard_from}</p>` : ''}${b.group_ref ? html`<p class="small" style="margin:6px 0"><b>Booked together with other experiences</b> (group ${b.group_ref}).</p>` : ''}
     <div class="row" style="margin:10px 0"><span class="lbl">Send to the guest:</span><button class="btn xs ghost" data-act="inv-print">${icon('print')} Invoice</button><button class="btn xs ghost" data-act="inv-send" data-ch="whatsapp">${icon('whatsapp')} Invoice</button>${b.email ? html`<button class="btn xs ghost" data-act="inv-send" data-ch="email">${icon('mail')} Invoice</button>` : ''}
       ${b.status === 'confirmed' ? html`<button class="btn xs ghost" data-act="welcome-send" data-ch="whatsapp">${icon('whatsapp')} Welcome message</button>${b.email ? html`<button class="btn xs ghost" data-act="welcome-send" data-ch="email">${icon('mail')} Welcome message</button>` : ''}` : ''}</div>
     <div id="file-proofs"></div>`);
@@ -3066,6 +3076,103 @@ const OPS_FORMS = {
     const { error } = await sb.from('maintenance_reports').update({ status: 'closed', resolution: res, closed_by_name: staffName(), closed_at: new Date().toISOString() }).eq('id', f.dataset.id);
     if (error) { err.textContent = errText(error); return; }
     closeModal(); toast('Report closed.'); ADM.maintenance();
+  }
+};
+
+/* ================= How guests heard about us, and guest feedback with memories ================= */
+const HEARD = ['Instagram', 'Facebook', 'TikTok', 'Google search', 'Booking.com', 'A friend or family member', 'I have visited before', 'News or press', 'An event at Grand Bay', 'Other'];
+const feedbackLink = b => `${location.origin}${location.pathname}#/feedback?ref=${b.reference}`;
+const starsTxt = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+SECTIONS.splice(SECTIONS.findIndex(s => s.k === 'testimonials') + 1, 0, { k: 'feedback', l: 'Guest feedback', i: 'star', r: ['super_admin', 'manager', 'marketing', 'receptionist'] });
+
+function pageFeedback(q) {
+  return html`${pageHead('Guest feedback', 'Share your experience', 'Tell us about your visit and share your favourite moments. You need your booking reference and the email you booked with.', [[0, 'Feedback']])}
+  <section style="padding-top:20px"><div class="wrap" style="max-width:760px" id="fb-wrap"><form class="card pad" data-form="fb" novalidate>
+    <div class="form-grid"><div class="field"><label for="fb-r">Booking reference<span class="req" aria-hidden="true">*</span></label><input id="fb-r" name="ref" class="mono" maxlength="11" placeholder="GB-XXXXXXXX" value="${String(q.ref || '').toUpperCase().slice(0, 11)}" required autocapitalize="characters"></div>
+      <div class="field"><label for="fb-e">Email you booked with<span class="req" aria-hidden="true">*</span></label><input id="fb-e" name="email" type="email" maxlength="200" autocomplete="email" required></div></div>
+    <fieldset class="choice"><legend class="lbl">Your rating<span class="req" aria-hidden="true">*</span></legend><div class="stars-in" role="radiogroup" aria-label="Rating">${[5, 4, 3, 2, 1].map(n => html`<label title="${n} out of 5"><input type="radio" name="rating" value="${n}" class="sr"><span aria-hidden="true">★</span><span class="sr">${n} out of 5</span></label>`)}</div></fieldset>
+    <div class="field"><label for="fb-c">Tell us about your visit</label><textarea id="fb-c" name="comment" rows="5" maxlength="2000" placeholder="What did you enjoy? What could we do better?"></textarea></div>
+    <div class="field"><label for="fb-p">Your photos (optional, up to 5)</label><input id="fb-p" name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple><small class="help">Photos are only seen by our team unless you allow us to share them.</small></div>
+    <label class="check"><input type="checkbox" name="consent"> <span>You may share my review and photos on the Grand Bay website and social media, with my first name only.</span></label>
+    <p class="err" data-err role="alert"></p><button class="btn" type="submit">Send feedback</button></form></div></section>`;
+}
+async function fbCall(body) {
+  try {
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/submit-feedback`, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({})); return r.ok ? j : { error: j.error || 'Something went wrong. Please try again.' };
+  } catch { return { error: 'We could not reach our system. Please check your connection.' }; }
+}
+
+/* Staff: Guest feedback */
+ADM.feedback = async () => {
+  const { data, error } = await sb.from('feedback').select('*, bookings(reference,customer_name,booking_date,heard_from,services(name))').order('created_at', { ascending: false }).limit(300);
+  if (error) throw error;
+  A.rows.fb = data;
+  const paths = data.flatMap(f => (f.photos || []).map(p => p.path));
+  A.fbUrls = {};
+  if (paths.length) { const { data: s } = await sb.storage.from('memories').createSignedUrls(paths, 3600); (s || []).forEach(x => { if (x.signedUrl) A.fbUrls[x.path] = x.signedUrl; }); }
+  const avg = data.length ? (data.reduce((a, f) => a + f.rating, 0) / data.length).toFixed(1) : 'None yet', mkt = can(MKT);
+  fill(html`${admTop('Guest feedback', 'Reviews and photos from guests, linked to their bookings. Only publish what guests have allowed you to share.')}
+    <div class="kpis"><div class="kpi"><span>Reviews</span><b>${data.length}</b></div><div class="kpi"><span>Average rating</span><b>${avg}${data.length ? ' / 5' : ''}</b></div><div class="kpi"><span>Five-star reviews</span><b>${data.filter(f => f.rating === 5).length}</b></div><div class="kpi"><span>Not yet read</span><b>${data.filter(f => f.status === 'new').length}</b></div><div class="kpi"><span>With photos</span><b>${data.filter(f => (f.photos || []).length).length}</b></div></div>
+    ${data.length ? html`<div class="stack">${data.map(f => { const b = f.bookings || {}; return html`<article class="card pad"><div class="row between"><div><span class="fb-stars" aria-label="${f.rating} out of 5">${starsTxt(f.rating)}</span> <b>${b.customer_name}</b><br><span class="small muted">${b.reference}, ${b.services?.name}, visited ${fmtDate(b.booking_date)}${b.heard_from ? `, heard about us from ${b.heard_from}` : ''}. Sent ${fmtDT(f.created_at)}.</span></div>
+        <div class="row">${f.consent_publish ? pill('ok', 'May be shared') : pill('', 'Private')}${pill(f.status === 'published' ? 'ok' : f.status === 'hidden' ? 'bad' : f.status === 'new' ? 'warn' : 'info', { new: 'New', read: 'Read', published: 'Published', hidden: 'Hidden' }[f.status])}</div></div>
+      ${f.comment ? html`<p style="white-space:pre-line;margin:10px 0">${f.comment}</p>` : html`<p class="muted small">No comment written.</p>`}
+      ${(f.photos || []).length ? html`<div class="fb-photos">${f.photos.map(p => html`<figure><a href="${A.fbUrls[p.path] || '#'}" target="_blank" rel="noopener noreferrer"><img src="${A.fbUrls[p.path] || ''}" alt="Photo from ${firstName(b.customer_name)}" loading="lazy"></a>${mkt && f.consent_publish ? html`<button class="btn xs ghost" data-act="fb-gallery" data-id="${f.id}" data-path="${p.path}">Add to gallery</button>` : ''}</figure>`)}</div>` : ''}
+      <div class="row" style="margin-top:10px">${mkt && f.consent_publish && f.comment && f.status !== 'published' ? html`<button class="btn xs" data-act="fb-publish" data-id="${f.id}">Publish as testimonial</button>` : ''}
+        ${f.status === 'new' && mkt ? html`<button class="btn xs ghost" data-act="fb-status" data-id="${f.id}" data-s="read">Mark as read</button>` : ''}${mkt && f.status !== 'hidden' ? html`<button class="btn xs ghost" data-act="fb-status" data-id="${f.id}" data-s="hidden">Hide</button>` : ''}
+        <button class="btn xs ghost" data-act="file-open" data-id="${f.booking_id}">Open booking</button></div></article>`; })}</div>` : html`<div class="empty">${icon('star')}<p>No feedback yet. Guests receive the feedback link in the thank-you message after check-out.</p></div>`}`);
+};
+function heardCard(rows) {
+  const by = {}; rows.forEach(b => { const k = b.heard_from || 'Not given'; by[k] = (by[k] || 0) + 1; });
+  const list = Object.entries(by).sort((a, z) => z[1] - a[1]), max = Math.max(1, ...list.map(x => x[1]));
+  return html`<div class="card pad" style="margin-top:14px"><h2 class="h-sm">How guests heard about us</h2><div class="bars">${list.length ? list.map(([k, n]) => html`<div class="bar"><span>${k}</span><span class="track"><span class="fill" style="width:${Math.round(n / max * 100)}%"></span></span><b>${n}</b></div>`) : html`<p class="muted small">No data.</p>`}</div></div>`;
+}
+const FB_ACT = {
+  'fb-status': async b => { const { error } = await sb.from('feedback').update({ status: b.dataset.s, reviewed_by_name: staffName(), reviewed_at: new Date().toISOString() }).eq('id', b.dataset.id); if (error) return toast(errText(error), 'error'); toast(b.dataset.s === 'hidden' ? 'Hidden.' : 'Marked as read.'); ADM.feedback(); },
+  'fb-publish': async b => {
+    const f = A.rows.fb.find(x => x.id === b.dataset.id); if (!f) return;
+    const bk = f.bookings || {}, nm = String(bk.customer_name || '').trim().split(/\s+/);
+    const author = nm[0] + (nm[1] ? ' ' + nm[1][0] + '.' : '');
+    const context = `${bk.services?.name || 'Visit'}, ${parseISO(bk.booking_date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
+    const { error } = await sb.from('testimonials').insert({ author, context, quote: f.comment.slice(0, 1000), rating: f.rating, published: true });
+    if (error) return toast(errText(error), 'error');
+    await sb.from('feedback').update({ status: 'published', reviewed_by_name: staffName(), reviewed_at: new Date().toISOString() }).eq('id', f.id);
+    toast('Published on the website as a testimonial.'); loadPublic().catch(() => {}); ADM.feedback();
+  },
+  'fb-gallery': async b => {
+    const f = A.rows.fb.find(x => x.id === b.dataset.id), url = A.fbUrls[b.dataset.path]; if (!f || !url) return;
+    b.disabled = true;
+    try {
+      const blob = await (await fetch(url)).blob();
+      const pub = await uploadFile(new File([blob], 'memory', { type: blob.type || 'image/jpeg' }), 'memories');
+      const { error } = await sb.from('gallery').insert({ image_url: pub, caption: `Shared by ${firstName(f.bookings?.customer_name)}`, category: 'Guest memories', published: true });
+      if (error) throw error;
+      toast('Added to the gallery.'); loadPublic().catch(() => {});
+    } catch (e) { toast(errText(e), 'error'); b.disabled = false; }
+  }
+};
+const FB_FORMS = {
+  fb: async f => {
+    const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), btn = $('button[type=submit]', f);
+    const ref = String(v.ref || '').trim().toUpperCase(), email = String(v.email || '').trim().toLowerCase();
+    if (!/^GB-[A-Z0-9]{8}$/.test(ref)) { err.textContent = 'Enter your booking reference, for example GB-1A2B3C4D.'; f.elements.ref.focus(); return; }
+    { const em = emailIssue(email); if (em) { err.textContent = em; f.elements.email.focus(); return; } }
+    if (!v.rating) { err.textContent = 'Choose a star rating.'; return; }
+    const files = [...f.elements.photos.files];
+    if (files.length > 5) { err.textContent = 'Please choose up to 5 photos.'; return; }
+    const badFile = files.find(x => !/^image\/(jpeg|png|webp)$/.test(x.type)); if (badFile) { err.textContent = `${badFile.name} is not a JPG, PNG or WebP photo.`; return; }
+    btn.disabled = true; btn.textContent = 'Sending'; err.textContent = '';
+    const res = await fbCall({ action: 'submit', reference: ref, email, rating: Number(v.rating), comment: v.comment || '', consent: !!v.consent });
+    if (res.error) { btn.disabled = false; btn.textContent = 'Send feedback'; err.textContent = res.error; return; }
+    let sent = 0, failed = '';
+    for (const file of files) {
+      btn.textContent = `Uploading photo ${sent + 1} of ${files.length}`;
+      const small = await shrink(file);
+      if (small.size > 5 * 1024 * 1024) { failed = `${file.name} is larger than 5 MB.`; continue; }
+      const r = await fbCall({ action: 'photo', reference: ref, email, name: file.name, data: await fileToB64(small) });
+      if (r.error) failed = r.error; else sent++;
+    }
+    $('#fb-wrap').innerHTML = String(html`<div class="card pad" style="text-align:center"><div class="success-ic">${icon('check')}</div><h2>Thank you!</h2><p class="lead" style="margin-inline:auto">Your feedback${sent ? ` and ${sent} photo${sent > 1 ? 's' : ''}` : ''} reached our team. We truly appreciate it.</p>${failed ? html`<p class="err">${failed}</p>` : ''}<a class="btn" href="#/">Back to the website</a></div>`);
   }
 };
 
@@ -3255,7 +3362,7 @@ const FORMS = {
     closeModal(); toast('Password updated. Share it privately with the staff member.');
   }
 };
-Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT, FIN_ACT, GUEST_ACT, OPS_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS, FIN_FORMS, GUEST_FORMS, OPS_FORMS);
+Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT, FIN_ACT, GUEST_ACT, OPS_ACT, FB_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS, FIN_FORMS, GUEST_FORMS, OPS_FORMS, FB_FORMS);
 document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); FORMS[f.dataset.form]?.(f, e); });
 
 const redrawCust = debounce(q => { const b = $('#cs-body'); if (b) b.innerHTML = ser(custRows(q)); }, 150);
@@ -3342,7 +3449,7 @@ sb.auth.onAuthStateChange(event => {
 
 /* ================= Router ================= */
 const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -6% 0px' }) : null;
-const TITLES = { faq: 'Frequently asked questions', about: 'Our story', services: 'Experiences', packages: 'Packages and pricing', book: 'Book online', gallery: 'Gallery', restaurant: 'Dining', contact: 'Visit us', privacy: 'Privacy policy', terms: 'Terms' };
+const TITLES = { feedback: 'Share your experience', faq: 'Frequently asked questions', about: 'Our story', services: 'Experiences', packages: 'Packages and pricing', book: 'Book online', gallery: 'Gallery', restaurant: 'Dining', contact: 'Visit us', privacy: 'Privacy policy', terms: 'Terms' };
 const onScroll = () => document.body.classList.toggle('scrolled', window.scrollY > 40);
 window.addEventListener('scroll', onScroll, { passive: true });
 function parseHash() {
@@ -3381,6 +3488,7 @@ async function render() {
     case 'contact': view = pageContact(); break;
     case 'privacy': case 'terms': view = pageLegal(pg); break;
     case 'faq': view = pageFaq(); break;
+    case 'feedback': view = pageFeedback(q); break;
     default: view = page404();
   }
   const main = $('#main');
