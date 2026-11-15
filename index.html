@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-hd4wWdJnyr8mRm2rU9IOCoBeGcYLcWt6o5WdBUaECI4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-YYxG5esmgmMvUR9pb371gZR7UDIz1cY/ZeebsUee27o='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -505,8 +505,19 @@ td .row{gap:6px;flex-wrap:nowrap}
 .pick-tag{margin-left:auto;flex:none;font:600 .875rem var(--sans);color:var(--forest);border:1px solid var(--forest);padding:3px 10px}
 .opt.pick[aria-pressed="true"]{border-color:var(--forest);background:var(--sage);box-shadow:inset 0 0 0 1px var(--forest)}
 .opt.pick[aria-pressed="true"] .pick-tag{background:var(--forest);color:#fff}
-.quote-box{margin:12px 0;border-left:3px solid var(--forest)}
-.quote-box p{margin:0 0 10px}
+.rq{margin-bottom:12px}
+.rq-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:.95rem}
+.rq-tbl{width:100%;border-collapse:collapse;font-size:.95rem}
+.rq-tbl th{text-align:left;font:600 .875rem var(--sans);color:var(--muted);border-bottom:2px solid var(--line-2);padding:8px 10px}
+.rq-tbl td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+.rq-tbl .num{text-align:right;white-space:nowrap}
+.rq-tbl tfoot td{border-bottom:0;padding-top:12px}
+.rq-total{font-size:1.2rem;color:var(--forest)}
+.quote-box{margin-top:14px;gap:10px;align-items:center;flex-wrap:wrap}
+.notice-hold{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;margin:0 0 12px;background:#fdf3dc;border:1px solid #e3c98f;color:var(--ink)}
+.notice-hold .ic{width:22px;height:22px;flex:none;color:var(--brass);margin-top:2px}
+.notice-hold p{margin:0}
+@media (max-width:640px){.rq-tbl thead{display:none}.rq-tbl tbody tr{display:flex;flex-wrap:wrap;gap:2px 8px;padding:10px 0;border-bottom:1px solid var(--line)}.rq-tbl td{border:0;padding:0;text-align:left!important}.rq-tbl td:nth-child(1){flex:1 1 55%;order:1}.rq-tbl td:nth-child(5){order:2;text-align:right!important}.rq-tbl td:nth-child(2){order:3;flex-basis:100%}.rq-tbl td:nth-child(3){order:4}.rq-tbl td:nth-child(3) br{display:none}.rq-tbl td:nth-child(3) .small{margin-left:4px}.rq-tbl td:nth-child(4){order:5}.rq-tbl td:nth-child(4)::before{content:"× "}.rq-tbl td.nq{display:none}.rq-tbl tfoot tr{display:flex;justify-content:space-between;gap:10px}.rq-tbl tfoot td[colspan]{text-align:left!important}}
 .add-more{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;padding:12px 14px;background:var(--sage);border:1px solid var(--line)}
 .rev-items{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .stars-in{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
@@ -1178,16 +1189,11 @@ function stepHtml() {
       <label class="check"><input type="checkbox" data-b="consent" ${B.consent ? 'checked' : ''}><span>Send me occasional news and offers (optional).</span></label>
       ${navBtns('Review booking')}`;
   }
-  const p = S.packages.find(x => x.id === B.pid);
-  return html`<h2>Review and send</h2><p class="muted">Please check everything is correct.</p>
-    ${B.cart.length ? html`<div class="card pad" style="margin-bottom:10px"><h3 class="h-sm">Your experiences (${B.cart.length + 1})</h3><ol class="rev-items">${[...B.cart, { sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests }].map(c => { const cs = svcById(c.sid), est = itemEst(c); return html`<li><b>${cs ? cs.name : ''}</b> <span class="muted">${fmtDay(c.date)}${c.end ? ` to ${fmtDay(c.end)}` : ''}${c.time ? `, ${c.time}` : ''}, ${c.guests} guest${Number(c.guests) === 1 ? '' : 's'}${est ? `, about ${money(est.amount)}` : ''}</span></li>`; })}</ol></div>` : ''}
-    <div class="summary card pad"><dl><dt>${B.cart.length ? 'Last added' : 'Experience'}</dt><dd>${s.name}</dd>${p ? html`<dt>Package</dt><dd>${p.name}</dd>` : ''}
-      <dt>${s.stay_mode ? 'Stay' : 'Date'}</dt><dd>${fmtDay(B.date)}${B.end ? html` to ${fmtDay(B.end)}` : ''}</dd>${B.time ? html`<dt>Time</dt><dd>${B.time}</dd>` : ''}
-      <dt>Guests</dt><dd>${B.guests}</dd><dt>Name</dt><dd>${B.name}</dd><dt>Phone</dt><dd>${B.phone}</dd><dt>Email</dt><dd>${B.email}</dd>
-      ${B.notes ? html`<dt>Notes</dt><dd style="white-space:pre-line">${B.notes}</dd>` : ''}${estRow(s, p)}</dl>
-      <p class="muted" style="margin:0">${s.booking_mode === 'instant' ? 'If the date is still free, your booking is confirmed straight away.' : `Our team will contact you to confirm${s.booking_mode === 'quote' ? ' and send a quotation' : ''}. Any deposit is arranged directly with us.`}</p></div>
+  return html`<h2>Review your quotation</h2><p class="muted">Please check everything is correct. You can download this as a quotation before sending.</p>
+    ${reviewQuote()}
+    <div class="notice-hold" role="note">${icon('info')}<p><b>This is not a confirmed booking yet.</b> Your booking is only secured once your payment is received or the resort confirms it. We will contact you to confirm availability and any deposit.</p></div>
     ${reviewExtras()}<p class="err" role="alert" id="b-err" tabindex="-1">${B.errors.submit || ''}</p>
-    ${navBtns(s.booking_mode === 'instant' ? 'Confirm booking' : 'Send booking request')}`;
+    ${navBtns('Send booking request')}`;
 }
 function calHtml() {
   const s = svcById(B.sid), t = todayISO(), max = addDays(t, 730);
@@ -1371,7 +1377,8 @@ Object.assign(ICONS, {
   box: '<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
   wrench: '<path d="M15 6a4 4 0 0 0 5 5l-9 9a2.1 2.1 0 0 1-3-3l9-9a4 4 0 0 0-2-2z"/>',
   broom: '<path d="M14 3l-4 9M7 12h8l2 9H5z"/><path d="M9 16v5M13 16v5"/>',
-  chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>'
+  chat: '<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>'
 });
 Object.assign(ROLE_LABEL, { housekeeping: 'Housekeeping', kitchen: 'Kitchen', maintenance: 'Maintenance Officer' });
 const PURPOSES = ['Leisure', 'Family day', 'Birthday', 'Anniversary', 'Honeymoon', 'Wedding', 'Business or meeting', 'Team building', 'Photoshoot', 'Other'];
@@ -1394,12 +1401,31 @@ function bookSummary() {
 }
 const allItems = () => [...B.cart, { sid: B.sid, pid: B.pid, date: B.date, end: B.end, time: B.time, guests: B.guests }].filter(c => c.sid);
 const itemLine = c => { const s = svcById(c.sid), p = S.packages.find(x => x.id === c.pid); return `${s ? s.name : ''}${p ? ` (${p.name})` : ''}, ${fmtDay(c.date)}${c.end ? ` to ${fmtDay(c.end)}` : ''}${c.time ? `, ${c.time}` : ''}, ${c.guests} guest${Number(c.guests) === 1 ? '' : 's'}`; };
+function estParts(c) {
+  const s = svcById(c.sid); if (!s) return null;
+  const p = S.packages.find(x => x.id === c.pid), g = Math.max(1, Number(c.guests) || 1), nn = s.stay_mode && c.date && c.end ? Math.max(1, nights(c.date, c.end)) : 1;
+  const rate = p && p.price != null ? Number(p.price) : s.price_from != null ? Number(s.price_from) : null;
+  const unit = String((p ? p.price_note : s.price_unit) || '').trim(), gl = `${g} guest${g > 1 ? 's' : ''}`;
+  if (rate == null) return { s, p, rate: null, unit, qty: g, qtyText: gl, amount: null };
+  let qty = 1; const parts = [];
+  if (/person|guest|pp\b|each/i.test(unit)) { qty *= g; parts.push(gl); }
+  if (/night/i.test(unit) || (s.stay_mode && !/person/i.test(unit))) { qty *= nn; parts.push(`${nn} night${nn > 1 ? 's' : ''}`); }
+  return { s, p, rate, unit, qty, qtyText: parts.join(' × ') || '1', amount: rate * qty };
+}
+const itemWhen = c => `${fmtDay(c.date)}${c.end ? ` to ${fmtDay(c.end)}` : ''}${c.time ? `, ${c.time}` : ''}`;
+function reviewQuote() {
+  const rows = allItems().map(c => ({ c, x: estParts(c) })).filter(r => r.x), total = rows.reduce((a, r) => a + (r.x.amount || 0), 0), open = rows.some(r => r.x.amount == null);
+  return html`<div class="card pad rq"><div class="rq-head"><div><b>Prepared for</b><br>${B.name}<br>${B.phone}${B.email ? html`<br>${B.email}` : ''}</div><div><b>Date</b><br>${fmtDate(todayISO())}<br><span class="small muted">Prices valid for 14 days</span></div></div>
+    <div class="tbl-wrap"><table class="rq-tbl"><thead><tr><th>Service</th><th>Details</th><th class="num">Rate</th><th class="num">Qty</th><th class="num">Amount</th></tr></thead>
+      <tbody>${rows.map(({ c, x }) => html`<tr><td><b>${x.s.name}</b>${x.p ? html`<br><span class="small muted">${x.p.name}</span>` : ''}</td><td>${itemWhen(c)}<br><span class="small muted">${c.guests} guest${Number(c.guests) === 1 ? '' : 's'}</span></td>
+        <td class="num">${x.rate != null ? html`${money(x.rate)}${x.unit ? html`<br><span class="small muted">${x.unit}</span>` : ''}` : 'On request'}</td><td class="num ${x.rate != null ? '' : 'nq'}">${x.rate != null ? x.qtyText : '-'}</td><td class="num"><b>${x.amount != null ? money(x.amount) : 'On request'}</b></td></tr>`)}</tbody>
+      <tfoot><tr><td colspan="4" class="num"><b>${open ? 'Estimated total (excluding items on request)' : 'Estimated total'}</b></td><td class="num"><b class="rq-total">${money(total)}</b></td></tr></tfoot></table></div>
+    ${B.notes ? html`<p class="small" style="margin:10px 0 0;white-space:pre-line"><b>Your notes:</b> ${B.notes}</p>` : ''}${fxNote()}
+    ${quoteBox()}</div>`;
+}
 function quoteBox() {
-  const items = allItems(), priced = items.length && items.every(c => itemEst(c));
-  if (B.quoteDone) return html`<div class="card pad quote-box"><h3 class="h-sm">Quotation</h3><p style="margin:0">${B.quoteDone}</p></div>`;
-  return html`<div class="card pad quote-box"><h3 class="h-sm">Need a quotation first?</h3>
-    ${priced ? html`<p>Download a quotation for ${items.length > 1 ? 'these experiences' : 'this experience'} now, based on our published prices. You can still send your booking request below.</p><button class="btn ghost" data-act="b-quote">${icon('download')} Download quotation</button>`
-      : html`<p>Some prices depend on your plans, so our reception team will prepare your quotation and send it to you${set('reply_email_minutes') ? ` within ${Math.max(1, Math.round(Number(set('reply_email_minutes')) / 60))} hour(s) during office hours` : ''}.</p><button class="btn ghost" data-act="b-quote-req">Request a quotation</button>`}</div>`;
+  const open = allItems().some(c => !itemEst(c));
+  return html`<div class="quote-box row">${B.quoteDone ? html`<p class="small" style="margin:0;flex-basis:100%">${B.quoteDone}</p>` : ''}<button class="btn ghost" data-act="b-quote">${icon('download')} Download quotation (PDF)</button>${open && !B.quoteDone ? html`<button class="btn ghost" data-act="b-quote-req">Ask reception to price the rest</button><span class="small muted">Some prices depend on your plans, so our reception team will complete them.</span>` : ''}</div>`;
 }
 async function logQuote(subject) {
   const items = allItems();
@@ -1407,16 +1433,19 @@ async function logQuote(subject) {
   return sb.rpc('submit_enquiry', { p_name: B.name, p_phone: B.phone, p_email: B.email, p_service_id: items[0]?.sid || null, p_subject: subject, p_message: msg.slice(0, 3000), p_consent: !!B.consent });
 }
 function printGuestQuote() {
-  const items = allItems().map(c => ({ c, e: itemEst(c) }));
+  const rows = allItems().map(c => ({ c, x: estParts(c) })).filter(r => r.x), total = rows.reduce((a, r) => a + (r.x.amount || 0), 0), open = rows.some(r => r.x.amount == null);
   const no = 'QW-' + todayISO().replace(/-/g, '').slice(2) + '-' + Array.from(crypto.getRandomValues(new Uint8Array(3)), x => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[x % 32]).join('');
-  const total = items.reduce((a, x) => a + x.e.amount, 0);
   printDoc(html`${docHead('Quotation', no, todayISO())}<div class="doc-meta"><div><b>Prepared for</b><br>${B.name}<br>${B.phone}${B.email ? html`<br>${B.email}` : ''}</div><div><b>Valid until</b><br>${fmtDate(addDays(todayISO(), 14))}</div></div>
-    ${docItems(items.map(x => ({ desc: `${itemLine(x.c)}. ${x.e.text}`, qty: 1, price: x.e.amount })), total, null)}
-    <p>This quotation is based on our published prices and is valid for 14 days. Availability is confirmed when you book. Our team confirms the final price and any deposit with you.</p>${set('payment_instructions') ? html`<p>${set('payment_instructions')}</p>` : ''}`);
+    <table><thead><tr><th>Service</th><th>Details</th><th class="num">Rate</th><th class="num">Qty</th><th class="num">Amount</th></tr></thead>
+      <tbody>${rows.map(({ c, x }) => html`<tr><td>${x.s.name}${x.p ? ` (${x.p.name})` : ''}</td><td>${itemWhen(c)}, ${c.guests} guest${Number(c.guests) === 1 ? '' : 's'}</td><td class="num">${x.rate != null ? `${pm(x.rate)}${x.unit ? ' ' + x.unit : ''}` : 'On request'}</td><td class="num">${x.rate != null ? x.qtyText : '-'}</td><td class="num">${x.amount != null ? pm(x.amount) : 'On request'}</td></tr>`)}</tbody>
+      <tfoot><tr><td colspan="4" class="num"><b>${open ? 'Estimated total (excluding items on request)' : 'Estimated total'}</b></td><td class="num"><b>${pm(total)}</b></td></tr></tfoot></table>
+    ${B.notes ? html`<p><b>Notes:</b> ${B.notes}</p>` : ''}
+    <p><b>This is not a confirmed booking.</b> A booking is only secured once payment is received or the resort confirms it.</p>
+    <p>This quotation is based on our published prices and is valid for 14 days. Availability is confirmed when you book.${open ? ' Items marked "On request" are priced by our team.' : ''}</p>${set('payment_instructions') ? html`<p>${set('payment_instructions')}</p>` : ''}`);
 }
 function reviewExtras() {
   const s = svcById(B.sid);
-  return html`${quoteBox()}${B.cart.length < 4 ? html`<div class="row" style="margin:12px 0">${s && s.stay_mode ? html`<button class="btn ghost" data-act="b-add-room">${icon('plus')} Add another room for the same dates</button>` : ''}<button class="btn ghost" data-act="b-add">${icon('plus')} Add another experience</button><span class="small muted">For example another room, a spa day or a dinner table.</span></div>` : html`<p class="small muted">You can book up to 5 experiences at once. For more, please contact us.</p>`}
+  return html`${B.cart.length < 4 ? html`<div class="row" style="margin:12px 0">${s && s.stay_mode ? html`<button class="btn ghost" data-act="b-add-room">${icon('plus')} Add another room for the same dates</button>` : ''}<button class="btn ghost" data-act="b-add">${icon('plus')} Add another experience</button><span class="small muted">For example another room, a spa day or a dinner table.</span></div>` : html`<p class="small muted">You can book up to 5 experiences at once. For more, please contact us.</p>`}
     <div class="card pad" style="margin-top:8px"><h3 class="h-sm">Payment details</h3><p style="margin-bottom:6px">${set('payment_instructions')}</p>${set('bank_details') ? html`<pre class="bank">${set('bank_details')}</pre>` : ''}
       <p class="small muted">${s && s.booking_mode !== 'instant' ? 'Our team confirms your booking and any deposit with you. ' : ''}You can upload proof of payment now, or send it later on WhatsApp with your booking reference.</p>
       ${fxNote()}${onlinePayOn() || paypalOn() ? html`<p class="small"><b>Pay online:</b> after you send your request you can pay securely online${onlinePayOn() ? ` with ${set('payment_gateway_name', 'card')}` : ''}${paypalOn() ? `${onlinePayOn() ? ' or' : ''} with PayPal` : ''}.</p>` : ''}<div class="field" style="margin:0"><label for="b-proof">Proof of payment (optional)</label><input id="b-proof" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" data-proof><small class="help">A photo or PDF of up to 5 MB.${B.proof ? ` Selected: ${B.proof.name}` : ''}</small></div></div>`;
