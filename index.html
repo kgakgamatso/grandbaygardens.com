@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-1qpR+vMOHk9BNMRwtxBA00C/AAjdrX4oSXZjgREEEOI='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-7QxfTZsrXYLBUe6dGGLM1ttPF0x9XouQ56wsl9eFktw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -1663,7 +1663,7 @@ const SECTIONS = [
   { k: 'testimonials', l: 'Testimonials', i: 'user', r: MKT },
   { k: 'faqs', l: 'FAQs', i: 'help', r: MKT },
   { g: 'Administration' },
-  { k: 'staff', l: 'Staff & users', i: 'shield', r: ['super_admin'] }
+  { k: 'staff', l: 'Staff & users', i: 'shield', r: ['super_admin', 'manager'] }
 ];
 const svcName = id => (A.services.find(s => s.id === id) || {}).name || 'Unknown';
 const svcOpts = empty => [...(empty ? [{ v: '', l: empty }] : []), ...A.services.map(s => ({ v: s.id, l: s.name + (s.active ? '' : ' (hidden)') }))];
@@ -2130,16 +2130,18 @@ ADM.staff = async () => {
       <div class="field"><label for="st-f">Show</label><select id="st-f" data-staff-f><option value="">Everyone</option><option value="active" ${A.sf === 'active' ? 'selected' : ''}>Active</option><option value="inactive" ${A.sf === 'inactive' ? 'selected' : ''}>Deactivated</option></select></div></div>
     <div class="tbl-wrap" style="margin-bottom:14px"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last sign-in</th><th>Actions</th></tr></thead><tbody id="staff-body">${staffRows()}</tbody></table></div>
     <div class="card pad"><h2 class="h-sm">What each role can do</h2><dl class="hours" style="grid-template-columns:auto 1fr;gap:6px 24px">
-      <dt>Super Administrator</dt><dd>Everything, including staff and users</dd><dt>Manager</dt><dd>Bookings, reception, customers, experiences, rooms, website content and reports</dd>
+      <dt>Super Administrator</dt><dd>Everything, including staff and users</dd><dt>Manager</dt><dd>Everything reception and finance do, plus bookings, experiences, rooms, website content, reports and staff accounts (except Super Administrators)</dd>
       <dt>Receptionist</dt><dd>Reception desk, payments, receipts, bookings and enquiries</dd><dt>Finance Officer</dt><dd>View payments, revenue, bookings and reports</dd><dt>Marketing Officer</dt><dd>Adverts, promotions, gallery, menu and website text</dd><dt>Housekeeping</dt><dd>Room cleaning status, items replaced and housekeeping stock</dd><dt>Kitchen</dt><dd>Kitchen stock</dd><dt>Maintenance Officer</dt><dd>Works on and closes maintenance reports</dd><dt>Everyone</dt><dd>Can report a maintenance problem</dd></dl></div>`);
 };
+const roleChoices = () => Object.entries(ROLE_LABEL).filter(([v]) => A.staff?.role === 'super_admin' || v !== 'super_admin');
 function staffRows() {
   const q = (A.sq || '').toLowerCase(), f = A.sf || '', meta = A.staffMeta || {};
   const list = (A.rows.staff || []).filter(x => (!q || [x.full_name, x.email].some(v => String(v || '').toLowerCase().includes(q))) && (!f || (f === 'active') === x.active));
   if (!list.length) return html`<tr><td colspan="6" class="muted" style="text-align:center;padding:24px">No staff match.</td></tr>`;
-  return list.map(x => { const me = A.staff.email === x.email, m = meta[x.user_id] || {};
+  return list.map(x => { const me = A.staff.email === x.email, m = meta[x.user_id] || {}, locked = A.staff.role !== 'super_admin' && x.role === 'super_admin';
+    if (locked) return html`<tr><td><b>${x.full_name || 'No name'}</b></td><td>${x.email}</td><td>${ROLE_LABEL.super_admin}</td><td>${x.active ? pill('ok', 'Active') : pill('bad', 'Deactivated')}</td><td class="small">${m.last_sign_in_at ? fmtDT(m.last_sign_in_at) : 'Never'}</td><td class="small muted">Only a Super Administrator can change this account</td></tr>`;
     return html`<tr><td><b>${x.full_name || 'No name'}</b>${me ? html` ${pill('ok', 'You')}` : ''}</td><td>${x.email}</td>
-      <td><select data-change="staff-role" data-id="${x.user_id}" aria-label="Role for ${x.email}" style="width:auto" ${me ? 'disabled' : ''}>${Object.entries(ROLE_LABEL).map(([v, l]) => html`<option value="${v}" ${x.role === v ? 'selected' : ''}>${l}</option>`)}</select></td>
+      <td><select data-change="staff-role" data-id="${x.user_id}" aria-label="Role for ${x.email}" style="width:auto" ${me ? 'disabled' : ''}>${(me ? Object.entries(ROLE_LABEL) : roleChoices()).map(([v, l]) => html`<option value="${v}" ${x.role === v ? 'selected' : ''}>${l}</option>`)}</select></td>
       <td>${x.active ? pill('ok', 'Active') : pill('bad', 'Deactivated')}</td><td class="small">${m.last_sign_in_at ? fmtDT(m.last_sign_in_at) : 'Never'}</td>
       <td><div class="row">${me ? '' : x.active ? html`<button class="btn xs ghost" data-act="staff-toggle" data-id="${x.user_id}" data-on="0">Deactivate</button>` : html`<button class="btn xs" data-act="staff-toggle" data-id="${x.user_id}" data-on="1">Activate</button>`}
         <button class="btn xs ghost" data-act="staff-edit" data-id="${x.user_id}">Edit</button><button class="btn xs ghost" data-act="staff-pass" data-id="${x.user_id}" data-email="${x.email}">Reset password</button>
@@ -2149,7 +2151,7 @@ function staffForm() {
   openModal('Add staff member', html`<form data-form="staff-add" novalidate><div class="form-grid">
     <div class="field"><label for="st-n">Full name</label><input id="st-n" name="name" maxlength="120" required></div>
     <div class="field"><label for="st-e">Email (their login)</label><input id="st-e" name="email" type="email" maxlength="200" required></div>
-    <div class="field"><label for="st-r">Role</label><select id="st-r" name="role">${Object.entries(ROLE_LABEL).map(([v, l]) => html`<option value="${v}" ${v === 'receptionist' ? 'selected' : ''}>${l}</option>`)}</select></div>
+    <div class="field"><label for="st-r">Role</label><select id="st-r" name="role">${roleChoices().map(([v, l]) => html`<option value="${v}" ${v === 'receptionist' ? 'selected' : ''}>${l}</option>`)}</select></div>
     <div class="field"><label for="st-p">Temporary password</label><div class="pw"><input id="st-p" name="password" type="text" minlength="10" maxlength="128" required value="${genPassword()}" autocomplete="off"><button type="button" data-act="pw-gen" aria-controls="st-p">New</button></div><small class="help">At least 10 characters. Share it privately; they can change it with "Forgot password".</small></div></div>
     <p class="err" data-err role="alert"></p><div class="row end"><button type="button" class="btn ghost" data-act="modal-close">Cancel</button><button class="btn" type="submit">Create login</button></div></form>`, { cls: 'wide' });
 }
