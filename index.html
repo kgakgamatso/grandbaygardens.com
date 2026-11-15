@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-7QxfTZsrXYLBUe6dGGLM1ttPF0x9XouQ56wsl9eFktw='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-upiYUCmbKtqniWQgpZQo2jvBQLMHGgZYf4BFTjhUKbo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -606,6 +606,35 @@ body.is-admin .cookie{display:none}
 .doc-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin:8px 0}
 .doc-foot{margin-top:26px;font-size:14px;color:#5d6a61}
 @media print{body>*:not(#print-area){display:none!important}#print-area{display:block!important}body{background:#fff}@page{margin:14mm}}
+/* Compact layout */
+section{padding:clamp(26px,3.2vw,46px) 0}
+.page-head{padding:clamp(16px,2.4vw,28px) 0 8px}
+.page-head .lead{font-size:1rem}
+.sec-head{margin-bottom:16px}
+.hero{min-height:min(60vh,520px)}
+.hero-inner{padding-top:64px;padding-bottom:72px}
+.collage{min-height:340px}
+.feature .ph{aspect-ratio:auto;height:min(460px,60vh)}
+.split{gap:clamp(24px,4vw,56px)}
+.ad-banner img{min-height:180px;max-height:240px}
+@media (min-width:1000px){.exp-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:190px}.exp .cap{padding:16px 18px}.exp .cap h3{font-size:1.35rem}.exp .cap p{font-size:.875rem}}
+.site-footer{padding:30px 0 26px}
+.foot-grid{gap:22px}
+.foot-grid h4{margin-bottom:8px}
+.foot-grid ul{gap:5px}
+.foot-bottom{margin-top:18px}
+/* Compact booking calendar */
+.cal{max-width:420px;padding:10px 12px}
+.cal-head{margin-bottom:4px}
+.cal-head b{font-size:1.15rem}
+.cal-grid{gap:3px}
+.cal-dow{padding:2px 0}
+.day{aspect-ratio:auto;height:38px;min-height:0}
+.day.limited::after{bottom:3px;width:4px;height:4px}
+.legend{margin-top:6px;gap:12px}
+.step-2{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:8px 28px;align-items:start}
+.step-2 > .full{grid-column:1/-1}
+@media (max-width:900px){.step-2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1057,7 +1086,7 @@ function enquiryForm(serviceId, subject) {
   const id = 'e' + Math.random().toString(36).slice(2, 7);
   return html`<form data-form="enquiry" data-service="${serviceId || ''}" novalidate><div class="form-grid">
       <div class="field"><label for="${id}n">Full name<span class="req" aria-hidden="true">*</span></label><input id="${id}n" name="name" autocomplete="name" required maxlength="120"></div>
-      <div class="field"><label for="${id}p">Phone or WhatsApp</label><input id="${id}p" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx"></div>
+      <div class="field"><label for="${id}p">Phone or WhatsApp</label><input id="${id}p" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx or +country code"></div>
       <div class="field full"><label for="${id}e">Email</label><input id="${id}e" name="email" type="email" autocomplete="email" maxlength="200"></div>
       ${serviceId ? '' : html`<div class="field full"><label for="${id}s">Topic</label><select id="${id}s" name="service"><option value="">General enquiry</option>${S.services.map(s => html`<option value="${s.id}">${s.name}</option>`)}</select></div>`}
       <div class="field full"><label for="${id}m">Message<span class="req" aria-hidden="true">*</span></label><textarea id="${id}m" name="message" required maxlength="3000" placeholder="Your date, number of guests and what you have in mind"></textarea></div></div>
@@ -1073,7 +1102,7 @@ async function submitEnquiry(f) {
   if (v.website) { f.reset(); toast('Thank you, your message was sent.'); return; }
   if (!v.name.trim() || !v.message.trim()) { err.textContent = 'Please add your name and a message.'; return; }
   if (!v.phone.trim() && !v.email.trim()) { err.textContent = 'Please give us a mobile number or email so we can reply.'; return; }
-  if (v.phone.trim() && !normPhone(v.phone)) { err.textContent = 'Please enter a valid mobile number, for example 71 234 567.'; return; }
+  if (v.phone.trim() && !normPhone(v.phone)) { err.textContent = 'Enter a valid mobile number, for example 71 234 567. Outside Botswana, start with + and your country code, for example +27 82 123 4567.'; return; }
   if (v.email.trim()) { const em = emailIssue(v.email); if (em) { err.textContent = em; return; } }
   const btn = $('button[type=submit]', f); btn.disabled = true;
   const { error } = await sb.rpc('submit_enquiry', { p_name: v.name, p_phone: v.phone, p_email: v.email, p_service_id: f.dataset.service || v.service || null, p_subject: v.subject || '', p_message: v.message, p_consent: !!v.consent });
@@ -1133,18 +1162,18 @@ function stepHtml() {
       ${pk.length ? html`<h3 style="margin-top:6px">Package <span class="muted small" style="font-family:var(--sans)">(optional)</span></h3><div class="opt-grid" role="radiogroup" aria-label="Package">
         <button class="opt slot" role="radio" aria-checked="${tf(!B.pid)}" data-act="b-pkg" data-id=""><span><b>Not sure yet</b><small>We will help you choose</small></span></button>
         ${pk.map(p => html`<button class="opt slot" role="radio" aria-checked="${tf(p.id === B.pid)}" data-act="b-pkg" data-id="${p.id}"><span><b>${p.name}</b><small>${p.price != null ? money(p.price) + (p.price_note ? ' ' + p.price_note : '') : (p.price_note || 'On request')}</small></span></button>`)}</div>` : ''}
-      <h3 style="margin-top:22px">${s.stay_mode ? 'Arrival and departure' : 'Date'}</h3>
+      <div class="step-2"><div><h3 style="margin-top:14px">${s.stay_mode ? 'Arrival and departure' : 'Date'}</h3>
       <p class="muted">${s.stay_mode ? 'Select your check-in date, then your check-out date.' : 'Dates that are fully booked are crossed out.'}</p>
-      <div id="cal">${calHtml()}</div>${fErr('date')}
-      ${slots.length ? html`<h3 style="margin-top:26px">Start time</h3><div class="slots" role="radiogroup" aria-label="Time slot">${slots.map(t => html`<button class="opt slot" role="radio" aria-checked="${tf(t === B.time)}" data-act="b-time" data-t="${t}"><b>${t}</b></button>`)}</div>${fErr('time')}` : ''}
-      <div class="field" style="max-width:260px;margin-top:22px"><label for="b-guests">${s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`}<span class="req" aria-hidden="true">*</span></label><input id="b-guests" data-b="guests" value="${B.guests}" type="number" min="1" max="${s.max_guests}" inputmode="numeric" ${B.errors.guests ? raw('aria-invalid="true" aria-describedby="err-guests"') : ''}>${fErr('guests')}</div>
-      ${s.stay_mode && B.cart.length + B.queue.length < 4 ? html`<div class="add-more"><span class="small muted">Need more than one room?</span><button class="btn sm ghost" data-act="b-add-room">${icon('plus')} Add another room, same dates</button></div>` : ''}
+      <div id="cal">${calHtml()}</div>${fErr('date')}</div><div>
+      ${slots.length ? html`<h3 style="margin-top:14px">Start time</h3><div class="slots" role="radiogroup" aria-label="Time slot">${slots.map(t => html`<button class="opt slot" role="radio" aria-checked="${tf(t === B.time)}" data-act="b-time" data-t="${t}"><b>${t}</b></button>`)}</div>${fErr('time')}` : ''}
+      <div class="field" style="max-width:260px;margin-top:16px"><label for="b-guests">${s.stay_mode ? `Guests in this room (up to ${s.max_guests})` : `Guests (up to ${s.max_guests})`}<span class="req" aria-hidden="true">*</span></label><input id="b-guests" data-b="guests" value="${B.guests}" type="number" min="1" max="${s.max_guests}" inputmode="numeric" ${B.errors.guests ? raw('aria-invalid="true" aria-describedby="err-guests"') : ''}>${fErr('guests')}</div>
+      </div></div>${s.stay_mode && B.cart.length + B.queue.length < 4 ? html`<div class="add-more"><span class="small muted">Need more than one room?</span><button class="btn sm ghost" data-act="b-add-room">${icon('plus')} Add another room, same dates</button></div>` : ''}
       ${navBtns(B.queue.length ? `Next: ${svcById(B.queue[0])?.name || 'next experience'}` : 'Continue')}`;
   }
   if (B.step === 3) {
     const inp = (k, l, attrs) => html`<div class="field"><label for="b-${k}">${l}<span class="req" aria-hidden="true">*</span></label><input id="b-${k}" data-b="${k}" value="${B[k]}" ${raw(attrs)} ${B.errors[k] ? raw(`aria-invalid="true" aria-describedby="err-${k}"`) : ''}>${fErr(k)}</div>`;
     return html`<h2>Your details</h2><p class="muted">We use these to confirm your booking.</p>
-      <div class="form-grid">${inp('name', 'Full name', 'autocomplete="name" maxlength="120"')}${inp('phone', 'Phone or WhatsApp', 'type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx"')}
+      <div class="form-grid">${inp('name', 'Full name', 'autocomplete="name" maxlength="120"')}${inp('phone', 'Phone or WhatsApp', 'type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+267 7x xxx xxx or +country code"')}
         ${inp('email', 'Email', 'type="email" autocomplete="email" maxlength="200"')}
         <div class="field"><label for="b-country">Country you are travelling from</label><select id="b-country" data-b="country"><option value="">Choose (optional)</option>${COUNTRIES.map(([n]) => html`<option value="${n}" ${B.country === n ? 'selected' : ''}>${n}</option>`)}</select></div>
         <div class="field"><label for="b-purpose">Purpose of your visit</label><select id="b-purpose" data-b="purpose"><option value="">Choose one (optional)</option>${PURPOSES.map(x => html`<option value="${x}" ${B.purpose === x ? 'selected' : ''}>${x}</option>`)}</select></div>
@@ -1216,7 +1245,7 @@ function validateStep() {
   }
   if (B.step === 3) {
     if (B.name.trim().length < 2 || !/[a-z]/i.test(B.name)) e.name = 'Please enter your full name.';
-    if (!normPhone(B.phone)) e.phone = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; else B.phone = normPhone(B.phone);
+    if (!normPhone(B.phone)) e.phone = 'Enter a valid mobile number, for example 71 234 567. Outside Botswana, start with + and your country code, for example +27 82 123 4567.'; else B.phone = normPhone(B.phone);
     { const em = emailIssue(B.email); if (em) e.email = em; }
     if (!B.agree) e.agree = 'Please accept the booking terms to continue.';
   }
@@ -1250,9 +1279,10 @@ function bookDone() {
 function normPhone(p) {
   let d = String(p || '').replace(/[^\d+]/g, '');
   if (!d) return null;
+  if (d.startsWith('00')) d = '+' + d.slice(2);
   if (d.startsWith('+')) { d = d.slice(1); if (!d.startsWith('267')) return /^[1-9]\d{7,14}$/.test(d) ? '+' + d : null; d = d.slice(3); }
-  else if (d.startsWith('00267')) d = d.slice(5);
   else if (d.startsWith('267') && d.length === 11) d = d.slice(3);
+  else if (!/^7\d{7}$/.test(d) && /^[1-9]\d{9,14}$/.test(d)) return '+' + d;
   return /^7\d{7}$/.test(d) ? `+267 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5)}` : null;
 }
 const EMAIL_RE = /^[a-z0-9._%+'-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/i;
@@ -3434,7 +3464,7 @@ const FORMS = {
     const o = collect(BK_FIELDS(), f);
     if (o.end_date && o.end_date <= o.booking_date) { err.textContent = 'Check-out must be after the booking date.'; return; }
     if (o.customer_name.length < 2 || !/[a-z]/i.test(o.customer_name)) { err.textContent = 'Enter the customer name.'; f.elements.customer_name.focus(); return; }
-    const ph = normPhone(o.phone); if (!ph) { err.textContent = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; f.elements.phone.focus(); return; }
+    const ph = normPhone(o.phone); if (!ph) { err.textContent = 'Enter a valid mobile number, for example 71 234 567. Outside Botswana, start with + and your country code, for example +27 82 123 4567.'; f.elements.phone.focus(); return; }
     o.phone = ph;
     if (o.email) { const em = emailIssue(o.email); if (em) { err.textContent = em; f.elements.email.focus(); return; } o.email = o.email.toLowerCase(); }
     const svcB = A.services.find(s => s.id === o.service_id);
@@ -3569,7 +3599,7 @@ document.addEventListener('change', async e => {
 document.addEventListener('focusout', e => {
   const t = e.target, k = t.dataset && t.dataset.b; if (k !== 'phone' && k !== 'email') return;
   const v = t.value.trim(); let msg = '';
-  if (v) { if (k === 'phone') { const n = normPhone(v); if (n) { t.value = n; B.phone = n; } else msg = 'Enter a valid mobile number, for example 71 234 567 or +267 71 234 567.'; } else msg = emailIssue(v); }
+  if (v) { if (k === 'phone') { const n = normPhone(v); if (n) { t.value = n; B.phone = n; } else msg = 'Enter a valid mobile number, for example 71 234 567. Outside Botswana, start with + and your country code, for example +27 82 123 4567.'; } else msg = emailIssue(v); }
   let s = document.getElementById('err-' + k);
   if (msg) { B.errors[k] = msg; t.setAttribute('aria-invalid', 'true'); if (!s) { s = document.createElement('span'); s.className = 'err'; s.id = 'err-' + k; t.after(s); } s.textContent = msg; t.setAttribute('aria-describedby', 'err-' + k); }
   else { delete B.errors[k]; t.removeAttribute('aria-invalid'); s?.remove(); }
