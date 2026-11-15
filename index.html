@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-pgVHDcwnHRz2NIGAwpVBqXjT0xAZOJqBLJKzij5aDG0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-BXGZWz2gakWFdIrHsF6b12nmGuEHbhm52iCoTKzj2Sg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -664,7 +664,7 @@ section{padding:clamp(26px,3.2vw,46px) 0}
 <header class="site-header" id="hdr"></header>
 <main id="main" tabindex="-1"><div class="boot"><div class="spinner" role="status" aria-label="Loading"></div></div></main>
 <footer class="site-footer" id="ftr"></footer>
-<a id="fab" class="fab" href="#/contact" target="_blank" rel="noopener noreferrer" aria-label="Chat with Grand Bay on WhatsApp"></a>
+<a id="fab" class="fab" href="#/contact" target="_blank" rel="noopener noreferrer" aria-label="Chat with Grand Bay Resort on WhatsApp"></a>
 <div id="toasts" role="status" aria-live="polite"></div>
 <dialog id="modal" aria-modal="true"></dialog>
 <div id="print-area"></div>
@@ -860,7 +860,7 @@ const toCSV = (rows, cols) => [cols.map(c => csvCell(c[0])).join(','), ...rows.m
 const NAV = [['#/about', 'Our story'], ['#/services', 'Experiences'], ['#/packages', 'Packages'], ['#/restaurant', 'Dining'], ['#/gallery', 'Gallery'], ['#/faq', 'FAQ'], ['#/contact', 'Visit']];
 function logoHtml(href = '#/') {
   const img = safeUrl(set('logo_url'));
-  return html`<a class="logo" href="${href}" aria-label="${set('business_name', 'Grand Bay')}, home">${img ? html`<img src="${img}" alt="">` : logoSvg()}</a>`;
+  return html`<a class="logo" href="${href}" aria-label="${set('business_name', 'Grand Bay Resort')}, home">${img ? html`<img src="${img}" alt="">` : logoSvg()}</a>`;
 }
 function phones() { return [set('phone'), set('phone_alt')].filter(Boolean); }
 function renderChrome(path) {
@@ -909,7 +909,7 @@ function promoRail() {
   return html`<section class="alt"><div class="wrap">${secHead("What's on", 'Specials and seasonal experiences', '')}
     <div class="rail">${S.promos.map(p => { const s = svcById(p.service_id); return html`<article class="card promo"><div class="pm">${media(p.image_url, '', s ? s.icon : 'sparkle')}${p.badge ? html`<span class="badge">${p.badge}</span>` : ''}</div>
       <div class="pb"><h3>${p.title}</h3><p>${p.body}</p><p class="faint small">Until ${fmtDate(p.end_date)}</p>
-      <div class="row">${s ? html`<a class="btn sm" href="#/book?service=${s.slug}">Book</a>` : ''}<a class="btn sm ghost" href="${waLink(`Hello Grand Bay, I am interested in: ${p.title}`)}" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a></div></div></article>`; })}</div></div></section>`;
+      <div class="row">${s ? html`<a class="btn sm" href="#/book?service=${s.slug}">Book</a>` : ''}<a class="btn sm ghost" href="${waLink(`Hello Grand Bay Resort, I am interested in: ${p.title}`)}" target="_blank" rel="noopener noreferrer">Ask on WhatsApp</a></div></div></article>`; })}</div></div></section>`;
 }
 function bannerAds() {
   const ads = S.ads.filter(a => a.placement === 'banner');
@@ -946,14 +946,14 @@ function pageHome() {
     ${imgs.length > 1 ? html`<div class="dots" role="group" aria-label="Slideshow">${imgs.map((_, i) => html`<button data-act="slide" data-i="${i}" aria-label="Show photo ${i + 1}" aria-current="${tf(i === 0)}"></button>`)}</div>` : ''}</section>
   ${quickBook()}
   <section><div class="wrap split">
-    <div class="collage reveal">${g[0] ? html`<img src="${g[0]}" alt="The thatched lapa and pond at Grand Bay" loading="lazy">` : ''}${g[2] ? html`<img src="${g[2]}" alt="A celebration set up in the garden" loading="lazy">` : ''}</div>
-    <div class="reveal"><span class="kicker">Welcome to Grand Bay</span><h2>${set('intro_title')}</h2><p class="lead">${set('intro_text')}</p><a class="link" href="#/about">Read our story ${icon('arrow')}</a>
+    <div class="collage reveal">${g[0] ? html`<img src="${g[0]}" alt="The thatched lapa and pond at Grand Bay Resort" loading="lazy">` : ''}${g[2] ? html`<img src="${g[2]}" alt="A celebration set up in the garden" loading="lazy">` : ''}</div>
+    <div class="reveal"><span class="kicker">Welcome to Grand Bay Resort</span><h2>${set('intro_title')}</h2><p class="lead">${set('intro_text')}</p><a class="link" href="#/about">Read our story ${icon('arrow')}</a>
       <div class="stats">${pairs('highlights').map(([n, l]) => html`<div class="stat"><b>${n}</b><span>${l || ''}</span></div>`)}</div></div></div></section>
   <section style="padding-top:0"><div class="wrap">${secHead('Experiences', 'Celebrate, unwind and explore', 'From garden weddings to guided hikes, choose an experience to see details, packages and live availability.')}
     <div class="exp-grid">${featured.map((s, i) => expCard(s, i === 0))}</div>
     <p style="margin-top:28px"><a class="link" href="#/services">All experiences ${icon('arrow')}</a></p></div></section>
   ${spa ? html`<section class="band"><div class="wrap feature">
-    <div class="ph reveal">${media(spa.image_url, 'Spa day at Grand Bay', 'sparkle')}</div>
+    <div class="ph reveal">${media(spa.image_url, 'Spa day at Grand Bay Resort', 'sparkle')}</div>
     <div class="reveal"><span class="script">Rejuvenate</span><h2>${spa.name}</h2><p class="lead">${spa.description}</p>
       <ul class="inc">${spa.features.split(/\r?\n/).filter(Boolean).map(f => html`<li>${icon('check')}<span>${f}</span></li>`)}</ul>
       <p class="price" style="color:var(--brass-2);font-size:1.8rem">${priceText(spa)}</p>
@@ -966,7 +966,7 @@ function pageHome() {
     ${specials.length ? html`<div class="reveal">${specials.map(m => html`<div class="menu-item"><div class="mi"><div class="mt"><span>${m.name}</span><span>${money(m.price)}</span></div><p>${m.description}</p></div></div>`)}</div>` : ''}</div></section>` : ''}
   ${set('press_quote') ? html`<section class="alt"><div class="wrap press reveal"><span class="kicker">In the press</span><q>${set('press_quote')}</q><cite>${safeUrl(set('press_link')) ? html`<a href="${safeUrl(set('press_link'))}" target="_blank" rel="noopener noreferrer">${set('press_source')}</a>` : set('press_source')}</cite></div></section>` : ''}
   ${S.testimonials.length ? html`<section><div class="wrap">${secHead('Guest notes', 'In their words', '')}<div class="grid g3">${S.testimonials.map(t => html`<figure class="reveal card pad" style="margin:0"><blockquote style="margin:0 0 14px;font:500 1.25rem/1.45 var(--serif);color:var(--forest)">${t.quote}</blockquote><figcaption class="muted">${t.author}${t.context ? `, ${t.context}` : ''}</figcaption></figure>`)}</div></div></section>` : ''}
-  ${g.length ? html`<section><div class="wrap row between" style="margin-bottom:22px"><div><span class="kicker">@grand.baybotanicalgardens</span><h2 style="margin:0">Moments at Grand Bay</h2></div><a class="link" href="#/gallery">Open the gallery ${icon('arrow')}</a></div>
+  ${g.length ? html`<section><div class="wrap row between" style="margin-bottom:22px"><div><span class="kicker">@grand.baybotanicalgardens</span><h2 style="margin:0">Moments at Grand Bay Resort</h2></div><a class="link" href="#/gallery">Open the gallery ${icon('arrow')}</a></div>
     <div class="strip">${S.gallery.slice(0, 6).map(x => html`<a href="#/gallery" aria-label="${x.caption || 'Gallery photo'}"><img src="${safeUrl(x.image_url)}" alt="" loading="lazy"></a>`)}</div></section>` : ''}
 `;
 }
@@ -995,13 +995,13 @@ function maybePopupAd() {
 
 function pageAbout() {
   const why = pairs('why_choose'), g = S.gallery.map(x => safeUrl(x.image_url)).filter(Boolean);
-  return html`${pageHead('About Grand Bay', 'Our story', set('tagline'), [[0, 'Our story']])}
+  return html`${pageHead('About Grand Bay Resort', 'Our story', set('tagline'), [[0, 'Our story']])}
   <section style="padding-top:30px"><div class="wrap split">
     <div class="reveal"><h2>How it began</h2><p class="lead" style="white-space:pre-line">${set('about_story')}</p><h3 style="margin-top:28px">The garden</h3><p class="muted" style="white-space:pre-line">${set('about_environment')}</p></div>
-    <div class="collage reveal">${g[0] ? html`<img src="${g[0]}" alt="The lapa at Grand Bay" loading="lazy">` : ''}${g[1] ? html`<img src="${g[1]}" alt="Poolside at Grand Bay" loading="lazy">` : ''}</div></div></section>
+    <div class="collage reveal">${g[0] ? html`<img src="${g[0]}" alt="The lapa at Grand Bay Resort" loading="lazy">` : ''}${g[1] ? html`<img src="${g[1]}" alt="Poolside at Grand Bay Resort" loading="lazy">` : ''}</div></div></section>
   <section class="alt"><div class="wrap grid g2"><div class="reveal"><span class="kicker">Our vision</span><p style="font:500 1.6rem/1.4 var(--serif);color:var(--forest)">${set('vision')}</p></div>
     <div class="reveal"><span class="kicker">Our mission</span><p style="font:500 1.6rem/1.4 var(--serif);color:var(--forest)">${set('mission')}</p></div></div></section>
-  ${why.length ? html`<section><div class="wrap">${secHead('Why Grand Bay', 'Reasons guests return', '')}
+  ${why.length ? html`<section><div class="wrap">${secHead('Why Grand Bay Resort', 'Reasons guests return', '')}
     <ol class="grid g4" style="list-style:none;padding:0;margin:0">${why.map(([t, d], i) => html`<li class="reveal"><span style="font:600 2rem/1 var(--sans);color:var(--brass)">${String(i + 1).padStart(2, '0')}</span><h3 style="margin-top:12px">${t}</h3><p class="muted" style="margin:0">${d || ''}</p></li>`)}</ol></div></section>` : ''}
   ${set('management_intro') ? html`<section style="padding-top:0"><div class="wrap"><span class="kicker">Our team</span><p class="lead" style="white-space:pre-line">${set('management_intro')}</p></div></section>` : ''}`;
 }
@@ -1009,7 +1009,7 @@ function pageServices(q) {
   const cats = [...new Set(S.services.map(s => s.category))];
   const cat = cats.includes(q.cat) ? q.cat : '';
   const list = S.services.filter(s => !cat || s.category === cat);
-  return html`${pageHead('Experiences', 'Everything Grand Bay offers', 'Celebrations, wellness, adventures, stays and dining. Book online or arrange everything on WhatsApp.', [[0, 'Experiences']])}
+  return html`${pageHead('Experiences', 'Everything Grand Bay Resort offers', 'Celebrations, wellness, adventures, stays and dining. Book online or arrange everything on WhatsApp.', [[0, 'Experiences']])}
   <section style="padding-top:20px"><div class="wrap"><div class="chips" role="group" aria-label="Filter by category">
     <a class="chip-btn" href="#/services" aria-pressed="${tf(!cat)}">All</a>${cats.map(c => html`<a class="chip-btn" href="#/services?cat=${encodeURIComponent(c)}" aria-pressed="${tf(c === cat)}">${c}</a>`)}</div>
     <div class="grid g3">${list.map(svcCard)}</div></div></section>`;
@@ -1052,7 +1052,7 @@ function pageGallery(q) {
   const cats = [...new Set(S.gallery.map(g => g.category))];
   const cat = cats.includes(q.cat) ? q.cat : '';
   galleryView = S.gallery.filter(g => !cat || g.category === cat);
-  return html`${pageHead('Gallery', 'Moments at Grand Bay', 'Gardens, celebrations, food, spa days and adventures.', [[0, 'Gallery']])}
+  return html`${pageHead('Gallery', 'Moments at Grand Bay Resort', 'Gardens, celebrations, food, spa days and adventures.', [[0, 'Gallery']])}
   <section style="padding-top:20px"><div class="wrap">${cats.length > 1 ? html`<div class="chips" role="group" aria-label="Filter photos"><a class="chip-btn" href="#/gallery" aria-pressed="${tf(!cat)}">All</a>${cats.map(c => html`<a class="chip-btn" href="#/gallery?cat=${encodeURIComponent(c)}" aria-pressed="${tf(c === cat)}">${c}</a>`)}</div>` : ''}
   ${galleryGrid(galleryView)}${safeUrl(set('instagram_url')) ? html`<p style="margin-top:30px"><a class="link" href="${safeUrl(set('instagram_url'))}" target="_blank" rel="noopener noreferrer">More on Instagram ${icon('arrow')}</a></p>` : ''}</div></section>`;
 }
@@ -1072,7 +1072,7 @@ function pageRestaurant() {
       ${secs.length ? html`<div class="menu-sec">${secs.map(sec => html`<h3>${sec}</h3><div style="margin-bottom:26px">${S.menu.filter(m => m.section === sec).map(item)}</div>`)}</div>`
         : html`<div class="empty">${icon('dish')}<p>Our menu is being updated. Ask us on WhatsApp for today's menu.</p></div>`}</div>
     <aside class="card pad sticky"><span class="kicker">Opening hours</span><p class="lead" style="color:var(--forest)">${set('restaurant_hours')}</p>
-      <div class="stack">${r ? html`<a class="btn" style="width:100%" href="#/book?service=restaurant">Reserve a table</a>` : ''}<a class="btn wa" style="width:100%" href="${waLink(r ? r.whatsapp_message : 'Hello Grand Bay, may I see your menu?')}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')} Ask about the menu</a></div></aside></div></section>`;
+      <div class="stack">${r ? html`<a class="btn" style="width:100%" href="#/book?service=restaurant">Reserve a table</a>` : ''}<a class="btn wa" style="width:100%" href="${waLink(r ? r.whatsapp_message : 'Hello Grand Bay Resort, may I see your menu?')}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')} Ask about the menu</a></div></aside></div></section>`;
 }
 function pageContact() {
   const email = set('email');
@@ -1123,7 +1123,7 @@ async function submitEnquiry(f) {
   const { error } = await sb.rpc('submit_enquiry', { p_name: v.name, p_phone: v.phone, p_email: v.email, p_service_id: f.dataset.service || v.service || null, p_subject: v.subject || '', p_message: v.message, p_consent: !!v.consent });
   btn.disabled = false;
   if (error) { err.textContent = errText(error); return; }
-  f.innerHTML = String(html`<div class="empty" style="border-style:solid">${icon('check')}<p><b>Thank you, ${firstName(v.name)}.</b><br>Your message has been received. We will be in touch soon.</p><a class="btn sm wa" href="${waLink(`Hello Grand Bay, I just sent an enquiry on your website (${v.name}).`)}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')} Need a faster reply?</a></div>`);
+  f.innerHTML = String(html`<div class="empty" style="border-style:solid">${icon('check')}<p><b>Thank you, ${firstName(v.name)}.</b><br>Your message has been received. We will be in touch soon.</p><a class="btn sm wa" href="${waLink(`Hello Grand Bay Resort, I just sent an enquiry on your website (${v.name}).`)}" target="_blank" rel="noopener noreferrer">${icon('whatsapp')} Need a faster reply?</a></div>`);
 }
 
 /* Booking wizard */
@@ -1274,7 +1274,7 @@ async function submitBooking() {
 }
 function bookDone() {
   const r = B.result, ok = r.status === 'confirmed';
-  const msg = `Hello Grand Bay, my booking reference is ${r.reference} for ${r.service} on ${fmtDate(r.date)}${r.time ? ' at ' + r.time : ''} (${r.guests} guests). Name: ${r.name}.`;
+  const msg = `Hello Grand Bay Resort, my booking reference is ${r.reference} for ${r.service} on ${fmtDate(r.date)}${r.time ? ' at ' + r.time : ''} (${r.guests} guests). Name: ${r.name}.`;
   return html`<section><div class="wrap" style="max-width:760px;text-align:center"><div class="success-ic">${icon('check')}</div>
     <h1 tabindex="-1" style="font-size:clamp(2.2rem,5vw,3.4rem)">${ok ? 'You are booked' : 'Request received'}</h1>
     <p class="lead" style="margin-inline:auto">${ok ? html`Your <b>${r.service}</b> booking is confirmed. We look forward to welcoming you.` : html`Thank you, ${firstName(r.name)}. Our team will review your <b>${r.service}</b> request and contact you shortly${r.mode === 'quote' ? ' with a quotation' : ''}.`}</p>
@@ -1495,7 +1495,7 @@ function proofStatus() {
 function bookDone() {
   const r = B.result, items = r.items || [r], allOk = items.every(i => i.status === 'confirmed'), stay = items.some(i => i.stay);
   const refs = items.map(i => i.reference).join(', ');
-  const msg = `Hello Grand Bay, my booking reference${items.length > 1 ? 's are' : ' is'} ${refs}. Name: ${r.name}.`;
+  const msg = `Hello Grand Bay Resort, my booking reference${items.length > 1 ? 's are' : ' is'} ${refs}. Name: ${r.name}.`;
   return html`<section><div class="wrap" style="max-width:780px;text-align:center"><div class="success-ic">${icon('check')}</div>
     <h1 tabindex="-1" style="font-size:clamp(2.1rem,4.6vw,3.2rem)">${allOk ? 'You are booked' : 'Request received'}</h1>
     <p class="lead" style="margin-inline:auto">Thank you, ${firstName(r.name)}. ${allOk ? 'Your booking is confirmed. We look forward to welcoming you.' : 'Our team will review your request and contact you shortly.'}</p>
@@ -1538,7 +1538,7 @@ function faqItems(q) {
   return list.length ? ser(list.map(f => html`<details ${q ? 'open' : ''}><summary>${f.question}</summary><div>${f.answer}</div></details>`)) : String(html`<p class="muted">No questions match. Try another word, or ask our assistant.</p>`);
 }
 function pageFaq() {
-  return html`${pageHead('Help', 'Frequently asked questions', 'Quick answers about booking, staying, paying and visiting Grand Bay.', [[0, 'FAQ']])}
+  return html`${pageHead('Help', 'Frequently asked questions', 'Quick answers about booking, staying, paying and visiting Grand Bay Resort.', [[0, 'FAQ']])}
   <section style="padding-top:20px"><div class="wrap" style="max-width:900px"><div class="field"><label for="faq-q">Search the questions</label><input id="faq-q" type="search" data-faq-q placeholder="For example: check-in, deposit, children"></div>
     <div class="faq" id="faq-list">${raw(faqItems(''))}</div>
     <p class="muted" style="margin-top:18px">Still need help? <button class="linkbtn" data-act="va-open">Ask our assistant</button> or <a href="${waLink()}" target="_blank" rel="noopener noreferrer">message us on WhatsApp</a>.</p></div></section>`;
@@ -1550,12 +1550,12 @@ function vaMount() {
   if ($('#va')) return;
   const ft = $('#ftr');
   if (ft && 'IntersectionObserver' in window) new IntersectionObserver(es => document.body.classList.toggle('foot-in', es[0].isIntersecting), { rootMargin: '0px 0px -40px 0px' }).observe(ft);
-  document.body.insertAdjacentHTML('beforeend', String(html`<section id="va" class="va" role="dialog" aria-label="Grand Bay assistant" hidden></section>`));
+  document.body.insertAdjacentHTML('beforeend', String(html`<section id="va" class="va" role="dialog" aria-label="Grand Bay Resort assistant" hidden></section>`));
 }
 const VA_CHIPS = ['Menu', 'Prices', 'Activities', 'Rooms', 'Check-in times', 'Opening hours', 'Directions', 'Payment', 'Contact'];
 function vaRender() {
   const el = $('#va'); if (!el) return;
-  el.innerHTML = String(html`<div class="va-head"><b>Grand Bay assistant</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close assistant">${icon('close')}</button></div>
+  el.innerHTML = String(html`<div class="va-head"><b>Grand Bay Resort assistant</b><button class="linkbtn" style="color:#fff" data-act="va-close" aria-label="Close assistant">${icon('close')}</button></div>
     <div class="va-log" id="va-log" aria-live="polite">${VA.log.map(m => html`<div class="va-msg ${m.who}">${m.who === 'me' ? m.text : raw(m.html)}</div>`)}</div>
     <div class="va-chips">${VA_CHIPS.map(c => html`<button data-act="va-ask" data-q="${c}">${c}</button>`)}</div>
     <form data-form="va" novalidate><label class="sr" for="va-q">Your question</label><input id="va-q" name="q" maxlength="200" autocomplete="off" placeholder="Type a question"><button class="btn sm" type="submit">Send</button></form>`);
@@ -1575,7 +1575,7 @@ function vaAnswer(q) {
   if (has('thank')) return html`You are welcome. Is there anything else I can help with?`;
   if (has('check in', 'check-in', 'checkin', 'check out', 'check-out', 'checkout', 'arrival', 'departure')) return html`Check-in is from <b>${set('checkin_time', '14:00')}</b> and check-out is by <b>${set('checkout_time', '10:00')}</b>. ${set('welcome_note')}`;
   if (has('menu', 'food', 'eat', 'dish', 'meal', 'burger', 'grill', 'drink', 'cocktail', 'restaurant', 'lunch', 'dinner', 'breakfast', 'kids menu')) {
-    if (!S.menu.length) return html`Our menu is being updated. <a href="${waLink('Hello Grand Bay, may I see your menu?')}" target="_blank" rel="noopener noreferrer">Ask us on WhatsApp</a>.`;
+    if (!S.menu.length) return html`Our menu is being updated. <a href="${waLink('Hello Grand Bay Resort, may I see your menu?')}" target="_blank" rel="noopener noreferrer">Ask us on WhatsApp</a>.`;
     const secs = [...new Set(S.menu.map(m => m.section))];
     return html`Here is a taste of our menu:<ul>${secs.slice(0, 7).map(sec => html`<li><b>${sec}:</b> ${S.menu.filter(m => m.section === sec).slice(0, 3).map(m => `${m.name}${m.price != null ? ' (' + money(m.price) + ')' : ''}`).join(', ')}</li>`)}</ul>Restaurant hours: ${set('restaurant_hours')}. ${link('#/restaurant', 'See the full menu')}.`;
   }
@@ -1591,13 +1591,13 @@ function vaAnswer(q) {
   if (has('book', 'reserve', 'reservation', 'availab')) return html`You can book online in a few steps and see which dates are free: ${link('#/book', 'start a booking')}. You can add more than one experience to the same booking.`;
   const svc = S.services.find(s => `${s.name} ${s.slug}`.toLowerCase().split(/[\s&,()-]+/).filter(w => w.length > 2 && !['the', 'and', 'day', 'for', 'full', 'booking', 'experience', 'garden', 'gardens', 'party', 'parties', 'table'].includes(w)).some(w => t.includes(w)));
   if (svc) return html`<b>${svc.name}</b>: ${svc.tagline.replace(/[.!]+$/, '')}. Price: ${priceText(svc)}. ${link('#/services/' + svc.slug, 'Read more')} or ${link('#/book?service=' + svc.slug, 'book it')}.`;
-  if (has('activit', 'things to do', 'what do you offer', 'experience', 'service', 'fun', 'children', 'kids', 'family')) return html`Here is what you can enjoy at Grand Bay:<ul>${S.services.map(s => html`<li>${link('#/services/' + s.slug, s.name)}: ${s.tagline}</li>`)}</ul>`;
+  if (has('activit', 'things to do', 'what do you offer', 'experience', 'service', 'fun', 'children', 'kids', 'family')) return html`Here is what you can enjoy at Grand Bay Resort:<ul>${S.services.map(s => html`<li>${link('#/services/' + s.slug, s.name)}: ${s.tagline}</li>`)}</ul>`;
   if (has('price', 'cost', 'how much', 'rate', 'fee', 'charge')) return html`Prices at a glance:<ul>${S.services.map(s => html`<li>${s.name}: ${priceText(s)}</li>`)}</ul>${link('#/packages', 'See all packages')}.`;
   const words = t.split(/\W+/).filter(w => w.length > 3);
   let best = null, score = 0;
   S.faqs.forEach(f => { const txt = `${f.question} ${f.answer}`.toLowerCase(), sc = words.filter(w => txt.includes(w)).length; if (sc > score) { score = sc; best = f; } });
   if (best) return html`<b>${best.question}</b><br>${best.answer}`;
-  return html`I am not sure about that one. <a href="${waLink('Hello Grand Bay, I have a question: ' + q)}" target="_blank" rel="noopener noreferrer">Ask our team on WhatsApp</a> and they will help.`;
+  return html`I am not sure about that one. <a href="${waLink('Hello Grand Bay Resort, I have a question: ' + q)}" target="_blank" rel="noopener noreferrer">Ask our team on WhatsApp</a> and they will help.`;
 }
 
 const GUEST_ACT = {
@@ -1634,7 +1634,7 @@ function policyHtml(text) {
 const POLICIES = [['booking-terms', 'Booking terms and conditions', 'terms'], ['cancellation', 'Cancellation and refund policy', 'cancellation_policy'], ['payment', 'Payment policy', 'payment_policy'], ['privacy', 'Privacy policy', 'privacy_policy']];
 function pageLegal(kind) {
   const list = kind === 'privacy' ? POLICIES.slice(3) : POLICIES;
-  return html`${pageHead('Policies', kind === 'privacy' ? 'Privacy policy' : 'Terms and policies', kind === 'privacy' ? '' : 'Please read these before you book. They apply to every booking with Grand Bay.', [[0, kind === 'privacy' ? 'Privacy policy' : 'Terms and policies']])}
+  return html`${pageHead('Policies', kind === 'privacy' ? 'Privacy policy' : 'Terms and policies', kind === 'privacy' ? '' : 'Please read these before you book. They apply to every booking with Grand Bay Resort.', [[0, kind === 'privacy' ? 'Privacy policy' : 'Terms and policies']])}
   <section style="padding-top:20px"><div class="wrap" style="max-width:880px">
     ${list.length > 1 ? html`<nav class="card pad" aria-label="On this page"><b>On this page</b><ol style="margin:8px 0 0;padding-left:20px">${list.map(([id, t]) => html`<li><a href="#/terms" data-act="policy-jump" data-id="${id}">${t}</a></li>`)}</ol></nav>` : ''}
     ${list.map(([id, t, k]) => html`<article id="${id}" style="margin-top:26px"><h2>${t}</h2>${set(k) ? policyHtml(set(k)) : html`<p class="muted">Not published yet.</p>`}</article>`)}
@@ -1856,7 +1856,7 @@ async function renderAdmin(sub) {
     A.staff = me.data;
   }
   const sec = SECTIONS.find(s => s.k === (sub || 'dashboard') && can(s.r)) || SECTIONS[0];
-  document.title = sec.l + ' | Grand Bay admin';
+  document.title = sec.l + ' | Grand Bay Resort admin';
   main.innerHTML = String(html`<div class="adm"><nav class="side" aria-label="Admin">${logoHtml('#/admin')}
     ${SECTIONS.map((s, idx) => s.g ? (SECTIONS.slice(idx + 1).find(x => x.g || (x.k && can(x.r)))?.k ? html`<h5>${s.g}</h5>` : '') : can(s.r) ? html`<a href="#/admin/${s.k}" ${s.k === sec.k ? raw('aria-current="page"') : ''}>${icon(s.i)} ${s.l}${s.c && A.counts[s.c] ? html`<span class="count">${A.counts[s.c]}</span>` : ''}</a>` : '')}
     <div class="side-foot"><b>${A.staff.full_name || A.staff.email}</b><br><span style="opacity:.75">${ROLE_LABEL[A.staff.role]}</span>
@@ -2370,7 +2370,7 @@ function printReceipt(p, b, bal) {
   printDoc(html`${docHead(p.kind === 'refund' ? 'Refund receipt' : 'Receipt', p.receipt_no, (p.received_at || '').slice(0, 10))}
     <div class="doc-meta"><div><b>Received from</b><br>${p.customer_name || (b && b.customer_name) || ''}</div><div><b>For</b><br>${b && b.reference ? `${b.reference}, ${b.services?.name || ''}` : (p.note || 'Walk-in sale')}</div></div>
     <table><tbody><tr><td>${KIND[p.kind]}</td><td class="num"><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b></td></tr><tr><td>Paid by</td><td class="num">${payMethod(p)}${p.reference ? ` (${p.reference})` : ''}</td></tr>${bal != null ? html`<tr><td>Balance remaining</td><td class="num">${pm(bal)}</td></tr>` : ''}</tbody></table>
-    <p class="small">Served by ${p.received_by_name || set('short_name', 'Grand Bay')} on ${fmtDT(p.received_at)}.</p>`);
+    <p class="small">Served by ${p.received_by_name || set('short_name', 'Grand Bay Resort')} on ${fmtDT(p.received_at)}.</p>`);
 }
 function walkinForm() {
   openModal('Walk-in sale', html`<form data-form="walkin" novalidate><div class="form-grid">
@@ -3191,7 +3191,7 @@ const OPS_ACT = {
   'inv-print': () => printInvoice(),
   'inv-send': async b => { if (!(await ensureInvoiceNo())) return; drawFile(); sendText(A.file.b, b.dataset.ch, `Invoice ${A.file.b.invoice_no} for booking ${A.file.b.reference}`, invoiceText()); },
   'rcpt-send': b => { const p = A.file.pays.find(x => x.id === b.dataset.id); if (p) sendText(A.file.b, b.dataset.ch, `Receipt ${p.receipt_no}`, receiptText(p)); },
-  'welcome-send': b => sendText(A.file.b, b.dataset.ch, `Welcome to ${set('short_name', 'Grand Bay')}: booking ${A.file.b.reference}`, welcomeText(A.file.b)),
+  'welcome-send': b => sendText(A.file.b, b.dataset.ch, `Welcome to ${set('short_name', 'Grand Bay Resort')}: booking ${A.file.b.reference}`, welcomeText(A.file.b)),
   'proof-view': async b => { const { data, error } = await sb.storage.from('proofs').createSignedUrl(b.dataset.path, 300); if (error) return toast(errText(error), 'error'); window.open(data.signedUrl, '_blank', 'noopener'); },
   'proof-set': async b => { const { error } = await sb.from('payment_proofs').update({ status: b.dataset.s, reviewed_by_name: staffName(), reviewed_at: new Date().toISOString() }).eq('id', b.dataset.id); if (error) return toast(errText(error), 'error'); toast(b.dataset.s === 'accepted' ? 'Proof accepted. Now record the payment below.' : 'Proof marked as rejected.'); drawFile(); }
 };
@@ -3238,7 +3238,7 @@ const OPS_FORMS = {
 };
 
 /* ================= How guests heard about us, and guest feedback with memories ================= */
-const HEARD = ['Instagram', 'Facebook', 'TikTok', 'Google search', 'Booking.com', 'A friend or family member', 'I have visited before', 'News or press', 'An event at Grand Bay', 'Other'];
+const HEARD = ['Instagram', 'Facebook', 'TikTok', 'Google search', 'Booking.com', 'A friend or family member', 'I have visited before', 'News or press', 'An event at Grand Bay Resort', 'Other'];
 const feedbackLink = b => `${location.origin}${location.pathname}#/feedback?ref=${b.reference}`;
 const starsTxt = n => '★'.repeat(n) + '☆'.repeat(5 - n);
 SECTIONS.splice(SECTIONS.findIndex(s => s.k === 'testimonials') + 1, 0, { k: 'feedback', l: 'Guest feedback', i: 'star', r: ['super_admin', 'manager', 'marketing', 'receptionist'] });
@@ -3251,7 +3251,7 @@ function pageFeedback(q) {
     <fieldset class="choice"><legend class="lbl">Your rating<span class="req" aria-hidden="true">*</span></legend><div class="stars-in" role="radiogroup" aria-label="Rating">${[5, 4, 3, 2, 1].map(n => html`<label title="${n} out of 5"><input type="radio" name="rating" value="${n}" class="sr"><span aria-hidden="true">★</span><span class="sr">${n} out of 5</span></label>`)}</div></fieldset>
     <div class="field"><label for="fb-c">Tell us about your visit</label><textarea id="fb-c" name="comment" rows="5" maxlength="2000" placeholder="What did you enjoy? What could we do better?"></textarea></div>
     <div class="field"><label for="fb-p">Your photos (optional, up to 5)</label><input id="fb-p" name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple><small class="help">Photos are only seen by our team unless you allow us to share them.</small></div>
-    <label class="check"><input type="checkbox" name="consent"> <span>You may share my review and photos on the Grand Bay website and social media, with my first name only.</span></label>
+    <label class="check"><input type="checkbox" name="consent"> <span>You may share my review and photos on the Grand Bay Resort website and social media, with my first name only.</span></label>
     <p class="err" data-err role="alert"></p><button class="btn" type="submit">Send feedback</button></form></div></section>`;
 }
 async function fbCall(body) {
@@ -3724,7 +3724,7 @@ window.addEventListener('hashchange', render);
     try {
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/create-payment`, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY }, body: JSON.stringify({ action: 'capture', provider: 'paypal', order_id: order }) });
       const j = await resp.json().catch(() => ({}));
-      openModal(j.ok ? 'Payment received' : 'Payment not completed', j.ok ? html`<p>Thank you. We received ${moneyP(j.amount)} for booking <b>${j.reference}</b>${j.receipt ? html`, receipt <b>${j.receipt}</b>` : ''}.</p><div class="row end"><button class="btn" data-act="modal-close">Done</button></div>` : html`<p>${j.error || j.message || 'PayPal did not complete the payment.'}</p><div class="row end"><a class="btn wa" href="${waLink('Hello Grand Bay, I tried to pay with PayPal and need help.')}" target="_blank" rel="noopener noreferrer">Ask us on WhatsApp</a><button class="btn ghost" data-act="modal-close">Close</button></div>`);
+      openModal(j.ok ? 'Payment received' : 'Payment not completed', j.ok ? html`<p>Thank you. We received ${moneyP(j.amount)} for booking <b>${j.reference}</b>${j.receipt ? html`, receipt <b>${j.receipt}</b>` : ''}.</p><div class="row end"><button class="btn" data-act="modal-close">Done</button></div>` : html`<p>${j.error || j.message || 'PayPal did not complete the payment.'}</p><div class="row end"><a class="btn wa" href="${waLink('Hello Grand Bay Resort, I tried to pay with PayPal and need help.')}" target="_blank" rel="noopener noreferrer">Ask us on WhatsApp</a><button class="btn ghost" data-act="modal-close">Close</button></div>`);
     } catch { toast('We could not confirm the payment. Please contact us.', 'error'); }
     return;
   }
