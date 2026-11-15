@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-YYxG5esmgmMvUR9pb371gZR7UDIz1cY/ZeebsUee27o='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-yRDEWjQv+gT/dSFW+N+0QSjbijkOxp+na/HqPEqyHYE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -629,11 +629,18 @@ section{padding:clamp(26px,3.2vw,46px) 0}
 .split{gap:clamp(24px,4vw,56px)}
 .ad-banner img{min-height:180px;max-height:240px}
 @media (min-width:1000px){.exp-grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:190px}.exp .cap{padding:16px 18px}.exp .cap h3{font-size:1.35rem}.exp .cap p{font-size:.875rem}}
-.site-footer{padding:30px 0 26px}
-.foot-grid{gap:22px}
-.foot-grid h4{margin-bottom:8px}
-.foot-grid ul{gap:5px}
-.foot-bottom{margin-top:18px}
+.site-footer{padding:20px 0 16px}
+.foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 28px}
+.foot-brand{display:flex;align-items:center;gap:14px;min-width:0}
+.foot-brand .logo{margin:0;flex:none}
+.foot-brand .logo svg,.foot-brand .logo img{height:42px;width:auto}
+.foot-links,.foot-contact{display:flex;flex-wrap:wrap;align-items:center;gap:4px 18px}
+.foot-links a,.foot-contact a{color:#ece3cf;text-decoration:none}
+.foot-links a:hover,.foot-contact a:hover{color:#fff;text-decoration:underline}
+.foot-contact .socials{display:inline-flex;gap:8px;margin:0}
+.foot-hours{margin:10px 0 0;color:#ece3cf;opacity:.85}
+.foot-bottom{margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)}
+@media (max-width:700px){.foot-top{flex-direction:column;align-items:flex-start}}
 /* Compact booking calendar */
 .cal{max-width:420px;padding:10px 12px}
 .cal-head{margin-bottom:4px}
@@ -862,13 +869,12 @@ function renderChrome(path) {
     ${curSelect('hide-m')}<a class="btn gold sm" href="#/book">Book now</a>
     <button class="icon-btn menu-btn" data-act="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">${icon('menu')}</button></nav>`);
   const socials = [['instagram_url', 'instagram', 'Instagram'], ['facebook_url', 'facebook', 'Facebook'], ['tiktok_url', 'tiktok', 'TikTok']].filter(s => safeUrl(set(s[0])));
-  $('#ftr').innerHTML = String(html`<div class="wrap"><div class="foot-grid">
-    <div>${logoHtml()}<p style="max-width:340px">${set('tagline')}</p><p class="small" style="white-space:pre-line;opacity:.8">${set('address')}</p>
-      <div class="socials">${socials.map(s => html`<a href="${safeUrl(set(s[0]))}" target="_blank" rel="noopener noreferrer" aria-label="${s[2]}">${icon(s[1])}</a>`)}</div></div>
-    <div><h4>Explore</h4><ul>${NAV.map(([h, l]) => html`<li><a href="${h}">${l}</a></li>`)}</ul></div>
-    <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="https://www.google.com/maps/dir/?api=1&destination=${mapsQ()}" target="_blank" rel="noopener noreferrer">Get directions</a></li><li><a href="#/feedback">Share your feedback</a></li></ul></div>
-    <div><h4>Contact</h4><ul>${phones().map(p => html`<li><a href="${telHref(p)}">${p}</a></li>`)}${set('email') ? html`<li><a href="mailto:${set('email')}">${set('email')}</a></li>` : ''}
-      ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
+  const addr1 = String(set('address') || '').split(/\r?\n/).map(x => x.trim()).filter(Boolean).join(', ');
+  $('#ftr').innerHTML = String(html`<div class="wrap"><div class="foot-top">
+    <div class="foot-brand">${logoHtml()}<span class="small">${addr1}</span></div>
+    <nav class="foot-links" aria-label="Footer"><a href="#/book">Make a booking</a><a href="#/packages">Packages &amp; pricing</a><a href="#/faq">FAQ</a><a href="https://www.google.com/maps/dir/?api=1&destination=${mapsQ()}" target="_blank" rel="noopener noreferrer">Get directions</a><a href="#/feedback">Share your feedback</a></nav>
+    <div class="foot-contact">${phones().map(p => html`<a href="${telHref(p)}">${p}</a>`)}${set('email') ? html`<a href="mailto:${set('email')}">${set('email')}</a>` : ''}<span class="socials">${socials.map(s => html`<a href="${safeUrl(set(s[0]))}" target="_blank" rel="noopener noreferrer" aria-label="${s[2]}">${icon(s[1])}</a>`)}</span></div></div>
+  ${pairs('hours').length ? html`<p class="foot-hours small">Open ${pairs('hours').map(([d, h]) => `${d}: ${h || ''}`).join('  |  ')}</p>` : ''}
   <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}. Developed by <a href="https://www.cyberjayainvest.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Cyberjaya Investments</a></span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
 }
 function setFab(msg) { const f = $('#fab'); f.href = waLink(msg); f.innerHTML = String(icon('whatsapp')); }
@@ -2211,7 +2217,7 @@ function staffForm() {
 }
 
 /* ================= Reception, payments, rooms, calendar ================= */
-const METHOD = { cash: 'Cash', card: 'Card', orange_money: 'Orange Money', myzaka: 'MyZaka', smega: 'Smega', bank_transfer: 'Bank transfer', other: 'Other' };
+const METHOD = { cash: 'Cash', card: 'Card', mobile_money: 'Mobile Money (Orange Money, MyZaka, Smega)', bank_transfer: 'Bank transfer', other: 'Other' };
 const KIND = { deposit: 'Deposit', payment: 'Payment', refund: 'Refund' };
 const sign = p => (p.kind === 'refund' ? -1 : 1) * Number(p.amount);
 const paidOf = ps => (ps || []).reduce((a, p) => a + sign(p), 0);
