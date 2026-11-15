@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-yRDEWjQv+gT/dSFW+N+0QSjbijkOxp+na/HqPEqyHYE='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-pgVHDcwnHRz2NIGAwpVBqXjT0xAZOJqBLJKzij5aDG0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -583,7 +583,10 @@ body.is-admin .adm-top h1{font-size:1.55rem}
 .logo .fr{transform-box:fill-box;transform-origin:50% 56%;animation:sway 3.8s ease-in-out infinite alternate}
 .logo g>g:nth-child(2) .fr{animation-duration:4.6s;animation-delay:-2s}
 .logo:hover .fr{animation-duration:1.4s}
-@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(5deg)}}
+@keyframes sway{from{transform:rotate(-9deg)}to{transform:rotate(8deg)}}
+.logo .tr{transform-box:fill-box;transform-origin:50% 100%;animation:bob 3.2s ease-in-out infinite alternate}
+.logo g>g:nth-child(2) .tr{animation-duration:4s;animation-delay:-1.6s}
+@keyframes bob{0%{transform:translateY(2px) rotate(-2deg)}50%{transform:translateY(-1px) rotate(.5deg)}100%{transform:translateY(-3.5px) rotate(2.5deg)}}
 .logo text:first-of-type{animation:glow 6s ease-in-out infinite}
 @keyframes glow{50%{opacity:.82}}
 .cookie{position:fixed;left:16px;bottom:16px;z-index:60;max-width:420px;background:var(--paper);color:var(--ink);border:1px solid var(--line-2);padding:16px 18px;box-shadow:0 24px 50px -24px rgba(0,0,0,.45);font-size:.92rem}
@@ -751,7 +754,7 @@ const ICONS = {
 };
 const icon = (n, cls = '') => raw(`<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[n] || ICONS.leaf}</svg>`);
 /* Grand Bay wordmark: twin palms with script name, drawn in currentColor */
-const palm = (x, s) => `<g transform="translate(${x} 0) scale(${s})"><path d="M22 60c1.5-12 2.6-24 1.2-37" stroke-width="2.2"/><path class="fr" d="M23.2 23c-6-6.5-14-6.5-19-1.5M23.2 23c-3.5-8.5-10.5-12-17.5-11M23.2 23c1-9 7-13.5 14.5-12.5M23.2 23c6.5-6 14.5-5 19 .5M23.2 23c4 1 9 5 9.5 11.5M23.2 23c-4.5.5-9.5 4.5-10.5 10.5" stroke-width="1.6"/></g>`;
+const palm = (x, s) => `<g transform="translate(${x} 0) scale(${s})"><g class="tr"><path d="M22 60c1.5-12 2.6-24 1.2-37" stroke-width="2.2"/><path class="fr" d="M23.2 23c-6-6.5-14-6.5-19-1.5M23.2 23c-3.5-8.5-10.5-12-17.5-11M23.2 23c1-9 7-13.5 14.5-12.5M23.2 23c6.5-6 14.5-5 19 .5M23.2 23c4 1 9 5 9.5 11.5M23.2 23c-4.5.5-9.5 4.5-10.5 10.5" stroke-width="1.6"/></g></g>`;
 const logoSvg = () => raw(`<svg viewBox="0 0 252 66" role="img" aria-label="Grand Bay Botanical Gardens and Resort"><g fill="none" stroke="currentColor" stroke-linecap="round">${palm(0, 1)}${palm(22, .78)}</g><text x="64" y="38" fill="currentColor" font-family="Great Vibes, cursive" font-size="34">Grand Bay</text><text x="66" y="56" fill="currentColor" font-family="Libre Franklin, sans-serif" font-size="8" letter-spacing="1.6">BOTANICAL GARDENS &amp; RESORT</text></svg>`);
 
 /* Helpers */
@@ -2217,7 +2220,7 @@ function staffForm() {
 }
 
 /* ================= Reception, payments, rooms, calendar ================= */
-const METHOD = { cash: 'Cash', card: 'Card', mobile_money: 'Mobile Money (Orange Money, MyZaka, Smega)', bank_transfer: 'Bank transfer', other: 'Other' };
+const METHOD = { cash: 'Cash', card: 'Card', mobile_money: 'Mobile Money', bank_transfer: 'Bank transfer', other: 'Other' };
 const KIND = { deposit: 'Deposit', payment: 'Payment', refund: 'Refund' };
 const sign = p => (p.kind === 'refund' ? -1 : 1) * Number(p.amount);
 const paidOf = ps => (ps || []).reduce((a, p) => a + sign(p), 0);
@@ -2227,7 +2230,10 @@ const dur = m => m < 60 ? `${m} min` : m < 1440 ? `${Math.floor(m / 60)} h${m % 
 const slaMins = e => Number(set(e.phone ? 'reply_whatsapp_minutes' : 'reply_email_minutes')) || (e.phone ? 60 : 120);
 const inDay = (b, d) => d >= b.booking_date && d <= (b.end_date ? addDays(b.end_date, -1) : b.booking_date);
 const roomName = b => ((A.rooms || []).find(r => r.id === b.room_id) || {}).name || '';
-const methodSelect = (id, val = 'cash') => html`<div class="field"><label for="${id}">Paid by</label><select id="${id}" name="method">${Object.entries(METHOD).map(([v, l]) => html`<option value="${v}" ${v === val ? 'selected' : ''}>${l}</option>`)}</select></div>`;
+const MM = { orange_money: 'Orange Money', myzaka: 'MyZaka', smega: 'Smega' };
+const payMethod = p => p.method === 'mobile_money' ? (p.mm_provider ? `Mobile Money (${MM[p.mm_provider]})` : 'Mobile Money') : (payMethod(p) || MM[p.method] || p.method);
+const methodSelect = (id, val = 'cash') => html`<div class="field"><label for="${id}">Paid by</label><select id="${id}" name="method" data-method>${Object.entries(METHOD).map(([v, l]) => html`<option value="${v}" ${v === val ? 'selected' : ''}>${l}</option>`)}</select></div>
+  <div class="field mm-field" ${val === 'mobile_money' ? '' : 'hidden'}><label for="${id}-mm">Mobile money service</label><select id="${id}-mm" name="mm_provider"><option value="">Choose one</option>${Object.entries(MM).map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select></div>`;
 async function loadRooms() { const { data } = await sb.from('rooms').select('*').order('sort'); A.rooms = data || []; }
 async function paysFor(ids) {
   const out = [];
@@ -2294,7 +2300,7 @@ function drawFile() {
       <tbody>${items.map((it, i) => html`<tr><td><input data-item="desc" data-i="${i}" value="${it.desc}" ${ops ? '' : 'disabled'} aria-label="Charge description"></td><td><input type="number" min="0" step="1" data-item="qty" data-i="${i}" value="${it.qty}" ${ops ? '' : 'disabled'} aria-label="Quantity"></td><td><input type="number" min="0" step="0.01" data-item="price" data-i="${i}" value="${it.price}" ${ops ? '' : 'disabled'} aria-label="Unit price"></td><td class="amt">${pm(it.qty * it.price)}</td><td>${ops && items.length > 1 ? html`<button class="linkbtn" data-act="file-del-item" data-i="${i}" aria-label="Remove line">${icon('close')}</button>` : ''}</td></tr>`)}</tbody>
       <tfoot><tr><td colspan="3">Total</td><td id="f-total">${pm(t.total)}</td><td></td></tr><tr><td colspan="3">Paid</td><td id="f-paid">${pm(t.paid)}</td><td></td></tr><tr><td colspan="3"><b>Balance due</b></td><td id="f-bal"><b>${pm(t.bal)}</b></td><td></td></tr></tfoot></table></div>
     ${ops ? html`<div class="row" style="margin:8px 0 14px"><button class="btn xs ghost" data-act="file-add-item">${icon('plus')} Add charge</button><button class="btn xs" data-act="file-save-items">Save charges</button><span class="faint small" id="f-dirty">${A.file.dirty ? 'Not saved yet' : ''}</span></div>` : ''}
-    <h3 style="margin:6px 0">Payments</h3>${pays.length ? html`<ul class="list-plain">${pays.map(p => html`<li><div><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b> ${KIND[p.kind]} by ${METHOD[p.method]}${p.reference ? ` (${p.reference})` : ''}<br><span class="faint small">${p.receipt_no}, ${fmtDT(p.received_at)}${p.received_by_name ? `, ${p.received_by_name}` : ''}</span></div><button class="btn xs ghost" data-act="file-receipt" data-id="${p.id}">${icon('print')} Receipt</button></li>`)}</ul>` : html`<p class="muted small">No payments yet.</p>`}
+    <h3 style="margin:6px 0">Payments</h3>${pays.length ? html`<ul class="list-plain">${pays.map(p => html`<li><div><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b> ${KIND[p.kind]} by ${payMethod(p)}${p.reference ? ` (${p.reference})` : ''}<br><span class="faint small">${p.receipt_no}, ${fmtDT(p.received_at)}${p.received_by_name ? `, ${p.received_by_name}` : ''}</span></div><button class="btn xs ghost" data-act="file-receipt" data-id="${p.id}">${icon('print')} Receipt</button></li>`)}</ul>` : html`<p class="muted small">No payments yet.</p>`}
     ${ops ? html`<form data-form="pay" class="pay-form" novalidate><div class="field"><label for="p-a">Amount</label><input id="p-a" name="amount" type="number" min="0.01" step="0.01" value="${t.bal || ''}" required></div>${methodSelect('p-m')}
       <div class="field"><label for="p-k">Type</label><select id="p-k" name="kind">${Object.entries(KIND).map(([v, l]) => html`<option value="${v}" ${v === (t.paid ? 'payment' : 'deposit') ? 'selected' : ''}>${l}</option>`)}</select></div>
       <div class="field"><label for="p-r">Reference</label><input id="p-r" name="reference" maxlength="120" placeholder="Slip or transaction ID"></div><button class="btn sm" type="submit">Record payment</button><p class="err" data-err role="alert" style="flex-basis:100%"></p></form>` : ''}
@@ -2363,7 +2369,7 @@ function printConfirmation() {
 function printReceipt(p, b, bal) {
   printDoc(html`${docHead(p.kind === 'refund' ? 'Refund receipt' : 'Receipt', p.receipt_no, (p.received_at || '').slice(0, 10))}
     <div class="doc-meta"><div><b>Received from</b><br>${p.customer_name || (b && b.customer_name) || ''}</div><div><b>For</b><br>${b && b.reference ? `${b.reference}, ${b.services?.name || ''}` : (p.note || 'Walk-in sale')}</div></div>
-    <table><tbody><tr><td>${KIND[p.kind]}</td><td class="num"><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b></td></tr><tr><td>Paid by</td><td class="num">${METHOD[p.method]}${p.reference ? ` (${p.reference})` : ''}</td></tr>${bal != null ? html`<tr><td>Balance remaining</td><td class="num">${pm(bal)}</td></tr>` : ''}</tbody></table>
+    <table><tbody><tr><td>${KIND[p.kind]}</td><td class="num"><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b></td></tr><tr><td>Paid by</td><td class="num">${payMethod(p)}${p.reference ? ` (${p.reference})` : ''}</td></tr>${bal != null ? html`<tr><td>Balance remaining</td><td class="num">${pm(bal)}</td></tr>` : ''}</tbody></table>
     <p class="small">Served by ${p.received_by_name || set('short_name', 'Grand Bay')} on ${fmtDT(p.received_at)}.</p>`);
 }
 function walkinForm() {
@@ -2419,7 +2425,7 @@ ADM.payments = async () => {
     <div class="tbl-wrap"><table><thead><tr><th>Receipt</th><th>Date</th><th>Customer</th><th>For</th><th>Paid by</th><th>Type</th><th style="text-align:right">Amount</th><th>Taken by</th><th></th></tr></thead><tbody>
     ${data.length ? data.map(p => html`<tr><td class="mono">${p.receipt_no}</td><td class="small">${fmtDT(p.received_at)}</td><td>${p.customer_name || p.bookings?.customer_name}</td>
       <td>${p.booking_id ? html`<button class="linkbtn" data-act="file-open" data-id="${p.booking_id}">${p.bookings?.reference}</button>, ${p.bookings?.services?.name}` : (p.note || p.services?.name || 'Walk-in')}</td>
-      <td>${METHOD[p.method]}${p.reference ? html`<br><span class="faint small">${p.reference}</span>` : ''}</td><td>${KIND[p.kind]}</td><td style="text-align:right;white-space:nowrap"><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b></td><td class="small">${p.received_by_name}</td>
+      <td>${payMethod(p)}${p.reference ? html`<br><span class="faint small">${p.reference}</span>` : ''}</td><td>${KIND[p.kind]}</td><td style="text-align:right;white-space:nowrap"><b>${p.kind === 'refund' ? '-' : ''}${pm(p.amount)}</b></td><td class="small">${p.received_by_name}</td>
       <td><div class="row"><button class="icon-btn" style="width:32px;height:32px" data-act="pay-receipt" data-id="${p.id}" aria-label="Print receipt ${p.receipt_no}">${icon('print')}</button>${can(CAT) ? html`<button class="icon-btn" style="width:32px;height:32px" data-act="pay-del" data-id="${p.id}" aria-label="Delete payment">${icon('trash')}</button>` : ''}</div></td></tr>`)
       : html`<tr><td colspan="9" class="muted" style="text-align:center;padding:26px">No payments in this period.</td></tr>`}</tbody></table></div>`);
 };
@@ -2431,7 +2437,7 @@ async function revenueReport() {
   if (error) return;
   const owing = await outstandingData();
   const grp = (f) => { const m = {}; data.forEach(p => { const k = f(p); m[k] = (m[k] || 0) + sign(p); }); return Object.entries(m).sort((a, z) => z[1] - a[1]); };
-  const byMethod = grp(p => METHOD[p.method]), bySvc = grp(p => p.services?.name || p.bookings?.services?.name || 'Walk-in and other');
+  const byMethod = grp(p => METHOD[p.method] || payMethod(p)), bySvc = grp(p => p.services?.name || p.bookings?.services?.name || 'Walk-in and other');
   const pkey = p => { const d = p.received_at.slice(0, 10); if (r.group === 'month') return d.slice(0, 7); if (r.group === 'week') { const x = parseISO(d); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return iso(x); } return d; };
   const byPer = grp(pkey).sort(([a], [z]) => a < z ? -1 : 1);
   const plabel = k => r.group === 'month' ? parseISO(k + '-01').toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : r.group === 'week' ? 'Week of ' + fmtDate(k) : fmtDay(k);
@@ -2502,7 +2508,7 @@ const RX_ACT = {
   'walkin': () => walkinForm(),
   'pay-receipt': b => { const p = A.rows.payments.find(x => x.id === b.dataset.id); if (p) printReceipt(p, p.bookings ? { ...p.bookings } : null, null); },
   'pay-del': async b => { if (!(await confirmDialog('Delete this payment record? Only do this to correct a mistake.', 'Delete', true))) return; const { error } = await sb.from('payments').delete().eq('id', b.dataset.id); if (error) return toast(errText(error), 'error'); toast('Payment deleted.'); ADM.payments(); },
-  'pay-csv': () => download(`payments-${A.pf.from}-to-${A.pf.to}.csv`, toCSV(A.rows.payments, [['Receipt', p => p.receipt_no], ['Date', p => p.received_at], ['Customer', p => p.customer_name || p.bookings?.customer_name], ['Booking', p => p.bookings?.reference], ['For', p => p.bookings?.services?.name || p.note], ['Paid by', p => METHOD[p.method]], ['Reference', p => p.reference], ['Type', p => KIND[p.kind]], ['Amount', p => sign(p).toFixed(2)], ['Taken by', p => p.received_by_name]])),
+  'pay-csv': () => download(`payments-${A.pf.from}-to-${A.pf.to}.csv`, toCSV(A.rows.payments, [['Receipt', p => p.receipt_no], ['Date', p => p.received_at], ['Customer', p => p.customer_name || p.bookings?.customer_name], ['Booking', p => p.bookings?.reference], ['For', p => p.bookings?.services?.name || p.note], ['Paid by', p => payMethod(p)], ['Reference', p => p.reference], ['Type', p => KIND[p.kind]], ['Amount', p => sign(p).toFixed(2)], ['Taken by', p => p.received_by_name]])),
   'rev-csv': b => { const k = b.dataset.k, rows = A.revRows[k] || []; download(`revenue-${k}-${A.rep.from}-to-${A.rep.to}.csv`, toCSV(rows, [[k === 'byPer' ? 'Period' : k === 'bySvc' ? 'Experience' : 'Paid by', x => x[0]], ['Collected (Pula)', x => x[1].toFixed(2)]])); },
   'cal-move': b => { A.cal.month = new Date(A.cal.month.getFullYear(), A.cal.month.getMonth() + Number(b.dataset.dir), 1); renderDashCal(); },
   'cal-today': () => { A.cal.month = new Date(new Date().getFullYear(), new Date().getMonth(), 1); renderDashCal(); },
@@ -2543,7 +2549,7 @@ const RX_FORMS = {
     if (!(amt > 0)) { err.textContent = 'Enter an amount above zero.'; return; }
     if (A.file.dirty && !(await saveItems(true))) return;
     const b = A.file.b, btn = $('button[type=submit]', f); btn.disabled = true;
-    const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind, method: v.method, reference: v.reference.trim(), received_by_name: staffName() }).select().single();
+    const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind, method: v.method, mm_provider: v.method === 'mobile_money' ? (v.mm_provider || null) : null, reference: v.reference.trim(), received_by_name: staffName() }).select().single();
     btn.disabled = false;
     if (error) { err.textContent = errText(error); return; }
     A.file.pays.push(data); toast(`${KIND[data.kind]} recorded. Receipt ${data.receipt_no}.`); if (f.dataset.return === 'checkout') openCheckout(); else drawFile(); refreshAfterFile();
@@ -2552,7 +2558,7 @@ const RX_FORMS = {
     const v = Object.fromEntries(new FormData(f)), err = $('[data-err]', f), amt = Math.round(Number(v.amount) * 100) / 100;
     if (!v.name.trim() || !v.note.trim()) { err.textContent = 'Add the customer name and what was bought.'; return; }
     if (!(amt > 0)) { err.textContent = 'Enter an amount above zero.'; return; }
-    const { data, error } = await sb.from('payments').insert({ booking_id: null, service_id: v.service || null, customer_name: v.name.trim(), amount: amt, kind: 'payment', method: v.method, reference: v.reference.trim(), note: v.note.trim(), received_by_name: staffName() }).select().single();
+    const { data, error } = await sb.from('payments').insert({ booking_id: null, service_id: v.service || null, customer_name: v.name.trim(), amount: amt, kind: 'payment', method: v.method, mm_provider: v.method === 'mobile_money' ? (v.mm_provider || null) : null, reference: v.reference.trim(), note: v.note.trim(), received_by_name: staffName() }).select().single();
     if (error) { err.textContent = errText(error); return; }
     closeModal(); toast(`Sale recorded. Receipt ${data.receipt_no}.`); printReceipt(data, null, null); refreshAfterFile();
   },
@@ -2734,7 +2740,7 @@ const MORE_FORMS = {
     if (v.room_id && v.room_id !== b.room_id && !(await roomFree(v.room_id, b.booking_date, b.end_date, b.id))) { checkIn(); return; }
     let receipt = '';
     if (amt > 0) {
-      const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind || 'payment', method: v.method, reference: (v.reference || '').trim(), received_by_name: staffName() }).select().single();
+      const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: v.kind || 'payment', method: v.method, mm_provider: v.method === 'mobile_money' ? (v.mm_provider || null) : null, reference: (v.reference || '').trim(), received_by_name: staffName() }).select().single();
       if (error) { toast(errText(error), 'error'); return; }
       A.file.pays.push(data); receipt = data.receipt_no;
     }
@@ -2966,7 +2972,7 @@ const FIN_FORMS = {
     if (!v.date || v.date > todayISO()) { err.textContent = 'The date received cannot be in the future.'; return; }
     if (amt > b.bal + 0.004 && !(await confirmDialog(`${pm(amt)} is more than the ${pm(b.bal)} balance. Record it anyway?`, 'Record anyway'))) { finPayForm(b.id, v.request); return; }
     const received_at = v.date === todayISO() ? new Date().toISOString() : `${v.date}T12:00:00+02:00`;
-    const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: 'payment', method: v.method, reference: (v.reference || '').trim(), note: v.request ? `Request ${(reqs.find(r => r.id === v.request) || {}).request_no || ''}` : '', received_by_name: staffName(), received_at }).select().single();
+    const { data, error } = await sb.from('payments').insert({ booking_id: b.id, service_id: b.service_id, customer_name: b.customer_name, amount: amt, kind: 'payment', method: v.method, mm_provider: v.method === 'mobile_money' ? (v.mm_provider || null) : null, reference: (v.reference || '').trim(), note: v.request ? `Request ${(reqs.find(r => r.id === v.request) || {}).request_no || ''}` : '', received_by_name: staffName(), received_at }).select().single();
     if (error) { err.textContent = errText(error); return; }
     const left = Math.max(0, b.bal - amt), done = reqs.filter(r => r.id === v.request || left < 0.005).map(r => r.id);
     if (done.length) await sb.from('payment_requests').update({ status: 'paid', paid_at: new Date().toISOString() }).in('id', done);
@@ -3142,7 +3148,7 @@ function invoiceText() {
 }
 function receiptText(p) {
   const b = A.file.b;
-  return `Receipt ${p.receipt_no} from ${set('business_name')}: ${pm(p.amount)} ${p.kind === 'refund' ? 'refunded' : 'received'} by ${METHOD[p.method]}${p.reference ? ' (' + p.reference + ')' : ''} on ${fmtDT(p.received_at)} for booking ${b.reference} (${b.services?.name}). Balance remaining: ${pm(fileTotals().bal)}. Thank you.`;
+  return `Receipt ${p.receipt_no} from ${set('business_name')}: ${pm(p.amount)} ${p.kind === 'refund' ? 'refunded' : 'received'} by ${payMethod(p)}${p.reference ? ' (' + p.reference + ')' : ''} on ${fmtDT(p.received_at)} for booking ${b.reference} (${b.services?.name}). Balance remaining: ${pm(fileTotals().bal)}. Thank you.`;
 }
 async function printInvoice() {
   if (!(await ensureInvoiceNo())) return;
@@ -3558,7 +3564,13 @@ const FORMS = {
   }
 };
 Object.assign(ACT, RX_ACT, MORE_ACT, PUB_ACT, FIN_ACT, GUEST_ACT, OPS_ACT, FB_ACT); Object.assign(FORMS, RX_FORMS, MORE_FORMS, FIN_FORMS, GUEST_FORMS, OPS_FORMS, FB_FORMS);
-document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); FORMS[f.dataset.form]?.(f, e); });
+document.addEventListener('submit', e => {
+  const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault();
+  const m = f.querySelector('[data-method]'), mm = f.querySelector('[name="mm_provider"]');
+  if (m && m.value === 'mobile_money' && mm && !mm.value) { const er = $('[data-err]', f); if (er) er.textContent = 'Choose the mobile money service: Orange Money, MyZaka or Smega.'; else toast('Choose the mobile money service.', 'error'); mm.focus(); return; }
+  FORMS[f.dataset.form]?.(f, e);
+});
+document.addEventListener('change', e => { const t = e.target; if (!t.matches || !t.matches('[data-method]')) return; const box = t.closest('form')?.querySelector('.mm-field'); if (box) { box.hidden = t.value !== 'mobile_money'; if (box.hidden) box.querySelector('select').value = ''; } });
 
 const redrawCust = debounce(q => { const b = $('#cs-body'); if (b) b.innerHTML = ser(custRows(q)); }, 150);
 const redrawCrud = debounce((k, q) => { const b = $('#crud-body'); if (b) b.innerHTML = ser(crudRows(k, q)); }, 150);
