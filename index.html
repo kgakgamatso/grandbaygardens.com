@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-upiYUCmbKtqniWQgpZQo2jvBQLMHGgZYf4BFTjhUKbo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net 'sha256-hd4wWdJnyr8mRm2rU9IOCoBeGcYLcWt6o5WdBUaECI4='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src https://cvopffgpgbjlokmoegld.supabase.co; connect-src https://cvopffgpgbjlokmoegld.supabase.co wss://cvopffgpgbjlokmoegld.supabase.co; frame-src https://www.google.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Grand Bay Botanical Gardens &amp; Resort · Fikeng, near Gaborone</title>
 <meta name="description" content="Garden celebrations, spa days, guided hikes, poolside afternoons and dining at Grand Bay Botanical Gardens &amp; Resort in Fikeng, 25 km from Gaborone, Botswana. Book online or chat on WhatsApp.">
@@ -855,7 +855,7 @@ function renderChrome(path) {
     <div>${logoHtml()}<p style="max-width:340px">${set('tagline')}</p><p class="small" style="white-space:pre-line;opacity:.8">${set('address')}</p>
       <div class="socials">${socials.map(s => html`<a href="${safeUrl(set(s[0]))}" target="_blank" rel="noopener noreferrer" aria-label="${s[2]}">${icon(s[1])}</a>`)}</div></div>
     <div><h4>Explore</h4><ul>${NAV.map(([h, l]) => html`<li><a href="${h}">${l}</a></li>`)}</ul></div>
-    <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="#/contact">Directions</a></li><li><a href="#/feedback">Share your feedback</a></li></ul></div>
+    <div><h4>Plan</h4><ul><li><a href="#/book">Make a booking</a></li><li><a href="#/packages">Packages &amp; pricing</a></li><li><a href="${waLink()}" target="_blank" rel="noopener noreferrer">WhatsApp us</a></li><li><a href="https://www.google.com/maps/dir/?api=1&destination=${mapsQ()}" target="_blank" rel="noopener noreferrer">Get directions</a></li><li><a href="#/feedback">Share your feedback</a></li></ul></div>
     <div><h4>Contact</h4><ul>${phones().map(p => html`<li><a href="${telHref(p)}">${p}</a></li>`)}${set('email') ? html`<li><a href="mailto:${set('email')}">${set('email')}</a></li>` : ''}
       ${pairs('hours').map(([d, h]) => html`<li class="small" style="opacity:.8">${d}: ${h || ''}</li>`)}</ul></div></div>
   <div class="foot-bottom"><span>© ${new Date().getFullYear()} ${set('business_name')}. Developed by <a href="https://www.cyberjayainvest.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">Cyberjaya Investments</a></span><span class="row"><a href="#/privacy">Privacy</a><a href="#/terms">Terms and policies</a>${curSelect()}<button class="linkbtn" style="color:inherit" data-act="cookie-open">Cookie settings</button><a href="#/admin">Staff login</a></span></div></div>`);
@@ -940,20 +940,15 @@ function pageHome() {
       <div class="row"><a class="btn gold" href="#/book?service=${spa.slug}">Reserve a spot</a><a class="btn light" href="${waLink(spa.whatsapp_message)}" target="_blank" rel="noopener noreferrer">Ask about dates</a></div></div></div></section>` : ''}
   ${promoRail()}
   ${bannerAds()}
-  ${rest ? html`<section><div class="wrap split">
+  ${rest ? html`<section class="alt"><div class="wrap split" style="align-items:start">
     <div class="reveal"><span class="kicker">The restaurant &amp; bar</span><h2>Long lunches under the trees</h2><p class="lead">${set('restaurant_intro')}</p>
-      ${specials.length ? html`<div style="margin:22px 0">${specials.map(m => html`<div class="menu-item"><div class="mi"><div class="mt"><span>${m.name}</span><span>${money(m.price)}</span></div><p>${m.description}</p></div></div>`)}</div>` : ''}
       <div class="row"><a class="btn" href="#/book?service=restaurant">Reserve a table</a><a class="link" href="#/restaurant">See the menu ${icon('arrow')}</a></div></div>
-    <div class="collage reveal">${media(rest.image_url, 'A traditional plate at Grand Bay', 'dish')}${g[11] ? html`<img src="${g[11]}" alt="Cocktails by the pool" loading="lazy">` : ''}</div></div></section>` : ''}
+    ${specials.length ? html`<div class="reveal">${specials.map(m => html`<div class="menu-item"><div class="mi"><div class="mt"><span>${m.name}</span><span>${money(m.price)}</span></div><p>${m.description}</p></div></div>`)}</div>` : ''}</div></section>` : ''}
   ${set('press_quote') ? html`<section class="alt"><div class="wrap press reveal"><span class="kicker">In the press</span><q>${set('press_quote')}</q><cite>${safeUrl(set('press_link')) ? html`<a href="${safeUrl(set('press_link'))}" target="_blank" rel="noopener noreferrer">${set('press_source')}</a>` : set('press_source')}</cite></div></section>` : ''}
   ${S.testimonials.length ? html`<section><div class="wrap">${secHead('Guest notes', 'In their words', '')}<div class="grid g3">${S.testimonials.map(t => html`<figure class="reveal card pad" style="margin:0"><blockquote style="margin:0 0 14px;font:500 1.25rem/1.45 var(--serif);color:var(--forest)">${t.quote}</blockquote><figcaption class="muted">${t.author}${t.context ? `, ${t.context}` : ''}</figcaption></figure>`)}</div></div></section>` : ''}
-  ${g.length ? html`<section style="padding-bottom:0"><div class="wrap row between" style="margin-bottom:22px"><div><span class="kicker">@grand.baybotanicalgardens</span><h2 style="margin:0">Moments at Grand Bay</h2></div><a class="link" href="#/gallery">Open the gallery ${icon('arrow')}</a></div>
+  ${g.length ? html`<section><div class="wrap row between" style="margin-bottom:22px"><div><span class="kicker">@grand.baybotanicalgardens</span><h2 style="margin:0">Moments at Grand Bay</h2></div><a class="link" href="#/gallery">Open the gallery ${icon('arrow')}</a></div>
     <div class="strip">${S.gallery.slice(0, 6).map(x => html`<a href="#/gallery" aria-label="${x.caption || 'Gallery photo'}"><img src="${safeUrl(x.image_url)}" alt="" loading="lazy"></a>`)}</div></section>` : ''}
-  ${faqSec()}
-  <section class="band"><div class="wrap split" style="align-items:start">
-    <div class="reveal"><span class="kicker">Plan your visit</span><h2>${set('short_name', 'Grand Bay')} is closer than you think</h2><p class="lead" style="white-space:pre-line">${set('address')}</p>
-      <div class="row" style="margin-top:22px"><a class="btn gold" href="https://www.google.com/maps/dir/?api=1&destination=${mapsQ()}" target="_blank" rel="noopener noreferrer">Get directions</a>${phones()[0] ? html`<a class="btn light" href="${telHref(phones()[0])}">${icon('phone')} ${phones()[0]}</a>` : ''}</div></div>
-    <div class="reveal"><h3>Opening hours</h3>${hoursList()}</div></div></section>`;
+`;
 }
 function startHero() {
   clearInterval(heroTimer);
